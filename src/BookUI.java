@@ -251,10 +251,10 @@ public class BookUI extends JPanel {
 		initReserve();
 		initLayerPane();
 		//for test
-		/*frame = new JFrame("test");
+		frame = new JFrame("test");
 		frame.setBounds(0,0,frameWidth, frameHeight);
 		frame.setVisible(true);
-		frame.setContentPane(Reserve);*/
+		frame.setContentPane(Reserve);
 		// buttons in reserve
 		cancelreserve.addMouseListener(ml);
 		backreserve.addMouseListener(ml);
@@ -282,15 +282,13 @@ public class BookUI extends JPanel {
 				
 			} else if (e.getSource() == nextreserve) {
 				String s1 = reservecheckindateField.getText();
-				Time time1 = new Time(1, 2, 3);
 				String s2 = reservecheckoutdateField.getText();
 				String HotelID = reservehotelid.getSelectedItem().toString();
 				int sn = Integer.parseInt(reservesingleroomField.getText());
 				int dn = Integer.parseInt(reservedoubleroomField.getText());
 				int qn = Integer.parseInt(reservequadroomField.getText());
 				//Forward reserve request to Book Controller
-				mBookController = new Book(HotelID, time1, 1, "AAAAAAAAAA", "0987878787","single","1");
-				mBookController.print();
+				mBookController = new Book(HotelID, s1, s2, 1, "AAAAAAAAAA", "0987878787","single", 1);
 			} else if (e.getSource() == backsoldout) {
 				layeredPane.remove(Soldout);
 			} 
