@@ -1,0 +1,117 @@
+[
+  {
+    "HotelID": 0,
+    "HotelStar": 2,
+    "Locality": "�x�_",
+    "Street-Address": "���ͪF���@�q28��",
+    "Rooms": [
+      {
+        "RoomType": "Single",
+        "RoomPrice": 518,
+        "Number": 29
+      },
+      {
+        "RoomType": "Double",
+        "RoomPrice": 1251,
+        "Number": 21
+      },
+      {
+        "RoomType": "Quad",
+        "RoomPrice": 2122,
+        "Number": 13
+      }
+    ]
+  },
+  {
+    "HotelID": 1,
+    "HotelStar": 4,
+    "Locality": "�x�_",
+    "Street-Address": "���s�_���|�q1��",
+    "Rooms": [
+      {
+        "RoomType": "Single",
+        "RoomPrice": 1869,
+        "Number": 12
+      },
+      {
+        "RoomType": "Double",
+        "RoomPrice": 3052,
+        "Number": 26
+      },
+      {
+        "RoomType": "Quad",
+        "RoomPrice": 4399,
+        "Number": 11
+      }
+    ]
+  },
+  {
+    "HotelID": 2,
+    "HotelStar": 2,
+    "Locality": "�x�_",
+    "Street-Address": "����m������163��",
+    "Rooms": [
+      {
+        "RoomType": "Single",
+        "RoomPrice": 652,
+        "Number": 18
+      },
+      {
+        "RoomType": "Double",
+        "RoomPrice": 1419,
+        "Number": 15
+      },
+      {
+        "RoomType": "Quad",
+        "RoomPrice": 1945,
+        "Number": 11
+      }
+    ]
+  },
+  {
+    "HotelID": 3,
+    "HotelStar": 4,
+    "Locality": "�x�_",
+    "Street-Address": "���y�n���@�q111��",
+    "Rooms": [
+      {
+        "RoomType": "Single",
+        "RoomPrice": 1587,
+        "Number": 11
+      },
+      {
+        "RoomType": "Double",
+        "RoomPrice": 2192,
+        "Number": 17
+      },
+      {
+        "RoomType": "Quad",
+        "RoomPrice": 4389,
+        "Number": 16
+      }
+    ]
+  },
+  {
+    "HotelID": 4,
+    "HotelStar": 4,
+    "Locality": "����",
+    "Street-Address": "���@�Ϧ۱j��1�q320��",
+    "Rooms": [
+      {
+        "RoomType": "Single",
+        "RoomPrice": 1836,
+        "Number": 10
+      },
+      {
+        "RoomType": "Double",
+        "RoomPrice": 2901,
+        "Number": 30
+      },
+      {
+        "RoomType": "Quad",
+        "RoomPrice": 4276,
+        "Number": 18
+      }
+    ]
+  }
+]
