@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Area;
@@ -15,6 +16,10 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 
 public class SearchUI extends JPanel {
+	
+	private SearchController controller = new SearchController();
+	private UIMainFrame mUIMainFrame;
+	
 	private JFrame frame;
 	private JLayeredPane layeredPane;
 	private JLabel background = new JLabel();
@@ -214,7 +219,7 @@ public class SearchUI extends JPanel {
 			int sroom = _AHR.get(i).getSingle(); // single room
 			int droom = _AHR.get(i).getDouble(); // double room
 			int qroom = _AHR.get(i).getQuad(); // quad room
-			int price = main.CountSumPrice(_AHR.get(i)); // price
+			int price = controller.CountSumPrice(_AHR.get(i)); // price
 			String go = "Select"; // select
 			Object[] data = { id, star, locality, address, sroom, droom, qroom, price, go };
 			tablemodel.addRow(data);
@@ -314,7 +319,7 @@ public class SearchUI extends JPanel {
 		layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
 
-		this.background.setIcon(new ImageIcon("images/Menu/background.png"));
+		this.background.setIcon(new ImageIcon("images/Menu/background.jpg"));
 		this.background.setBounds(0, 0, frameWidth, frameHeight);
 		layeredPane.add(background, new Integer(0));
 
@@ -329,8 +334,8 @@ public class SearchUI extends JPanel {
 		this.Search.setBounds(searchCenter.width - (searchWidth / 2), searchCenter.height - (searchHeight / 2),
 				searchWidth, searchHeight);
 	}
-	public SearchUI() 
-	{
+	public SearchUI(UIMainFrame mUIMainFrame) {
+		this.mUIMainFrame = mUIMainFrame;
 		initPanel();
 		initEnterSearch();
 		initSearch();
