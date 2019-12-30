@@ -30,6 +30,7 @@ public class SignUpUI extends JPanel {
 	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 4);
 	private JLabel titleText = new JLabel("     HOTEL     ", JLabel.CENTER);
 
+	//signup section
 	private JPanel Signup = new JPanel();
 	final private int signupSetWidth = 600, signupSetHeight = 270;
 	final private Dimension signupSetCenter = new Dimension(frameWidth / 2, 450);
@@ -40,12 +41,106 @@ public class SignUpUI extends JPanel {
 	protected JTextField usercodeField = new JTextField(5);
 	protected JLabel verifycodeField = new JLabel("");
 	
+	// attribute of sign up error - USERID ALREADY EXISTS.
+	private JPanel Signuperror = new JPanel();
+	final private int signuperrorWidth = 500, signuperrorHeight = 110;
+	final private Dimension signuperrorCenter = new Dimension(frameWidth / 2, 500);
+	private JLabel signuperrorText = new JLabel("USER ID ALREADY EXISTS.", JLabel.CENTER);
+	private JLabel backsignuperror = new JLabel("BACK", JLabel.CENTER);
+
+	// attribute of sign up error - WRONG VERIFY CODE.
+	private JPanel Signuperror1 = new JPanel();
+	final private int signuperror1Width = 500, signuperror1Height = 110;
+	final private Dimension signuperrorCenter1 = new Dimension(frameWidth / 2, 500);
+	private JLabel signuperror1Text = new JLabel("WRONG VERIFY CODE.", JLabel.CENTER);
+	private JLabel backsignuperror1 = new JLabel("BACK", JLabel.CENTER);
+	
+	
+	/**
+	 * control the mouse event
+	 */
+	MouseListener ml = new MouseAdapter() {
+		public void mouseEntered(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			l.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			l.setForeground(Color.red);
+		}
+
+		public void mouseExited(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			l.setForeground(Color.black);
+		}
+
+		public void mouseClicked(MouseEvent e) {
+			if (e.getSource() == signuplogin) {
+				String UserID = signupidField.getText();
+				String Password = new String(signuppasswordField.getPassword());
+				String UserCode = usercodeField.getText(); // user enter verify code
+				String VerifyCode = verifycodeField.getText(); // random verify code
+				if (SignUpCheck(UserID)) {
+
+					if (UserCode.equals(VerifyCode)) {
+						// Create a new User
+						main.user = new User(UserID, Password);
+						DatabaseUtil.insertUser(main.user);
+						mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
+						signuplogin.setForeground(Color.black);
+					} else {// Wrong verify code.
+						layeredPane.remove(Signup);
+						layeredPane.add(Signuperror1, new Integer(3));
+						verifycodeField.setText(getRandomString(6));
+						validate();
+						repaint();
+						signuplogin.setForeground(Color.black);
+					}
+				} else {// UserID already existed.
+					layeredPane.remove(Signup);
+					layeredPane.add(Signuperror, new Integer(3));
+					signupidField.setText("");
+					signuppasswordField.setText("");
+					verifycodeField.setText(getRandomString(6));
+					revalidate();
+					signuplogin.setForeground(Color.black);
+				}
+			} else if(e.getSource() == signupcancel) {
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.LOGIN);
+				signupcancel.setForeground(Color.black);
+			} else if(e.getSource() == backsignuperror || e.getSource() == backsignuperror1) {
+				layeredPane.remove(Signuperror);
+				layeredPane.remove(Signuperror1);
+				layeredPane.add(Signup);
+				signupidField.setText(null);
+				signuppasswordField.setText(null);
+				usercodeField.setText(null);
+				revalidate();
+				backsignuperror.setForeground(Color.black);
+				backsignuperror1.setForeground(Color.black);
+			}
+		}
+	};
+	
+	/**
+	 * This method checks whether the current user's ID doesn't exist.
+	 * 
+	 * @param UserID the current user's ID
+	 * @return boolean true if user's ID doesn't exist.
+	 */
+	public static boolean SignUpCheck(String UserID) {
+		return DatabaseUtil.getUser(UserID) == null;
+	}
+	
 	public SignUpUI(UIMainFrame UIMainFrame) {
 		this.mUIMainFrame = UIMainFrame;
 		initPanel();
 		initTitle();
 		initSignUp();
+		initSignuperror();
+		initSignuperror1();
 		initLayerPane();
+		signuplogin.addMouseListener(ml);
+		signupcancel.addMouseListener(ml);
+		backsignuperror.addMouseListener(ml);
+		backsignuperror1.addMouseListener(ml);
 	}
 	
 	private void initPanel() {
@@ -206,6 +301,29 @@ public class SignUpUI extends JPanel {
 
 	}
 	
+	/**
+	 * Initialize sign up error panel
+	 */
+	private void initSignuperror() {
+		signuperrorText.setFont(new Font("Dialog", Font.BOLD, 28));
+		signuperrorText.setForeground(new Color(255, 0, 0));
+		backsignuperror.setFont(new Font("Arial Black", Font.BOLD, 28));
+		Signuperror.setLayout(new GridLayout(2, 1, 0, 0));
+		Signuperror.setOpaque(false);
+		Signuperror.add(signuperrorText);
+		Signuperror.add(backsignuperror);
+	}
+
+	private void initSignuperror1() {
+		signuperror1Text.setFont(new Font("Dialog", Font.BOLD, 28));
+		signuperror1Text.setForeground(new Color(255, 0, 0));
+		backsignuperror1.setFont(new Font("Arial Black", Font.BOLD, 28));
+		Signuperror1.setLayout(new GridLayout(2, 1, 0, 0));
+		Signuperror1.setOpaque(false);
+		Signuperror1.add(signuperror1Text);
+		Signuperror1.add(backsignuperror1);
+	}
+	
 	private void initLayerPane() {
 		layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
@@ -222,9 +340,16 @@ public class SignUpUI extends JPanel {
 		this.Signup.setBounds(signupSetCenter.width - (signupSetWidth / 2),
 				signupSetCenter.height - (signupSetHeight / 2), signupSetWidth, signupSetHeight);
 		verifycodeField.setText(getRandomString(6));
+		
 		layeredPane.add(Signup, new Integer(2));
 		
 		this.add(layeredPane);
+		
+		this.Signuperror.setBounds(signuperrorCenter.width - (signuperrorWidth / 2),
+				signuperrorCenter.height - (signuperrorHeight / 2), signuperrorWidth, signuperrorHeight);
+
+		this.Signuperror1.setBounds(signuperrorCenter1.width - (signuperror1Width / 2),
+				signuperrorCenter1.height - (signuperror1Height / 2), signuperror1Width, signuperror1Height);
 	}
 	
 	public static String getRandomString(int length) {

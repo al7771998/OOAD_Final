@@ -60,8 +60,10 @@ public class LoginUI extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if (e.getSource() == signupText) {
 				mUImainFrame.changeUI(UIMainFrame.UIStage.SIGNUP);
+				signupText.setForeground(Color.black);
 			} else if(e.getSource() == signinText) {
 				mUImainFrame.changeUI(UIMainFrame.UIStage.SIGNIN);
+				signinText.setForeground(Color.black);
 			}
 		}
 	};

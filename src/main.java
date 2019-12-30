@@ -21,7 +21,7 @@ public class main {
 	
 	public static void main(String[] args) 
 	{
-		databaseUtil.buildConnection();
+		DatabaseUtil.buildConnection();
 		//databaseUtil.initDatabase();
 		ReadHotelList();
 		UIMainFrame program = new UIMainFrame();
