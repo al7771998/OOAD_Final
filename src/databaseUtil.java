@@ -15,7 +15,7 @@ import org.json.simple.parser.*;
  * @version 1.0
  * @since 2019-05-31
  */
-public class DatabaseUtil {
+public class databaseUtil {
 	// MySQL
 	static Connection connect = null;
 	static Statement stmt = null;

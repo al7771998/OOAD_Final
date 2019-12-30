@@ -15,6 +15,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 
 public class BookUI extends JPanel {
+	private JFrame frame;
 	private JLayeredPane layeredPane;
 	private JLabel background = new JLabel();
 	final int frameWidth = 1152, frameHeight = 720;
@@ -53,12 +54,18 @@ public class BookUI extends JPanel {
 	private Book mBookController = new Book();
 	//UIManager
 	private UIManager mUIManager;
+	
+	/** for testing **/
+	public static void main(String[] args) {
+		new BookUI();
+	}
+	
 	/**
 	 * Initialize Menu(Panel) settings
 	 */
 	private void initPanel() {
 		setLayout(new GridLayout(1, 1));
-		setOpaque(false);
+		setOpaque(true);
 	}
 	
 	/**
@@ -213,18 +220,46 @@ public class BookUI extends JPanel {
 	}
 	
 	/**
+	 * Initialize the LayeredPane, setting the bounds and dimension of all Panel
+	 */
+	private void initLayerPane() {
+		layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
+
+		this.background.setIcon(new ImageIcon("images/Menu/background.png"));
+		this.background.setBounds(0, 0, frameWidth, frameHeight);
+		layeredPane.add(background, new Integer(0));
+
+		this.add(layeredPane);
+
+		this.Reserve.setBounds(reserveCenter.width - (reserveWidth / 2), reserveCenter.height - (reserveHeight / 2),
+				reserveWidth, reserveHeight);
+
+		this.Reserve_success.setBounds(reservesuccessCenter.width - (reservesuccessWidth / 2),
+				reservesuccessCenter.height - (reservesuccessHeight / 2), reservesuccessWidth, reservesuccessHeight);
+
+		this.Soldout.setBounds(soldoutCenter.width - (soldoutWidth / 2), soldoutCenter.height - (soldoutHeight / 2),
+				soldoutWidth, soldoutHeight);
+	}
+	/**
 	 * default constructor of Menu
 	 */
-	public BookUI(UIManager UImanager) {
-		mUIManager = UImanager;
+	//UIManager UImanager
+	public BookUI() {
+		//mUIManager = UImanager;
 		initPanel();
 		initReserve();
+		initLayerPane();
+		//for test
+		/*frame = new JFrame("test");
+		frame.setBounds(0,0,frameWidth, frameHeight);
+		frame.setVisible(true);
+		frame.setContentPane(Reserve);*/
 		// buttons in reserve
 		cancelreserve.addMouseListener(ml);
 		backreserve.addMouseListener(ml);
 		nextreserve.addMouseListener(ml);
 	}
-	
 	/**
 	 * control the mouse event
 	 */
