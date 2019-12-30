@@ -1,5 +1,5 @@
 import com.google.gson.annotations.SerializedName;
-
+/*www*/
 /*
  * This is the class of the Hotel read from the HotelList.json.
  */
