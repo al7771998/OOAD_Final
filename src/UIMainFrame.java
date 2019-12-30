@@ -19,6 +19,7 @@ public class UIMainFrame extends JFrame {
 	
 	private JPanel loginUI;
 	private JPanel signUpUI;
+	private JPanel signInUI;
 	private JPanel searchUI;
 
 	// Program constructor
@@ -26,6 +27,7 @@ public class UIMainFrame extends JFrame {
 		initFrame();
 		loginUI  = new LoginUI(this);
 		signUpUI = new SignUpUI(this);
+		signInUI = new SignInUI(this);
 		searchUI = new SearchUI(this);
 		this.setContentPane(loginUI);
         this.setVisible(true);
@@ -59,7 +61,7 @@ public class UIMainFrame extends JFrame {
 				System.out.println("change to signup");
 				break;
 			case SIGNIN:
-				//this.setContentPane();
+				this.setContentPane(signInUI);
 				this.revalidate();
 				System.out.println("change to signin");
 				break;
