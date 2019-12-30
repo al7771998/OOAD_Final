@@ -14,9 +14,6 @@ import javax.swing.table.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -26,6 +23,8 @@ import javax.swing.table.TableColumnModel;
  *
  */
 public class LoginUI extends JPanel {
+	
+	private UIMainFrame mUImainFrame;
 	private JLayeredPane layeredPane;
 	private JLabel background = new JLabel();
 	final int frameWidth = 1152, frameHeight = 720;
@@ -39,15 +38,43 @@ public class LoginUI extends JPanel {
 	// attribute of sub menu
 	private JPanel subMenu = new JPanel();
 	final private int subMenuWidth = 500, subMenuHeight = 70;
-	final private Dimension subMenuCenter = new Dimension(frameWidth / 2, 524);
+	final private Dimension subMenuCenter = new Dimension(frameWidth / 2, frameHeight / 4 * 3);
 	private JLabel signinText = new JLabel("SIGN IN", JLabel.CENTER);
 	private JLabel signupText = new JLabel("SIGN UP", JLabel.CENTER);
 	
-	public LoginUI() {
+	/**
+	 * control the mouse event
+	 */
+	MouseListener ml = new MouseAdapter() {
+		public void mouseEntered(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			l.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			l.setForeground(Color.red);
+		}
+
+		public void mouseExited(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			l.setForeground(Color.black);
+		}
+
+		public void mouseClicked(MouseEvent e) {
+			if (e.getSource() == signupText) {
+				mUImainFrame.changeUI(UIMainFrame.UIStage.SIGNUP);
+			} else if(e.getSource() == signinText) {
+				mUImainFrame.changeUI(UIMainFrame.UIStage.SIGNIN);
+			}
+		}
+	};
+	
+	public LoginUI(UIMainFrame mUImainFrame) {
+		this.mUImainFrame = mUImainFrame;
 		initPanel();
 		initTitle();
 		initSubMenu();
 		initLayerPane();
+		// buttons in sub menu / sign in / sign up
+		signinText.addMouseListener(ml);
+		signupText.addMouseListener(ml);
 	}
 	
 	private void initPanel() {
@@ -85,7 +112,7 @@ public class LoginUI extends JPanel {
 
 		this.title.setBounds(titleCenter.width - (titleWidth / 2), titleCenter.height - (titleHeight / 2), titleWidth,
 				titleHeight);
-//		layeredPane.add(title, new Integer(1));
+		layeredPane.add(title, new Integer(1));
 
 		this.subMenu.setBounds(subMenuCenter.width - (subMenuWidth / 2), subMenuCenter.height - (subMenuHeight / 2),
 				subMenuWidth, subMenuHeight);
@@ -93,6 +120,4 @@ public class LoginUI extends JPanel {
 
 		this.add(layeredPane);
 	}
-
-
 }
