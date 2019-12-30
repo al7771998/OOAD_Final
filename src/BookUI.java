@@ -51,7 +51,8 @@ public class BookUI extends JPanel {
 	
 	// Controller
 	private Book mBookController = new Book();
-	
+	//UIManager
+	private UIManager mUIManager;
 	/**
 	 * Initialize Menu(Panel) settings
 	 */
@@ -214,7 +215,8 @@ public class BookUI extends JPanel {
 	/**
 	 * default constructor of Menu
 	 */
-	public BookUI() {
+	public BookUI(UIManager UImanager) {
+		mUIManager = UImanager;
 		initPanel();
 		initReserve();
 		// buttons in reserve
@@ -244,7 +246,8 @@ public class BookUI extends JPanel {
 			}  else if (e.getSource() == backreserve) {
 				
 			} else if (e.getSource() == nextreserve) {
-
+				//Forward reserve request to Book Controller
+				
 			} else if (e.getSource() == backsoldout) {
 				layeredPane.remove(Soldout);
 			} 
