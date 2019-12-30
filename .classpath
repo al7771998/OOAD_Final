@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/gson-2.6.2.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/json-20180813.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/mysql-connector-java-5.1.47.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/commons-io-2.6/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/commons-io-2.6/commons-io-2.6-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/commons-io-2.6/commons-io-2.6-sources.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/commons-io-2.6/commons-io-2.6-tests.jar"/>
+	<classpathentry kind="lib" path="D:/surrey/OOAD_Final/jar/commons-io-2.6/commons-io-2.6-test-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
