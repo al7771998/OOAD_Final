@@ -16,12 +16,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class main {
+	public static Hotel[] HotelList;
 	public static void main(String[] args) 
 	{
 		databaseUtil.buildConnection();
 //		databaseUtil.initDatabase();
 		ReadHotelList();
-		HotelPreference program = new HotelPreference();
+		StartUI program = new StartUI();
 		program.setVisible(true);
 	}
 	public static void ReadHotelList()  {
