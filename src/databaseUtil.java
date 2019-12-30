@@ -31,7 +31,7 @@ public class databaseUtil {
 			System.out.print("Connecting to MySQL...");
 
 			Class.forName("com.mysql.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost/?user=root&password=d05EA62951378");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost/?user=user&password=123");
 			stmt = connect.createStatement();
 			stmt.execute("USE `hotelList`;");
 			System.out.println("finish!");
@@ -356,7 +356,7 @@ public class databaseUtil {
 	 * main method to test databaseUtil.java
 	 * @param args not use
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		buildConnection();
 		initDatabase();
 		String test = "";
@@ -391,5 +391,5 @@ public class databaseUtil {
 			e.printStackTrace();
 		}
 
-	}
+	}*/
 }
