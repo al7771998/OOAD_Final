@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,7 +15,7 @@ public class UIMainFrame extends JFrame {
 	
 	//panel code
 	public enum UIStage{
-		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH
+		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT
 	}
 	
 	private JPanel loginUI;
@@ -48,7 +49,6 @@ public class UIMainFrame extends JFrame {
 	}
 	
 	public void changeUI(UIStage next) {
-		//this.getContentPane().removeAll();
 		switch(next) {
 			case LOGIN:
 				this.setContentPane(loginUI);
@@ -73,4 +73,11 @@ public class UIMainFrame extends JFrame {
 		}
 	}
 	
+	public void changeUI(UIStage next, ArrayList<AvailableHotelRoom> AHR) {
+		if(next == UIStage.SEARCH_RESULT) {
+			this.setContentPane(new SearchResultUI( this, AHR));
+			this.revalidate();
+			System.out.println("change to search result");
+		}
+	}
 }
