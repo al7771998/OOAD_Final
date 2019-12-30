@@ -281,8 +281,16 @@ public class BookUI extends JPanel {
 			}  else if (e.getSource() == backreserve) {
 				
 			} else if (e.getSource() == nextreserve) {
+				String s1 = reservecheckindateField.getText();
+				Time time1 = new Time(1, 2, 3);
+				String s2 = reservecheckoutdateField.getText();
+				String HotelID = reservehotelid.getSelectedItem().toString();
+				int sn = Integer.parseInt(reservesingleroomField.getText());
+				int dn = Integer.parseInt(reservedoubleroomField.getText());
+				int qn = Integer.parseInt(reservequadroomField.getText());
 				//Forward reserve request to Book Controller
-				
+				mBookController = new Book(HotelID, time1, 1, "AAAAAAAAAA", "0987878787","single","1");
+				mBookController.print();
 			} else if (e.getSource() == backsoldout) {
 				layeredPane.remove(Soldout);
 			} 
