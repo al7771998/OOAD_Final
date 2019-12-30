@@ -1,12 +1,17 @@
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * <h1>This is the class of database<\h1>
@@ -392,4 +397,23 @@ public class DatabaseUtil {
 		}
 
 	}*/
+	
+	public static User user;
+	/**
+	 * This method reads the hotel list.
+	 */
+	public static Hotel[] HotelList;
+	public static void ReadHotelList()  {
+		try (Reader reader = new InputStreamReader(main.class.getResourceAsStream("HotelList.json"), "big5")) {
+			// try (BufferedReader reader = new BufferedReader(new FileReader(file)) {
+			Gson gson = new GsonBuilder().create();
+			HotelList = gson.fromJson(reader, Hotel[].class);
+			for (Hotel h : HotelList)
+				h.init();
+			for (Hotel h : HotelList)
+				System.out.println(h);
+		} catch (Exception e) {
+			System.out.println("cannot find the file.");
+		}
+	}
 }
