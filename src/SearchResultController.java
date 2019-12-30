@@ -70,9 +70,9 @@ public class SearchResultController{
 	 * @return int the summation price 
 	 */
 	public static int countSumPrice(AvailableHotelRoom x) {
-		return main.HotelList[x.getHotelID()].getSingleRoomPrice() * x.getSingle() 
-			 + main.HotelList[x.getHotelID()].getDoubleRoomPrice() * x.getDouble()
-		     + main.HotelList[x.getHotelID()].getQuadRoomPrice() * x.getQuad();
+		return DatabaseUtil.HotelList[x.getHotelID()].getSingleRoomPrice() * x.getSingle() 
+			 + DatabaseUtil.HotelList[x.getHotelID()].getDoubleRoomPrice() * x.getDouble()
+		     + DatabaseUtil.HotelList[x.getHotelID()].getQuadRoomPrice() * x.getQuad();
 	}
 	
 	/**
