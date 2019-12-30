@@ -20,13 +20,14 @@ public class Book {
 	/**
 	 * Copy constructor
 	 */
-	Book(Book _Book) {
-		hotelName = _Book.hotelName;
-		time = _Book.time;
-		contactName = _Book.contactName;
-		contactPhone = _Book.contactPhone;
-		roomType = _Book.roomType;
-		roomQuantity = _Book.roomQuantity;
+	Book(String _hotelName, Time _time, int _reservations, String _contactName, 
+			String _contactPhone, String _roomType, String _roomQuantity) {
+		hotelName = _hotelName;
+		time = _time;
+		contactName = _contactName;
+		contactPhone = _contactPhone;
+		roomType = _roomType;
+		roomQuantity = _roomQuantity;
 	}
 	
 }
