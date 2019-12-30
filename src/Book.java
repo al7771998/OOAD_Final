@@ -30,4 +30,10 @@ public class Book {
 		roomQuantity = _roomQuantity;
 	}
 	
+	public void print() {
+		System.out.println(hotelName);
+		System.out.println(contactName);
+		return;
+	}
+
 }
