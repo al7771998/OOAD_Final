@@ -16,8 +16,33 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class main {
+	
+	public static Hotel[] HotelList;
+	public static User user;
+	
 	public static void main(String[] args) 
 	{
-		
+		DatabaseUtil.buildConnection();
+		//databaseUtil.initDatabase();
+		ReadHotelList();
+		HotelPreference program = new HotelPreference();
+		program.setVisible(true);
+	}
+	
+	/**
+	 * This method reads the hotel list.
+	 */
+	public static void ReadHotelList()  {
+		try (Reader reader = new InputStreamReader(main.class.getResourceAsStream("HotelList.json"), "big5")) {
+			// try (BufferedReader reader = new BufferedReader(new FileReader(file)) {
+			Gson gson = new GsonBuilder().create();
+			HotelList = gson.fromJson(reader, Hotel[].class);
+			for (Hotel h : HotelList)
+				h.init();
+			//for (Hotel h : HotelList)
+				//System.out.println(h);
+		} catch (Exception e) {
+			System.out.println("cannot find the file.");
+		}
 	}
 }
