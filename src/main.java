@@ -16,21 +16,21 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class main {
-	public static Hotel[] HotelList;
-	public static User user;
+	//public static Hotel[] HotelList;
+	//public static User user;
 	
 	public static void main(String[] args) 
 	{
 		DatabaseUtil.buildConnection();
 		//databaseUtil.initDatabase();
-		ReadHotelList();
+		DatabaseUtil.ReadHotelList();
 		UIMainFrame program = new UIMainFrame();
 		program.setVisible(true);
 	}
 	
 	/**
 	 * This method reads the hotel list.
-	 */
+	
 	public static void ReadHotelList()  {
 		try (Reader reader = new InputStreamReader(main.class.getResourceAsStream("HotelList.json"), "big5")) {
 			// try (BufferedReader reader = new BufferedReader(new FileReader(file)) {
@@ -43,5 +43,5 @@ public class main {
 		} catch (Exception e) {
 			System.out.println("cannot find the file.");
 		}
-	}
+	}*/
 }

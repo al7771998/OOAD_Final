@@ -6,7 +6,7 @@ public class SearchController{
 
 	public static Hotel[] HotelList;
 	public SearchController() {
-		HotelList = main.HotelList;
+		HotelList = DatabaseUtil.HotelList;
 	}
 	
 	/**
