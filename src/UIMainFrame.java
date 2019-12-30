@@ -9,13 +9,23 @@ import java.io.IOException;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 
-public class HotelPreference extends JFrame {
+public class UIMainFrame extends JFrame {
 	final public int frameWidth = 1152, frameHeight = 720;
+	
+	//panel code
+	public enum UIStage{
+		LOGIN,SIGNUP,SIGNIN,ROOM
+	}
+	
+	private JPanel loginUI;
+	private JPanel signUpUI;
 
 	// Program constructor
-	public HotelPreference() {
+	public UIMainFrame() {
 		initFrame();
-		this.setContentPane(new LoginUI());
+		loginUI  = new LoginUI(this);
+		signUpUI = new SignUpUI(this);
+		this.setContentPane(loginUI);
         this.setVisible(true);
 	}
 
@@ -30,6 +40,25 @@ public class HotelPreference extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new HotelPreference();
+		new UIMainFrame();
 	}
+	
+	public void changeUI(UIStage next) {
+		//this.getContentPane().removeAll();
+		switch(next) {
+			case LOGIN:
+				this.setContentPane(loginUI);
+				this.revalidate();
+				break;
+			case SIGNUP:
+				this.setContentPane(signUpUI);
+				this.revalidate();
+				break;
+			case SIGNIN:
+				//this.setContentPane();
+				System.out.print("123");
+				break;			
+		}
+	}
+	
 }

@@ -24,7 +24,7 @@ public class main {
 		DatabaseUtil.buildConnection();
 		//databaseUtil.initDatabase();
 		ReadHotelList();
-		HotelPreference program = new HotelPreference();
+		UIMainFrame program = new UIMainFrame();
 		program.setVisible(true);
 	}
 	
@@ -38,8 +38,8 @@ public class main {
 			HotelList = gson.fromJson(reader, Hotel[].class);
 			for (Hotel h : HotelList)
 				h.init();
-			for (Hotel h : HotelList)
-				System.out.println(h);
+			//for (Hotel h : HotelList)
+			//	System.out.println(h);
 		} catch (Exception e) {
 			System.out.println("cannot find the file.");
 		}
