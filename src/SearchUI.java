@@ -178,13 +178,13 @@ public class SearchUI extends JPanel {
 		locationPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 		JLabel location = new JLabel("LOCATION: ");
 		location.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		enterlocationField.setHorizontalAlignment(SwingConstants.CENTER);
-		enterlocationField.setEditable(true);
-		enterlocationField.setFont(new Font("Serif", Font.BOLD, 23));
+		String[] option = {"台北","台中","高雄"};
+		JComboBox<Object> locationOption = new JComboBox<Object>(option);
+		locationOption.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		
 		// room panel adding
 		locationPanel.add(location);
-		locationPanel.add(enterlocationField);
+		locationPanel.add(locationOption);
 		
 		// set 'back' and 'next' button
 		JPanel buttons = new JPanel();
