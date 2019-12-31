@@ -34,13 +34,27 @@ public class SearchUI extends JPanel {
 	private JPanel EnterSearch = new JPanel();
 	final private int entersearchWidth = 600, entersearchlistHeight = 400;
 	final private Dimension entersearchCenter = new Dimension(frameWidth / 2, frameHeight / 2);
-	private JLabel backentersearch = new JLabel("BACK", JLabel.CENTER);
-	private JLabel nextentersearch = new JLabel("NEXT", JLabel.CENTER);
+	private JLabel logoutentersearch = new JLabel("LOGOUT", JLabel.CENTER);
+	private JLabel searchentersearch = new JLabel("NEXT", JLabel.CENTER);
+	private JComboBox<Object> locationOption;
 	protected JTextField entercheckindateField = new JTextField(10);
 	protected JTextField entercheckoutdateField = new JTextField(10);
 	protected JTextField enterpeopleField = new JTextField(10);
 	protected JTextField enterroomField = new JTextField(10);
 	protected JTextField enterlocationField = new JTextField(10);
+	
+	// attribute of invalid date error
+	private JPanel Invalid_date_error = new JPanel();
+	final private int invaiddateerrorWidth = 300, invaliddateerrorHeight = 75;
+	final private Dimension invaliddateerrorCenter = new Dimension(frameWidth / 2, frameHeight / 5);
+	private JLabel invaliddateerrorText = new JLabel("INVALID DATE!", JLabel.CENTER);
+
+	// attribute of no matched hotel error
+	private JPanel No_matched_hotel_error = new JPanel();
+	final private int nomatchedhotelerrorWidth = 500, nomatchedhotelerrorHeight = 150;
+	final private Dimension nomatchedhotelerrorCenter = new Dimension(frameWidth / 2, frameHeight / 2);
+	private JLabel nomatchedhotelerrorText = new JLabel("NO MATCHED HOTEL!", JLabel.CENTER);
+	private JLabel backnomatchedhotelerror = new JLabel("BACK", JLabel.CENTER);
 	
 	public SearchUI(UIMainFrame mUIMainFrame) {
 		this.mUIMainFrame = mUIMainFrame;
@@ -48,10 +62,12 @@ public class SearchUI extends JPanel {
 		initTitle();
 		initPanel();
 		initEnterSearch();
+		initEnterinvaliddateerror();
+		initNomatchedhotelerror();
 		initLayerPane();
 		// buttons in enter hotel list
-		backentersearch.addMouseListener(ml);
-		nextentersearch.addMouseListener(ml);
+		logoutentersearch.addMouseListener(ml);
+		searchentersearch.addMouseListener(ml);
 
 	}
 	
@@ -179,9 +195,9 @@ public class SearchUI extends JPanel {
 		JLabel location = new JLabel("LOCATION: ");
 		location.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		String[] option = {"台北","台中","高雄"};
-		JComboBox<Object> locationOption = new JComboBox<Object>(option);
+		locationOption = new JComboBox<Object>(option);
 		locationOption.setFont(new Font("新細明體", Font.PLAIN, 20));
-		
+
 		// room panel adding
 		locationPanel.add(location);
 		locationPanel.add(locationOption);
@@ -191,10 +207,10 @@ public class SearchUI extends JPanel {
 		buttons.setLayout(new GridLayout(1, 2));
 		buttons.setOpaque(false);
 		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
-		backentersearch.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		nextentersearch.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		buttons.add(backentersearch);
-		buttons.add(nextentersearch);
+		logoutentersearch.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		searchentersearch.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		buttons.add(logoutentersearch);
+		buttons.add(searchentersearch);
 		
 		// EnterHotellist adding
 		EnterSearch.add(checkinPanel);
@@ -223,6 +239,41 @@ public class SearchUI extends JPanel {
 		layeredPane.add(EnterSearch, new Integer(3));
 
 		this.add(layeredPane);
+		
+		this.Invalid_date_error.setBounds(invaliddateerrorCenter.width - (invaiddateerrorWidth / 2),
+				invaliddateerrorCenter.height - (invaliddateerrorHeight / 2), invaiddateerrorWidth,
+				invaliddateerrorHeight);
+
+		this.No_matched_hotel_error.setBounds(nomatchedhotelerrorCenter.width - (nomatchedhotelerrorWidth / 2),
+				nomatchedhotelerrorCenter.height - (nomatchedhotelerrorHeight / 2), nomatchedhotelerrorWidth,
+				nomatchedhotelerrorHeight);
+	}
+	
+	/**
+	 * Initialize invalid date Panel
+	 */
+	private void initEnterinvaliddateerror() {
+		Invalid_date_error.setLayout(new GridLayout(1, 1, 0, 0));
+		Invalid_date_error.setOpaque(false);
+		invaliddateerrorText.setFont(new Font("Dialog", Font.BOLD, 30));
+		invaliddateerrorText.setForeground(new Color(255, 0, 0));
+		Invalid_date_error.add(invaliddateerrorText);
+	}
+	
+	/**
+	 * Initialize search hotel error (No matched Hotel) Panel
+	 */
+	private void initNomatchedhotelerror() {
+		nomatchedhotelerrorText.setFont(new Font("Dialog", Font.BOLD, 28));
+		nomatchedhotelerrorText.setForeground(new Color(255, 0, 0));
+		nomatchedhotelerrorText.setBorder(new EmptyBorder(20, 40, 20, 40));
+		backnomatchedhotelerror.setFont(new Font("Arial Black", Font.BOLD, 28));
+		backnomatchedhotelerror.setBorder(new EmptyBorder(20, 40, 20, 40));
+		No_matched_hotel_error.setLayout(new GridLayout(2, 1, 0, 0));
+		No_matched_hotel_error.setOpaque(false);
+		No_matched_hotel_error.setBorder(new MatteBorder(5, 5, 5, 5, Color.white));
+		No_matched_hotel_error.add(nomatchedhotelerrorText);
+		No_matched_hotel_error.add(backnomatchedhotelerror);
 	}
 	
 	MouseListener ml = new MouseAdapter() {
@@ -238,7 +289,39 @@ public class SearchUI extends JPanel {
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			
+			if(e.getSource() == logoutentersearch) {
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.LOGIN);
+			} else if(e.getSource() == searchentersearch) {
+				String s1 = entercheckindateField.getText();
+				String s2 = entercheckoutdateField.getText();
+				if (controller.countDaysBetween(s1, s2) > 0) {
+					String CID = entercheckindateField.getText();
+					String COD = entercheckoutdateField.getText();
+					int People = Integer.parseInt(enterpeopleField.getText());
+					int Rooms = Integer.parseInt(enterroomField.getText());
+					String LOC = locationOption.getSelectedItem().toString();
+					ArrayList<AvailableHotelRoom> AHR = controller.SearchAvailableHotels(CID, COD, People, Rooms, LOC);
+					if (AHR.size() > 0) {
+						mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH_RESULT, AHR);
+					} else {
+						// no matched hotel
+						layeredPane.remove(EnterSearch);
+						layeredPane.remove(Invalid_date_error);
+						layeredPane.add(No_matched_hotel_error, new Integer(3));
+						validate();
+						repaint();
+					}
+				} else {// Invaid date
+					layeredPane.add(Invalid_date_error, new Integer(3));
+					entercheckindateField.setText("SELECT DATE");
+					entercheckoutdateField.setText("SELECT DATE");
+					enterpeopleField.setText(null);
+					enterroomField.setText(null);
+					validate();
+					repaint();
+				}
+				searchentersearch.setForeground(Color.black);
+			}
 		}
 	};
 }

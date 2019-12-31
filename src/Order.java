@@ -39,9 +39,9 @@ public class Order {
 		Snum = new ArrayList<Integer> (); Snum.addAll(_Snum);
 		Dnum = new ArrayList<Integer> (); Dnum.addAll(_Dnum);
 		Qnum = new ArrayList<Integer> (); Qnum.addAll(_Qnum);
-		SumPrice = main.HotelList[HotelID].getSingleRoomPrice() * Snum.size()
-				+ main.HotelList[HotelID].getDoubleRoomPrice() * Dnum.size() 
-				+ main.HotelList[HotelID].getQuadRoomPrice() * Qnum.size();
+		SumPrice = DatabaseUtil.HotelList[HotelID].getSingleRoomPrice() * Snum.size()
+				+ DatabaseUtil.HotelList[HotelID].getDoubleRoomPrice() * Dnum.size() 
+				+ DatabaseUtil.HotelList[HotelID].getQuadRoomPrice() * Qnum.size();
 	}
 	/**
 	 * Another copy constructor.
@@ -55,9 +55,9 @@ public class Order {
 		Snum = new ArrayList<Integer> (); Snum.addAll(_Order.Snum);
 		Dnum = new ArrayList<Integer> (); Dnum.addAll(_Order.Dnum);
 		Qnum = new ArrayList<Integer> (); Qnum.addAll(_Order.Qnum);
-		SumPrice = main.HotelList[HotelID].getSingleRoomPrice() * Snum.size()
-				+ main.HotelList[HotelID].getDoubleRoomPrice() * Dnum.size() 
-				+ main.HotelList[HotelID].getQuadRoomPrice() * Qnum.size();
+		SumPrice = DatabaseUtil.HotelList[HotelID].getSingleRoomPrice() * Snum.size()
+				+ DatabaseUtil.HotelList[HotelID].getDoubleRoomPrice() * Dnum.size() 
+				+ DatabaseUtil.HotelList[HotelID].getQuadRoomPrice() * Qnum.size();
 	}
 	int getID() {
 		return ID;
