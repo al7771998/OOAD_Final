@@ -15,7 +15,7 @@ public class UIMainFrame extends JFrame {
 	
 	//panel code
 	public enum UIStage{
-		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT,BOOK,MANAGE
+		LOGIN,SIGNUP,SIGNIN,SEARCH,SEARCH_RESULT,BOOK,MANAGE
 	}
 	
 	private JPanel loginUI;

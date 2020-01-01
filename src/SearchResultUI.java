@@ -171,7 +171,7 @@ public class SearchResultUI extends JPanel {
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
 				if( buttonsColumn.hid != -1 && controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
-					mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
+					mUIMainFrame.changeUI(UIMainFrame.UIStage.BOOK, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
 				} else {
 					layeredPane.add(NotAvailableError, new Integer(2));
 				}
