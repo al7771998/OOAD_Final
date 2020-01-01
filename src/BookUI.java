@@ -13,6 +13,7 @@ import javax.swing.border.*;
 import javax.swing.table.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
+import java.util.ArrayList;
 
 public class BookUI extends JPanel {
 	private JFrame frame;
@@ -321,9 +322,8 @@ public class BookUI extends JPanel {
 				int qn = Integer.parseInt(reservequadroomField.getText());
 				String user = reserveusername.getText();
 				String phone = reservephone.getText();
-				Arraylist<Integer> roomtype = sn, dn, qn;
 				//Forward reserve request to Book Controller
-				mBookController = new Book(HotelID, s1, s2, 1, user, phone, roomtype);
+				mBookController = new Book(HotelID, s1, s2, 1, user, phone, sn, dn, qn);
 			} else if (e.getSource() == backsoldout) {
 				layeredPane.remove(Soldout);
 			} 
