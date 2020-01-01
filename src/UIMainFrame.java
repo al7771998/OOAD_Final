@@ -87,7 +87,7 @@ public class UIMainFrame extends JFrame {
 	}
 	
 	public void changeUI(UIStage next, String CID, String COD, int HotelID, int sn, int dn, int qn) {
-		if(next == UIStage.SEARCH_RESULT) {
+		if(next == UIStage.BOOK) {
 			this.setContentPane(new BookUI( this, CID, COD, HotelID, sn, dn, qn));
 			this.revalidate();
 			System.out.println("change to book");

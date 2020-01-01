@@ -13,6 +13,7 @@ public class BookController {
 	private String contactName;
 	private String contactPhone;
 	private int singleRoomNum, doubleRoomNum, quadRoomNum;
+	private String emailAddress;
 	
 	/**
 	 * Default constructor
@@ -30,7 +31,7 @@ public class BookController {
 	 * Copy constructor
 	 */
 	public BookController(String _hotelName, String _startTime, String _endTime, int _reservations, String _contactName, 
-			String _contactPhone, int _single_num, int _double_num, int _quad_num) {
+			String _contactPhone, String _email, int _single_num, int _double_num, int _quad_num) {
 		hotelName = _hotelName;
 		startTime = _startTime;
 		endTime = _endTime;
@@ -40,7 +41,7 @@ public class BookController {
 		singleRoomNum = _single_num;
 		doubleRoomNum = _double_num;
 		quadRoomNum = _quad_num;
-		
+		emailAddress = _email;
 		print();
 	}
 	
@@ -175,7 +176,7 @@ public class BookController {
 
 		if (CheckAllRooms(Integer.valueOf(hotelName), start, end, singleRoomNum, doubleRoomNum, quadRoomNum)) {
 			ArrayList<ArrayList<Integer>> re = Reserve(Integer.valueOf(hotelName), contactName, start, end, singleRoomNum, doubleRoomNum, quadRoomNum);
-			Order nOrder = new Order(DatabaseUtil.getNewOrderID(), contactName, Integer.valueOf(hotelName), startTime, endTime, re.get(0), re.get(1), re.get(2));
+			Order nOrder = new Order(DatabaseUtil.getNewOrderID(), DatabaseUtil.user.getUserID(), Integer.parseInt(hotelName), reservations, emailAddress, contactName, contactPhone, startTime, endTime, re.get(0), re.get(1), re.get(2));
 			DatabaseUtil.insertOrder(nOrder);
 			return nOrder;
 		}

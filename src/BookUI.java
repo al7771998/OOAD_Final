@@ -16,15 +16,21 @@ import javax.swing.text.DocumentFilter;
 import java.util.ArrayList;
 
 public class BookUI extends JPanel {
-	private JFrame frame;
 	private UIMainFrame mUIMainFrame;
 	private JLayeredPane layeredPane;
 	private JLabel background = new JLabel();
 	final int frameWidth = 1152, frameHeight = 720;
 	
+	// attribute of title
+	private JPanel title = new JPanel();
+	final private int titleWidth = 930, titleHeight = 80;
+	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 6);
+	private JLabel titleText = new JLabel("     BOOK     ", JLabel.CENTER);
+
+	
 	// attribute of Reserve
 	private JPanel Reserve = new JPanel();
-	final private int reserveWidth = 620, reserveHeight = 300;
+	final private int reserveWidth = 720, reserveHeight = 400;
 	final private Dimension reserveCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	private JPanel reservebuttons = new JPanel();
 	private JLabel cancelreserve = new JLabel("CANCEL", JLabel.CENTER);
@@ -39,6 +45,7 @@ public class BookUI extends JPanel {
 	protected static JTextField reservequadroomField = new JTextField(2);
 	protected static JTextField reserveusername = new JTextField(20);
 	protected static JTextField reservephone = new JTextField(20);
+	protected static JTextField reserveEmailField = new JTextField(40);
 	
 	// attribute of reserve error (sold out)
 	private JPanel Soldout = new JPanel();
@@ -55,8 +62,6 @@ public class BookUI extends JPanel {
 	
 	// Controller
 	private BookController mBookController;
-	//UIManager
-	private UIManager mUIManager;
 	
 	/** for testing **/
 	/*public static void main(String[] args) {
@@ -94,7 +99,7 @@ public class BookUI extends JPanel {
 		reservecheckindateField.setBackground(new Color(255, 255, 255));
 		reservecheckindateField.setText(start);
 		reservecheckindateField.setOpaque(true);
-		reservecheckindateField.setBounds(267, 15, 105, 40);
+		reservecheckindateField.setBounds(267, 15, 105, 50);
 		reservecheckindateField.setColumns(10);
 		
 		// check in panel adding
@@ -116,7 +121,7 @@ public class BookUI extends JPanel {
 		reservecheckoutdateField.setBackground(new Color(255, 255, 255));
 		reservecheckoutdateField.setText(end);
 		reservecheckoutdateField.setOpaque(true);
-		reservecheckoutdateField.setBounds(267, 15, 105, 40);
+		reservecheckoutdateField.setBounds(267, 15, 105, 50);
 		reservecheckoutdateField.setColumns(10);
 		
 		// check out panel adding
@@ -141,7 +146,7 @@ public class BookUI extends JPanel {
 		reservehotelID.setBackground(new Color(255, 255, 255));
 		reservehotelID.setText(Integer.toString(hotel_ID));
 		reservehotelID.setOpaque(true);
-		reservehotelID.setBounds(267, 15, 105, 40);
+		reservehotelID.setBounds(267, 15, 105, 30);
 		reservehotelID.setColumns(10);
 		hotelIDPanel.add(hotelID);
 
@@ -152,26 +157,26 @@ public class BookUI extends JPanel {
 		roomPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 		roomPanel.setOpaque(false);
 		// single room
-		JLabel singleroom = new JLabel("Single: " + Integer.toString(sn));
+		JLabel singleroom = new JLabel("Single: ");
 		singleroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reservesingleroomField.setHorizontalAlignment(SwingConstants.CENTER);
-		reservesingleroomField.setEditable(true);
+		reservesingleroomField.setEditable(false);
 		reservesingleroomField.setFont(new Font("Serif", Font.BOLD, 23));
-		
+		reservesingleroomField.setText(Integer.toString(sn));
 		// double room
-		JLabel doubleroom = new JLabel("Double: "+ Integer.toString(dn));
+		JLabel doubleroom = new JLabel("Double: ");
 		doubleroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reservedoubleroomField.setHorizontalAlignment(SwingConstants.CENTER);
-		reservedoubleroomField.setEditable(true);
+		reservedoubleroomField.setEditable(false);
 		reservedoubleroomField.setFont(new Font("Serif", Font.BOLD, 23));
-		
+		reservedoubleroomField.setText(Integer.toString(dn));
 		// quad room
-		JLabel quadroom = new JLabel("Quad: "+ Integer.toString(qn));
+		JLabel quadroom = new JLabel("Quad: ");
 		quadroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reservequadroomField.setHorizontalAlignment(SwingConstants.CENTER);
-		reservequadroomField.setEditable(true);
+		reservequadroomField.setEditable(false);
 		reservequadroomField.setFont(new Font("Serif", Font.BOLD, 23));
-		
+		reservequadroomField.setText(Integer.toString(qn));
 		// room panel adding
 		roomPanel.add(singleroom);
 		roomPanel.add(reservesingleroomField);
@@ -187,7 +192,7 @@ public class BookUI extends JPanel {
 		usernamePanel.setOpaque(false);
 		// enter username
 		JLabel username = new JLabel("  Username: ");
-		checkin.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		username.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		// setting username
 		reserveusername.setHorizontalAlignment(SwingConstants.CENTER);
 		reserveusername.setEditable(true);
@@ -211,8 +216,8 @@ public class BookUI extends JPanel {
 		phonePanel.setOpaque(false);
 		// enter phone
 		JLabel phone = new JLabel("  Phone Number: ");
-		checkin.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		// setting username
+		phone.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		// setting phone
 		reservephone.setHorizontalAlignment(SwingConstants.CENTER);
 		reservephone.setEditable(true);
 		reservephone.setFont(new Font("Serif", Font.BOLD, 23));
@@ -229,9 +234,34 @@ public class BookUI extends JPanel {
 			}
 		});
 		
-		// username panel adding
+		// phone panel adding
 		phonePanel.add(phone);
 		phonePanel.add(reservephone);
+		
+		// Email number panel
+		JPanel emailPanel = new JPanel();
+		emailPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		emailPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		emailPanel.setOpaque(false);
+		// enter email
+		JLabel email = new JLabel("  Email: ");
+		email.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		// setting email
+		reserveEmailField.setHorizontalAlignment(SwingConstants.CENTER);
+		reserveEmailField.setEditable(true);
+		reserveEmailField.setFont(new Font("Serif", Font.BOLD, 23));
+		reserveEmailField.setBackground(new Color(255, 255, 255));
+		reserveEmailField.setOpaque(true);
+		reserveEmailField.setBounds(267, 15, 105, 40);
+		reserveEmailField.setColumns(10);
+		reserveEmailField.addKeyListener(new KeyAdapter() {// can only enter number!
+			
+		});
+		
+		// email panel adding
+		emailPanel.add(email);
+		emailPanel.add(reserveEmailField);
+				
 		// setting 'back' and 'next' buttons
 		reservebuttons.setLayout(new GridLayout(1, 3));
 		reservebuttons.setOpaque(false);
@@ -248,7 +278,18 @@ public class BookUI extends JPanel {
 		Reserve.add(roomPanel);
 		Reserve.add(usernamePanel);
 		Reserve.add(phonePanel);
+		Reserve.add(emailPanel);
 		Reserve.add(reservebuttons);
+	}
+	
+	private void initTitle() {
+		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 96));
+		title.setLayout(new GridLayout(1, 1, 0, 0));
+		title.setOpaque(false);
+		titleText.setForeground(new Color(65, 105, 225));
+		titleText.setOpaque(false);
+		titleText.setBorder(new EmptyBorder(5, 5, 5, 5));
+		title.add(titleText);
 	}
 	
 	private void initReservesuccess() {
@@ -286,15 +327,22 @@ public class BookUI extends JPanel {
 		layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
 
-		this.background.setIcon(new ImageIcon("images/Menu/background.png"));
+		this.background.setIcon(new ImageIcon("images/Menu/background.jpg"));
 		this.background.setBounds(0, 0, frameWidth, frameHeight);
 		layeredPane.add(background, new Integer(0));
 
-		this.add(layeredPane);
+		this.title.setBounds(titleCenter.width - (titleWidth / 2), titleCenter.height - (titleHeight / 2), titleWidth,
+				titleHeight);
+		layeredPane.add(title, new Integer(1));
+		
+		
 
 		this.Reserve.setBounds(reserveCenter.width - (reserveWidth / 2), reserveCenter.height - (reserveHeight / 2),
 				reserveWidth, reserveHeight);
-
+		layeredPane.add(Reserve, new Integer(2));
+		
+		this.add(layeredPane);
+		
 		this.Reserve_success.setBounds(reservesuccessCenter.width - (reservesuccessWidth / 2),
 				reservesuccessCenter.height - (reservesuccessHeight / 2), reservesuccessWidth, reservesuccessHeight);
 
@@ -309,6 +357,7 @@ public class BookUI extends JPanel {
 		//mUIManager = UImanager;
 		this.mUIMainFrame = mUIMainFrame;
 		initPanel();
+		initTitle();
 		initReserve(hotel_ID, start, end, sn ,dn, qn);
 		initReservesuccess();
 		initSoldout();
@@ -352,8 +401,9 @@ public class BookUI extends JPanel {
 				int qn = Integer.parseInt(reservequadroomField.getText());
 				String user = reserveusername.getText();
 				String phone = reservephone.getText();
+				String email = reserveEmailField.getText();
 				//Forward reserve request to Book Controller
-				mBookController = new BookController(HotelID, s1, s2, 1, user, phone, sn, dn, qn);
+				mBookController = new BookController(HotelID, s1, s2, 1, user, phone, email, sn, dn, qn);
 				Order order = mBookController.BookHotel();
 				if (order != null) 
 				{

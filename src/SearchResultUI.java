@@ -170,8 +170,9 @@ public class SearchResultUI extends JPanel {
 				repaint();
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
+				System.out.println("reserve!!");
 				if( buttonsColumn.hid != -1 && controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
-					mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
+					mUIMainFrame.changeUI(UIMainFrame.UIStage.BOOK, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
 				} else {
 					layeredPane.add(NotAvailableError, new Integer(2));
 				}
