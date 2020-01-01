@@ -152,16 +152,22 @@ public class DatabaseUtil {
 			QR = QR + num.toString() + ":";
 		
 		String cmd = "INSERT INTO Orders"
-						+ "(OrderID, UID, HotelID, SingleRoom, DoubleRoom, QuadRoom, CheckIn, CheckOut)" 
+						+ "(OrderID, UID, HotelID, Reservations, Email, ContactName, ContactPhone, SingleRoom, DoubleRoom, QuadRoom, CheckIn, CheckOut, SumPrice)" 
 						+ "VALUES("
 						+ newOrder.getID() + ", " 
 						+ "\'" + newOrder.getUserID() + "\'" + ", "
 						+ newOrder.getHotelID() + ", "
+						+ newOrder.getReservations() + ", "
+						+ "\'" + newOrder.getEmail() + "\'" + ", "
+						+ "\'" + newOrder.getContactName() + "\'" + ", "
+						+ "\'" + newOrder.getContactPhone() + "\'" + ", "
 						+ "\'" + SR + "\'" + ", "
 						+ "\'" + DR + "\'" + ", "
 						+ "\'" + QR + "\'" + ", "
 						+ "\'" + newOrder.getCheckInDate().replace('/', '-') + "\'" + ", "
-						+ "\'" + newOrder.getCheckOutDate().replace('/', '-') + "\'" + ");";
+						+ "\'" + newOrder.getCheckOutDate().replace('/', '-') + "\'"
+						+ newOrder.getSumPrice() + ", "
+						+ ");";
 		try {
 			if (getOrderByOrderID(newOrder.getID()) != null) {
 				stmt.execute("DELETE FROM Orders WHERE OrderID=" + newOrder.getID() + ";");
