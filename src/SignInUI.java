@@ -85,6 +85,7 @@ public class SignInUI extends JPanel {
 				String Password = new String(signinpasswordField.getPassword());
 				int re = SignInCheck(UserID, Password);
 				if (re == 1) {
+					System.out.println(DatabaseUtil.user.getUserID() + " Login!");
 					if(DatabaseUtil.user.isManager) {
 						mUIMainFrame.changeUI(UIMainFrame.UIStage.MANAGE);
 					} else {

@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -7,13 +9,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 public class ManageUI extends JPanel {
 	
 	private UIMainFrame mUIMainFrame;
-	//private ManageController controller;
+	private ManageController controller;
 	
 	private JLayeredPane layeredPane;
 	private JLabel background = new JLabel();
@@ -30,20 +37,12 @@ public class ManageUI extends JPanel {
 	final private int orderlistWidth = 820, orderlistHeight = 600;
 	final private Dimension orderlistCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	JTable orderlistTable = new JTable();
-	String[] heading = new String[] { "ID","UserID", "HotelID",
-	"Reservations",
-	"Email",
-	"ContactName",
-	"ContactPhone",
-	"CheckInDate",
-	"CheckOutDate",
-	"SumPrice" };
 
-	private JLabel backhotellist = new JLabel("BACK", JLabel.CENTER);
-	private JLabel reservehotellist = new JLabel("RESERVE", JLabel.CENTER);
+	private JLabel logout = new JLabel("LOGOUT", JLabel.CENTER);
 	
 	public ManageUI(UIMainFrame mUImainFrame) {
 		this.mUIMainFrame = mUImainFrame;
+		controller = new ManageController();
 		initPanel();
 		initTitle();
 		initLayerPane();
@@ -76,7 +75,74 @@ public class ManageUI extends JPanel {
 		this.title.setBounds(titleCenter.width - (titleWidth / 2), titleCenter.height - (titleHeight / 2), titleWidth,
 				titleHeight);
 		layeredPane.add(title, new Integer(1));
+		showorderlist(controller.makeOrderList());
+		layeredPane.add(orderlist, new Integer(3));
 		this.add(layeredPane);
+	}
+	
+	public void showorderlist(DefaultTableModel tablemodel) {
+		orderlistTable = new JTable(tablemodel) {
+			public boolean isCellEditable(int row, int column) {
+				if (column == 12) {
+					return true;
+				}
+				return false;
+			}
+
+		};
+		orderlistTable.setOpaque(false);
+		JTableHeader head = orderlistTable.getTableHeader();
+		head.setFont(new Font("Arial", Font.PLAIN, 20));
+
+		// row height
+		orderlistTable.setRowHeight(40);
+		// column width
+		orderlistTable.getColumnModel().getColumn(0).setMaxWidth(50); // "ID", 
+		orderlistTable.getColumnModel().getColumn(1).setMaxWidth(50); // "UserID"
+		orderlistTable.getColumnModel().getColumn(2).setMaxWidth(50); // "HotelID"
+		orderlistTable.getColumnModel().getColumn(3).setMaxWidth(50); // "Reservations"
+		orderlistTable.getColumnModel().getColumn(4).setMaxWidth(300);// "Email"
+		orderlistTable.getColumnModel().getColumn(5).setMaxWidth(70); // "ContactName"
+		orderlistTable.getColumnModel().getColumn(6).setMaxWidth(70); // "ContactPhone"
+		orderlistTable.getColumnModel().getColumn(7).setMaxWidth(70); // "CheckInDate"
+		orderlistTable.getColumnModel().getColumn(8).setMaxWidth(70); // "CheckOutDate"
+		orderlistTable.getColumnModel().getColumn(9).setMaxWidth(70); // "SingleRoom Num"
+		orderlistTable.getColumnModel().getColumn(10).setMaxWidth(70);// "DoubleRoom Num"
+		orderlistTable.getColumnModel().getColumn(11).setMaxWidth(70);// "QuadRoom Num"
+		orderlistTable.getColumnModel().getColumn(12).setMaxWidth(70);// "SumPrice" 
+		// row color
+		DefaultTableCellRenderer ter = new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (row % 2 == 0)
+					setBackground(new Color(248, 248, 255, 100));
+				else if (row % 2 == 1)
+					setBackground(Color.white);
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+		for (int i = 0; i <= 12; i++) {
+			orderlistTable.getColumn(controller.heading[i]).setCellRenderer(ter);
+		}
+
+		// build up Table
+		JScrollPane HotellistJScrollPane = new JScrollPane(orderlistTable,
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+		//buttonsColumn = new ButtonColumn(orderlistTable, 8);
+
+		// set 'back' and 'reserve' button
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(1, 1));
+		buttons.setOpaque(false);
+		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
+		logout.setFont(new Font("Dialog", Font.BOLD, 25));
+		buttons.add(logout);
+
+		orderlist.removeAll();
+		//orderlist.add(choicepanel, BorderLayout.NORTH);
+		orderlist.add(HotellistJScrollPane, BorderLayout.CENTER);
+		orderlist.add(buttons, BorderLayout.SOUTH);
 	}
 	
 }

@@ -68,7 +68,6 @@ public class SearchUI extends JPanel {
 		// buttons in enter hotel list
 		logoutentersearch.addMouseListener(ml);
 		searchentersearch.addMouseListener(ml);
-
 	}
 	
 	private void initTitle() {

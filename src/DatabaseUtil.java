@@ -25,6 +25,8 @@ public class DatabaseUtil {
 	static Connection connect = null;
 	static Statement stmt = null;
 	static ResultSet results = null;
+	
+	public static User user;
 
 	/**
 	 * build connection to MySQL database(user:root, password:root)
@@ -87,8 +89,7 @@ public class DatabaseUtil {
 						+ "(UID, password, isManager)" 
 						+ "VALUES"
 						+ "(\'" + newUser.getUserID() + "\', \'" + newUser.getPassword() + "\', "+ newUser.isManager +");";
-
-		
+		System.out.println(cmd);
 		try {
 			stmt.execute(cmd);
 		} catch (SQLException e) {
@@ -103,8 +104,6 @@ public class DatabaseUtil {
 						+ "(UID, password, isManager)" 
 						+ "VALUES"
 						+ "(\'" + newUser.getUserID() + "\', \'" + newUser.getPassword() + "\', "+ newUser.isManager +");";
-
-		
 		try {
 			stmt.execute(cmd);
 		} catch (SQLException e) {
@@ -186,6 +185,57 @@ public class DatabaseUtil {
 	    } catch (NumberFormatException ex) {
 	        return false;
 	    }
+	}
+	
+	//get all orders
+	public static ArrayList<Order> getOrders() {
+		String cmd = "SELECT * FROM Orders;";
+		ArrayList<Order> result = new ArrayList<Order>();
+		try {
+			results = stmt.executeQuery(cmd);
+			
+			if (results.next()) {
+				System.out.print(results);
+				/*ArrayList<Integer> SRoom = new ArrayList<Integer>();
+				ArrayList<Integer> DRoom = new ArrayList<Integer>();
+				ArrayList<Integer> QRoom = new ArrayList<Integer>();
+				String SR = results.getString("SingleRoom"), DR = results.getString("DoubleRoom"), QR = results.getString("QuadRoom");
+				for (String num : SR.split(":")) {
+					if (!isInt(num)) break;
+					SRoom.add(Integer.valueOf(num));
+				}
+				for (String num : DR.split(":")) {
+					if (!isInt(num)) break;
+					DRoom.add(Integer.valueOf(num));
+				}
+				for (String num : QR.split(":")) {
+					if (!isInt(num)) break;
+					QRoom.add(Integer.valueOf(num));
+				}
+				return new Order(results.getInt("OrderID"), 
+								 results.getString("UID"), 
+								 results.getInt("HotelID"), 
+								 results.getInt("Reservations"),
+								 results.getString("Email"),
+								 results.getString("ContactName"),
+								 results.getString("ContactPhone"),
+								 results.getDate("CheckIn").toString().replace('-', '/'),
+								 results.getDate("CheckOut").toString().replace('-', '/'),
+								 SRoom, 
+								 DRoom, 
+								 QRoom);*/
+			} else {
+				System.out.println("No such Order!!");
+				return null;
+			}
+			while(results.next()) {
+				//TODO add to arrayList
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -426,7 +476,6 @@ public class DatabaseUtil {
 
 	}*/
 	
-	public static User user;
 	/**
 	 * This method reads the hotel list.
 	 */

@@ -344,7 +344,7 @@ public class SearchResultUI extends JPanel {
 		Hotellist.removeAll();
 		Hotellist.add(choicepanel, BorderLayout.NORTH);
 		Hotellist.add(HotellistJScrollPane, BorderLayout.CENTER);
-		Hotellist.add(buttons, BorderLayout.SOUTH);
+		//Hotellist.add(buttons, BorderLayout.SOUTH);
 	}
 }
 
