@@ -301,8 +301,7 @@ public class DatabaseUtil {
 	 */
 	public static Order[] getOrderByUserID(String UID) {
 		String cmd = "SELECT * FROM Orders WHERE UID=\'" + UID + "\';";
-		System.out.println(cmd);
-
+		
 		try {
 			int len;
 			results = stmt.executeQuery(cmd);
@@ -323,15 +322,16 @@ public class DatabaseUtil {
 				ArrayList<Integer> QRoom = new ArrayList<Integer>();
 				String SR = results.getString("SingleRoom"), DR = results.getString("DoubleRoom"), QR = results.getString("QuadRoom");
 				for (String num : SR.split(":")) {
-					if (num == "") break;
+					if (num.equals("")) 
+						break;
 					SRoom.add(Integer.valueOf(num));
 				}
 				for (String num : DR.split(":")) {
-					if (num == "") break;
+					if (num.equals("")) break;
 					DRoom.add(Integer.valueOf(num));
 				}
 				for (String num : QR.split(":")) {
-					if (num == "") break;
+					if (num.equals("")) break;
 					QRoom.add(Integer.valueOf(num));
 				}
 				retList[index++] = new Order(results.getInt("OrderID"), 
@@ -347,7 +347,7 @@ public class DatabaseUtil {
 											 DRoom, 
 											 QRoom);
 			} while(results.next());
-
+			
 			return retList;
 		} catch (SQLException e) {
 			e.printStackTrace();

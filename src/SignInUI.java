@@ -89,7 +89,7 @@ public class SignInUI extends JPanel {
 					if(DatabaseUtil.user.isManager) {
 						mUIMainFrame.changeUI(UIMainFrame.UIStage.MANAGE);
 					} else {
-						mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
+						mUIMainFrame.changeUI(UIMainFrame.UIStage.MENU);
 					}
 				} else if (re == 0) {
 					// UserID doesn't exist.
