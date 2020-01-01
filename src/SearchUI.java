@@ -77,16 +77,6 @@ public class SearchUI extends JPanel {
 
 	}
 	
-	public void updateTitle() {
-		initTitle();
-	}
-	
-//    protected void makebutton(String name, GridBagLayout gridbag, GridBagConstraints c) {
-//    	Button button = new Button(name);
-//    	gridbag.setConstraints(button, c);
-//    	add(button);
-//    }
-    
 	private void initTitle() {
 
 		JLabel welcomeText = new JLabel(" welcome, " + DatabaseUtil.user, JLabel.CENTER);
@@ -102,6 +92,7 @@ public class SearchUI extends JPanel {
 		Button button1 = new Button("1");
         Button button2 = new Button("2");
 		
+        title.setOpaque(false);
 		title.setLayout(new GridBagLayout());
 		//GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -110,18 +101,16 @@ public class SearchUI extends JPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 
-		title.add(titleText, c);
+		title.add(titleText, c, 0);
 		//title.add(button1, c);
 		
-		c.ipady = 20;
+		c.ipady = 30;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 1;
-		title.add(welcomeText, c);
+		title.add(welcomeText, c, 1);
 		//title.add(button2, c);
 		
-		title.setOpaque(false);
-
 	}
 	
 	private void initPanel() {
@@ -318,6 +307,22 @@ public class SearchUI extends JPanel {
 		No_matched_hotel_error.add(nomatchedhotelerrorText);
 		No_matched_hotel_error.add(backnomatchedhotelerror);
 	}
+	
+	public void updateTitle() {
+		Component toRemove = title.getComponent(1);
+		JLabel welcomeText = new JLabel(" welcome, " + DatabaseUtil.user.getUserID(), JLabel.CENTER);
+		welcomeText.setFont(new Font("Brush Script MT", Font.BOLD, 32));
+		welcomeText.setForeground(new Color(65, 105, 225));
+		welcomeText.setOpaque(false);
+		GridBagConstraints c = new GridBagConstraints();
+		c.ipady = 30;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		title.remove(toRemove);
+		title.add(welcomeText, c, 1);
+	}
+
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {

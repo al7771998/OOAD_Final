@@ -333,6 +333,7 @@ public class SignInUI extends JPanel {
 	 */
 	public static int SignInCheck(String UserID, String Password) { 
 		User user = DatabaseUtil.getUser(UserID);
+		System.out.println(user);
 		DatabaseUtil.user = user;
 		if (user == null) return 0;
 		else if (!Password.equals(user.getPassword())) return -1;
