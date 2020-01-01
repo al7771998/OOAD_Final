@@ -88,18 +88,18 @@ public class UIMainFrame extends JFrame {
 		}
 	}
 	
-	public void changeUI(UIStage next, String CID, String COD, ArrayList<AvailableHotelRoom> AHR) {
+	public void changeUI(UIStage next, int people, String CID, String COD, ArrayList<AvailableHotelRoom> AHR) {
 		if(next == UIStage.SEARCH_RESULT) {
-			searchResultUI = new SearchResultUI( this, CID, COD, AHR);
+			searchResultUI = new SearchResultUI( this, people, CID, COD, AHR);
 			this.setContentPane(searchResultUI);
 			this.revalidate();
 			System.out.println("change to search result");
 		}
 	}
 	
-	public void changeUI(UIStage next, String CID, String COD, int HotelID, int sn, int dn, int qn) {
+	public void changeUI(UIStage next, int people, String CID, String COD, int HotelID, int sn, int dn, int qn) {
 		if(next == UIStage.BOOK) {
-			this.setContentPane(new BookUI( this, CID, COD, HotelID, sn, dn, qn));
+			this.setContentPane(new BookUI( this, people, CID, COD, HotelID, sn, dn, qn));
 			this.revalidate();
 			System.out.println("change to book");
 		}

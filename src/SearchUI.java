@@ -350,7 +350,7 @@ public class SearchUI extends JPanel {
 					String LOC = locationOption.getSelectedItem().toString();
 					ArrayList<AvailableHotelRoom> AHR = controller.SearchAvailableHotels(CID, COD, People, Rooms, LOC);
 					if (AHR.size() > 0) {
-						mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH_RESULT, CID, COD, AHR);
+						mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH_RESULT, People, CID, COD, AHR);
 					} else {
 						// no matched hotel
 						layeredPane.remove(EnterSearch);

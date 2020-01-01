@@ -69,6 +69,7 @@ public class SearchResultUI extends JPanel {
 	
 	private String CID, COD;
 	private JLabel selectedOption = null;
+	private int people;
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
@@ -171,7 +172,7 @@ public class SearchResultUI extends JPanel {
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
 				if( buttonsColumn.hid != -1 && controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
-					mUIMainFrame.changeUI(UIMainFrame.UIStage.BOOK, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
+					mUIMainFrame.changeUI(UIMainFrame.UIStage.BOOK, people, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
 				} else {
 					layeredPane.add(NotAvailableError, new Integer(2));
 				}
@@ -183,11 +184,12 @@ public class SearchResultUI extends JPanel {
 		}
 	};
 	
-	public SearchResultUI(UIMainFrame mUIMainFrame, String CID, String COD, ArrayList<AvailableHotelRoom> AHR) {
+	public SearchResultUI(UIMainFrame mUIMainFrame, int people, String CID, String COD, ArrayList<AvailableHotelRoom> AHR) {
 		this.mUIMainFrame = mUIMainFrame;
 		this.controller = new SearchResultController(AHR);
 		this.CID = CID;
 		this.COD = COD;
+		this.people = people;
 		
 		initSearchTag();
 		initHotellist();
