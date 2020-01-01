@@ -108,7 +108,7 @@ public class SearchResultController{
 		return nAHR;
 	}
 	
-	public static boolean checkHotel(String CID, String COD, int HotelID, int sn, int dn, int qn) {
+	public boolean checkHotel(String CID, String COD, int HotelID, int sn, int dn, int qn) {
 		Date Now = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		long start = CountDaysBetween(sdf.format(Now), CID);
