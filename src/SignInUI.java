@@ -85,7 +85,11 @@ public class SignInUI extends JPanel {
 				String Password = new String(signinpasswordField.getPassword());
 				int re = SignInCheck(UserID, Password);
 				if (re == 1) {
-					mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
+					if(DatabaseUtil.user.isManager) {
+						mUIMainFrame.changeUI(UIMainFrame.UIStage.MANAGE);
+					} else {
+						mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
+					}
 				} else if (re == 0) {
 					// UserID doesn't exist.
 					layeredPane.remove(Signin);

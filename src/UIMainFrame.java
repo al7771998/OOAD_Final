@@ -15,7 +15,7 @@ public class UIMainFrame extends JFrame {
 	
 	//panel code
 	public enum UIStage{
-		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT,BOOK
+		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT,BOOK,MANAGE
 	}
 	
 	private JPanel loginUI;
@@ -69,6 +69,11 @@ public class UIMainFrame extends JFrame {
 				this.setContentPane(searchUI);
 				this.revalidate();
 				System.out.println("change to search");
+				break;
+			case MANAGE:
+				//this.setContentPane();
+				this.revalidate();
+				System.out.println("change to manage");
 				break;
 		}
 	}
