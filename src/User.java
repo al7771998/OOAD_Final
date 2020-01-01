@@ -9,6 +9,7 @@
 public class User {
 	private String UserID;
 	private String Password;
+	boolean isManager;
 	/**
 	 * Default constructor
 	 */
@@ -19,9 +20,10 @@ public class User {
 	/**
 	 * Copy constructor
 	 */
-	public User(String _UserID, String _Password) {
+	public User(String _UserID, String _Password, boolean _isManager) {
 		UserID = _UserID;
 		Password = _Password;
+		isManager = _isManager;
 	}
 	public String getUserID() {
 		return UserID;
