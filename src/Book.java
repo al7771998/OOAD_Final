@@ -18,9 +18,9 @@ public class Book {
 		reservations = 0;
 		contactName = "";
 		contactPhone = "";
-		singleRoomNum = _single_num;
-		doubleRoomNum = _double_num;
-		quadRoomNum = _quad_num;
+		singleRoomNum = 0;
+		doubleRoomNum = 0;
+		quadRoomNum = 0;
 	}
 	/**
 	 * Copy constructor
