@@ -178,6 +178,7 @@ public class SearchResultUI extends JPanel {
 				validate();
 				repaint();
 				reservehotellist.setForeground(Color.black);
+				layeredPane.add(Hotellist);
 			}
 		}
 	};

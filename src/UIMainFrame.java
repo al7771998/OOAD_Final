@@ -23,6 +23,7 @@ public class UIMainFrame extends JFrame {
 	private JPanel signInUI;
 	private JPanel searchUI;
 	private JPanel manageUI;
+	private JPanel searchResultUI;
 
 	// Program constructor
 	public UIMainFrame() {
@@ -78,12 +79,17 @@ public class UIMainFrame extends JFrame {
 				this.revalidate();
 				System.out.println("change to manage");
 				break;
+			case SEARCH_RESULT:
+				this.setContentPane(searchResultUI);
+				this.revalidate();
+				System.out.println("change to search result");
 		}
 	}
 	
 	public void changeUI(UIStage next, String CID, String COD, ArrayList<AvailableHotelRoom> AHR) {
 		if(next == UIStage.SEARCH_RESULT) {
-			this.setContentPane(new SearchResultUI( this, CID, COD, AHR));
+			searchResultUI = new SearchResultUI( this, CID, COD, AHR);
+			this.setContentPane(searchResultUI);
 			this.revalidate();
 			System.out.println("change to search result");
 		}
