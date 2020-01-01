@@ -139,7 +139,10 @@ public class SearchResultUI extends JPanel {
 				repaint();
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
-				//TODO
+				//if(checkHotel(String CID, String COD, int HotelID, int sn, int dn, int qn)) {
+					
+				//}
+				//TODO mUIMainFrame.changeUI()
 				validate();
 				repaint();
 				reservehotellist.setForeground(Color.black);
@@ -299,6 +302,11 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 	JButton renderButton;
 	JButton editButton;
 	String text;
+	
+	Object hid;
+	Object sroom;
+	Object droom;
+	Object qroom;
 
 	public ButtonColumn(JTable table, int column) {
 		super();
@@ -342,10 +350,10 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 
 	public void actionPerformed(ActionEvent e) {
 		fireEditingStopped();
-		Object hid = table.getModel().getValueAt(table.getSelectedRow(), 0);
-		Object sroom = table.getModel().getValueAt(table.getSelectedRow(), 4);
-		Object droom = table.getModel().getValueAt(table.getSelectedRow(), 5);
-		Object qroom = table.getModel().getValueAt(table.getSelectedRow(), 6);
+		hid = table.getModel().getValueAt(table.getSelectedRow(), 0);
+		sroom = table.getModel().getValueAt(table.getSelectedRow(), 4);
+		droom = table.getModel().getValueAt(table.getSelectedRow(), 5);
+		qroom = table.getModel().getValueAt(table.getSelectedRow(), 6);
 //		Menu.reservehotelid.setSelectedIndex((int) hid);
 //		Menu.reservesingleroomField.setText(sroom.toString());
 //		Menu.reservedoubleroomField.setText(droom.toString());
