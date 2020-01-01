@@ -67,7 +67,8 @@ public class SearchResultUI extends JPanel {
 	
 	private ButtonColumn buttonsColumn;
 	
-	String CID, COD;
+	private String CID, COD;
+	private JLabel selectedOption = null;
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
@@ -78,18 +79,31 @@ public class SearchResultUI extends JPanel {
 
 		public void mouseExited(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
-			l.setForeground(Color.black);
+			if(l != selectedOption)
+				l.setForeground(Color.black);
 		}
 
 		public void mouseClicked(MouseEvent e) {
 			layeredPane.remove(Hotellist);
-			if (e.getSource() == showallText) {
+			layeredPane.remove(NotAvailableError);
+			
+			star2.setForeground(Color.black);
+			star3.setForeground(Color.black);
+			star4.setForeground(Color.black);
+			star5.setForeground(Color.black);
+			showallText.setForeground(Color.black);
+			pricehighText.setForeground(Color.black);
+			pricelowText.setForeground(Color.black);
+			
+			if (e.getSource() == showallText || e.getSource() == NotAvailableErrorBack) {
 				DefaultTableModel dtm = controller.makeHotellist();
 				showHotellist(dtm);
 				layeredPane.add(Hotellist, new Integer(3));
 				validate();
 				repaint();
-				showallText.setForeground(Color.black);
+				selectedOption = showallText;
+				showallText.setForeground(Color.red);
+				NotAvailableErrorBack.setForeground(Color.black);
 			} else if (e.getSource() == pricehighText) { // show price high first
 				ArrayList<AvailableHotelRoom> nAHR = controller.SortByPrice(0);
 				DefaultTableModel dtm = controller.makeHotellist(nAHR);
@@ -98,7 +112,8 @@ public class SearchResultUI extends JPanel {
 				layeredPane.add(Hotellist, new Integer(3));
 				validate();
 				repaint();
-				pricehighText.setForeground(Color.black);
+				selectedOption = pricehighText;
+				pricehighText.setForeground(Color.red);
 			} else if (e.getSource() == pricelowText) { // show price low first
 				ArrayList<AvailableHotelRoom> nAHR = controller.SortByPrice(1);
 				DefaultTableModel dtm = controller.makeHotellist(nAHR);
@@ -107,7 +122,8 @@ public class SearchResultUI extends JPanel {
 				layeredPane.add(Hotellist, new Integer(3));
 				validate();
 				repaint();
-				pricelowText.setForeground(Color.black);
+				selectedOption = pricelowText;
+				pricelowText.setForeground(Color.red);
 			} else if (e.getSource() == star5) { // show star 5 hotel
 				ArrayList<AvailableHotelRoom> nAHR = controller.SearchByStar(5);
 				DefaultTableModel dtm =controller. makeHotellist(nAHR);
@@ -116,7 +132,8 @@ public class SearchResultUI extends JPanel {
 				layeredPane.add(Hotellist, new Integer(3));
 				validate();
 				repaint();
-				star5.setForeground(Color.black);
+				selectedOption = star5;
+				star5.setForeground(Color.red);
 			} else if (e.getSource() == star4) { // show star 4 hotel
 				ArrayList<AvailableHotelRoom> nAHR = controller.SearchByStar(4);
 				DefaultTableModel dtm = controller.makeHotellist(nAHR);
@@ -125,7 +142,8 @@ public class SearchResultUI extends JPanel {
 				layeredPane.add(Hotellist, new Integer(3));
 				validate();
 				repaint();
-				star4.setForeground(Color.black);
+				selectedOption = star4;
+				star4.setForeground(Color.red);
 			} else if (e.getSource() == star3) { // show star 3 hotel
 				ArrayList<AvailableHotelRoom> nAHR = controller.SearchByStar(3);
 				DefaultTableModel dtm = controller.makeHotellist(nAHR);
@@ -133,28 +151,30 @@ public class SearchResultUI extends JPanel {
 
 				layeredPane.add(Hotellist, new Integer(3));
 				validate();
+				selectedOption = star3;
 				repaint();
-				star3.setForeground(Color.black);
+				star3.setForeground(Color.red);
 			} else if (e.getSource() == star2) { // show star 2 hotel
 				ArrayList<AvailableHotelRoom> nAHR = controller.SearchByStar(2);
 				DefaultTableModel dtm = controller.makeHotellist(nAHR);
 				showHotellist(dtm);
 
-				layeredPane.add(Hotellist, new Integer(2));
+				layeredPane.add(Hotellist, new Integer(3));
 				validate();
 				repaint();
-				star2.setForeground(Color.black);
+				selectedOption = star2;
+				star2.setForeground(Color.red);
 			} else if (e.getSource() == backhotellist) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
 				validate();
 				repaint();
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
-				//if( controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
-				//	mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
-				//} else {
-					layeredPane.add(NotAvailableError);
-				//}
+				if( buttonsColumn.hid != -1 && controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
+					mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
+				} else {
+					layeredPane.add(NotAvailableError, new Integer(2));
+				}
 				validate();
 				repaint();
 				reservehotellist.setForeground(Color.black);
@@ -169,6 +189,7 @@ public class SearchResultUI extends JPanel {
 		this.COD = COD;
 		
 		initSearchTag();
+		initNotAvailableError();
 		initLayerPane();
 		
 		DefaultTableModel dtm = controller.makeHotellist();
@@ -177,7 +198,7 @@ public class SearchResultUI extends JPanel {
 		layeredPane.add(Hotellist, new Integer(3));
 		validate();
 		repaint();
-		showallText.setForeground(Color.black);
+		showallText.setForeground(Color.red);
 		
 		// buttons in search
 		star5.addMouseListener(ml);
@@ -190,7 +211,7 @@ public class SearchResultUI extends JPanel {
 		showallText.addMouseListener(ml);
 		backhotellist.addMouseListener(ml);
 		reservehotellist.addMouseListener(ml);
-		
+		NotAvailableErrorBack.addMouseListener(ml);
 	}
 	
 	private void initSearchTag() {
@@ -333,10 +354,10 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 	JButton editButton;
 	String text;
 	
-	int hid;
-	int sroom;
-	int droom;
-	int qroom;
+	int hid = -1;
+	int sroom = -1;
+	int droom = -1;
+	int qroom = -1;
 
 	public ButtonColumn(JTable table, int column) {
 		super();

@@ -11,6 +11,10 @@ public class Order {
 	private int ID;
 	private int HotelID;
 	private String UserID;
+	private int Reservations;
+	private String Email;
+	private String ContactName;
+	private String ContactPhone;
 	private String CheckInDate;
 	private String CheckOutDate;
 	private ArrayList<Integer> Snum, Dnum, Qnum;
@@ -22,6 +26,10 @@ public class Order {
 		ID = -1;
 		UserID = "";
 		HotelID = 0;
+		Reservations = 0;
+		Email = "";
+		ContactName = "";
+		ContactPhone = "";
 		CheckInDate = "";
 		CheckOutDate = "";
 		SumPrice = 0;
@@ -30,10 +38,14 @@ public class Order {
 	/**
 	 * Copy constructor.
 	 */
-	Order(int _ID, String _UserID, int _HotelID, String _CheckInDate, String _CheckOutDate, ArrayList<Integer> _Snum, ArrayList<Integer> _Dnum, ArrayList<Integer> _Qnum) {
+	Order(int _ID, String _UserID, int _HotelID, int _Reservations, String _Email, String _ContactName, String _ContactPhone, String _CheckInDate, String _CheckOutDate, ArrayList<Integer> _Snum, ArrayList<Integer> _Dnum, ArrayList<Integer> _Qnum) {
 		ID = _ID;
 		UserID = _UserID;
 		HotelID = _HotelID;
+		Reservations = _Reservations;
+		Email = _Email;
+		ContactName = _ContactName;
+		ContactPhone = _ContactPhone;
 		CheckInDate = _CheckInDate;
 		CheckOutDate = _CheckOutDate;
 		Snum = new ArrayList<Integer> (); Snum.addAll(_Snum);
@@ -50,6 +62,10 @@ public class Order {
 		ID = _Order.ID;
 		UserID = _Order.UserID;
 		HotelID = _Order.HotelID;
+		Reservations = _Order.Reservations;
+		Email = _Order.Email;
+		ContactName = _Order.ContactName;
+		ContactPhone = _Order.ContactPhone;
 		CheckInDate = _Order.CheckInDate;
 		CheckOutDate = _Order.CheckOutDate;
 		Snum = new ArrayList<Integer> (); Snum.addAll(_Order.Snum);
@@ -67,6 +83,18 @@ public class Order {
 	}
 	int getHotelID() {
 		return HotelID;
+	}
+	int getReservations() {
+		return Reservations;
+	}
+	String getEmail() {
+		return Email;
+	}
+	String getContactName() {
+		return ContactName;
+	}
+	String getContactPhone() {
+		return ContactPhone;
 	}
 	String getCheckInDate() {
 		return CheckInDate;

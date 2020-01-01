@@ -22,7 +22,9 @@ public class main {
 	public static void main(String[] args) 
 	{
 		DatabaseUtil.buildConnection();
-		//databaseUtil.initDatabase();
+		// If you don't init databases yet, please uncomment these.
+		//DatabaseUtil.initDatabase();
+		//DatabaseUtil.insertManager(new User("manager", "manager", true));
 		DatabaseUtil.ReadHotelList();
 		UIMainFrame program = new UIMainFrame();
 		program.setVisible(true);

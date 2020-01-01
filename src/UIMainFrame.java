@@ -15,13 +15,14 @@ public class UIMainFrame extends JFrame {
 	
 	//panel code
 	public enum UIStage{
-		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT,BOOK
+		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT,BOOK,MANAGE
 	}
 	
 	private JPanel loginUI;
 	private JPanel signUpUI;
 	private JPanel signInUI;
 	private JPanel searchUI;
+	private JPanel manageUI;
 
 	// Program constructor
 	public UIMainFrame() {
@@ -30,6 +31,7 @@ public class UIMainFrame extends JFrame {
 		signUpUI = new SignUpUI(this);
 		signInUI = new SignInUI(this);
 		searchUI = new SearchUI(this);
+		manageUI = new ManageUI(this);
 		this.setContentPane(loginUI);
         this.setVisible(true);
 	}
@@ -71,6 +73,11 @@ public class UIMainFrame extends JFrame {
 				this.revalidate();
 				System.out.println("change to search");
 				break;
+			case MANAGE:
+				this.setContentPane(manageUI);
+				this.revalidate();
+				System.out.println("change to manage");
+				break;
 		}
 	}
 	
@@ -86,7 +93,7 @@ public class UIMainFrame extends JFrame {
 		if(next == UIStage.SEARCH_RESULT) {
 			this.setContentPane(new BookUI( this, CID, COD, HotelID, sn, dn, qn));
 			this.revalidate();
-			System.out.println("change to search result");
+			System.out.println("change to book");
 		}
 	}
 }

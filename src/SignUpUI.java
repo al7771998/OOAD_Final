@@ -81,7 +81,7 @@ public class SignUpUI extends JPanel {
 
 					if (UserCode.equals(VerifyCode)) {
 						// Create a new User
-						DatabaseUtil.user = new User(UserID, Password);
+						DatabaseUtil.user = new User(UserID, Password, false);
 						DatabaseUtil.insertUser(DatabaseUtil.user);
 						mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
 						signuplogin.setForeground(Color.black);

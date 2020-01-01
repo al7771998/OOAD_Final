@@ -8,34 +8,34 @@ public class Book {
 	private int reservations;
 	private String contactName;
 	private String contactPhone;
-	private String roomType;
-	private int roomQuantity;
+	private int singleRoomNum, doubleRoomNum, quadRoomNum;
 	
 	/**
 	 * Default constructor
 	 */
-	Book() {
+	public Book() {
 		hotelName = "";
 		reservations = 0;
 		contactName = "";
 		contactPhone = "";
-		roomType = "";
-		roomQuantity = 0;
+		singleRoomNum = 0;
+		doubleRoomNum = 0;
+		quadRoomNum = 0;
 	}
 	/**
 	 * Copy constructor
 	 */
-	Book(String _hotelName, String _startTime, String _endTime, int _reservations, String _contactName, 
-			String _contactPhone, String _roomType, int _roomQuantity) {
+	public Book(String _hotelName, String _startTime, String _endTime, int _reservations, String _contactName, 
+			String _contactPhone, int _single_num, int _double_num, int _quad_num) {
 		hotelName = _hotelName;
 		startTime = _startTime;
 		endTime = _endTime;
 		reservations = _reservations;
 		contactName = _contactName;
 		contactPhone = _contactPhone;
-		roomType = _roomType;
-		roomQuantity = _roomQuantity;
-		
+		singleRoomNum = _single_num;
+		doubleRoomNum = _double_num;
+		quadRoomNum = _quad_num;
 		
 		print();
 	}

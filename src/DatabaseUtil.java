@@ -84,9 +84,25 @@ public class DatabaseUtil {
 	 */
 	public static boolean insertUser(User newUser) {
 		String cmd = "INSERT INTO Users"
-						+ "(UID, password)" 
+						+ "(UID, password, isManager)" 
 						+ "VALUES"
-						+ "(\'" + newUser.getUserID() + "\', \'" + newUser.getPassword() + "\');";
+						+ "(\'" + newUser.getUserID() + "\', \'" + newUser.getPassword() + "\', "+ newUser.isManager +");";
+
+		
+		try {
+			stmt.execute(cmd);
+		} catch (SQLException e) {
+			e.getStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean insertManager(User newUser) {
+		String cmd = "INSERT INTO Users"
+						+ "(UID, password, isManager)" 
+						+ "VALUES"
+						+ "(\'" + newUser.getUserID() + "\', \'" + newUser.getPassword() + "\', "+ newUser.isManager +");";
 
 		
 		try {
@@ -108,7 +124,7 @@ public class DatabaseUtil {
 		try {
 			results = stmt.executeQuery(cmd);
 			if (results.next()) {
-				return new User(results.getString("UID"), results.getString("password"));
+				return new User(results.getString("UID"), results.getString("password"), results.getBoolean("isManager"));
 			} else {
 				System.out.println("No such User!!");
 				return null;
@@ -202,6 +218,10 @@ public class DatabaseUtil {
 				return new Order(results.getInt("OrderID"), 
 								 results.getString("UID"), 
 								 results.getInt("HotelID"), 
+								 results.getInt("Reservations"),
+								 results.getString("Email"),
+								 results.getString("ContactName"),
+								 results.getString("ContactPhone"),
 								 results.getDate("CheckIn").toString().replace('-', '/'),
 								 results.getDate("CheckOut").toString().replace('-', '/'),
 								 SRoom, 
@@ -260,6 +280,10 @@ public class DatabaseUtil {
 				retList[index++] = new Order(results.getInt("OrderID"), 
 											 results.getString("UID"), 
 											 results.getInt("HotelID"), 
+											 results.getInt("Reservations"),
+											 results.getString("Email"),
+											 results.getString("ContactName"),
+											 results.getString("ContactPhone"),
 											 results.getDate("CheckIn").toString().replace('-', '/'),
 											 results.getDate("CheckOut").toString().replace('-', '/'),
 											 SRoom, 
@@ -315,6 +339,10 @@ public class DatabaseUtil {
 				retList[index++] = new Order(results.getInt("OrderID"), 
 											 results.getString("UID"), 
 											 results.getInt("HotelID"), 
+											 results.getInt("Reservations"),
+											 results.getString("Email"),
+											 results.getString("ContactName"),
+											 results.getString("ContactPhone"),
 											 results.getDate("CheckIn").toString().replace('-', '/'),
 											 results.getDate("CheckOut").toString().replace('-', '/'),
 											 SRoom, 
@@ -410,8 +438,8 @@ public class DatabaseUtil {
 			HotelList = gson.fromJson(reader, Hotel[].class);
 			for (Hotel h : HotelList)
 				h.init();
-			for (Hotel h : HotelList)
-				System.out.println(h);
+//			for (Hotel h : HotelList)
+//				System.out.println(h);
 		} catch (Exception e) {
 			System.out.println("cannot find the file.");
 		}
