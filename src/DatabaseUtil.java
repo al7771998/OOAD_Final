@@ -164,8 +164,8 @@ public class DatabaseUtil {
 						+ "\'" + DR + "\'" + ", "
 						+ "\'" + QR + "\'" + ", "
 						+ "\'" + newOrder.getCheckInDate().replace('/', '-') + "\'" + ", "
-						+ "\'" + newOrder.getCheckOutDate().replace('/', '-') + "\'"
-						+ newOrder.getSumPrice() + ", "
+						+ "\'" + newOrder.getCheckOutDate().replace('/', '-') + "\'"+ ", "
+						+ newOrder.getSumPrice()
 						+ ");";
 		try {
 			if (getOrderByOrderID(newOrder.getID()) != null) {

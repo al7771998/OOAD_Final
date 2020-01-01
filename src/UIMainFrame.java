@@ -68,6 +68,7 @@ public class UIMainFrame extends JFrame {
 				System.out.println("change to signin");
 				break;
 			case SEARCH:
+				((SearchUI)searchUI).updateTitle();
 				this.setContentPane(searchUI);
 				this.revalidate();
 				System.out.println("change to search");
