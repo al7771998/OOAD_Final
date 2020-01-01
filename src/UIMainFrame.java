@@ -23,6 +23,7 @@ public class UIMainFrame extends JFrame {
 	private JPanel signInUI;
 	private JPanel searchUI;
 	private JPanel manageUI;
+	private JPanel browseUI;
 	private JPanel searchResultUI;
 
 	// Program constructor
@@ -33,6 +34,7 @@ public class UIMainFrame extends JFrame {
 		signInUI = new SignInUI(this);
 		searchUI = new SearchUI(this);
 		manageUI = new ManageUI(this);
+		browseUI = new BrowseUI(this);
 		this.setContentPane(loginUI);
         this.setVisible(true);
 	}

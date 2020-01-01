@@ -416,7 +416,7 @@ public class BookUI extends JPanel {
 	 * default constructor of Menu
 	 */
 	//UIManager UImanager
-	public BookUI(UIMainFrame mUIMainFrame, String start, String end, int hotel_ID, int sn, int dn, int qn) {
+	public BookUI(UIMainFrame mUIMainFrame, String start, String end, int hotel_ID, int reservations, int sn, int dn, int qn) {
 		//mUIManager = UImanager;
 		this.mUIMainFrame = mUIMainFrame;
 		initPanel();

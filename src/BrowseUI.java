@@ -46,7 +46,7 @@ public class BrowseUI extends JPanel {
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			
+			BrowseController mBrowseController = new BrowseController();
 		}
 	};
 	
