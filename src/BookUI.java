@@ -59,6 +59,13 @@ public class BookUI extends JPanel {
 	final private Dimension reservesuccessCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	protected JTextField successreservenumberField = new JTextField(10);
 	
+	// attribute of invalid reserve
+	private JPanel Invalid_Reserve = new JPanel();
+	final private int invalidreserveWidth = 700, invalidreserveHeight = 150;
+	final private Dimension invalidreserveCenter = new Dimension(frameWidth / 2, frameHeight / 2);
+	private JLabel invalidreserveText = new JLabel("Please fill your username, phone and e-mail correctly!", JLabel.CENTER);
+	private JLabel backinvalidreserve = new JLabel("BACK", JLabel.CENTER);
+	
 	// Controller
 	private BookController mBookController;
 	
@@ -380,7 +387,30 @@ public class BookUI extends JPanel {
 		Soldout.setOpaque(false);
 		Soldout.setBorder(new MatteBorder(5, 5, 5, 5, Color.white));
 		Soldout.add(soldoutText);
-		Soldout.add(backsoldout);
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(1, 3));
+		buttons.setOpaque(false);
+		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
+		buttons.add(backsoldout);
+		Soldout.add(buttons);
+	}
+	
+	private void initInvalid() {
+		invalidreserveText.setFont(new Font("Dialog", Font.BOLD, 28));
+		invalidreserveText.setForeground(new Color(255, 0, 0));
+		invalidreserveText.setBorder(new EmptyBorder(20, 20, 20, 20));
+		backinvalidreserve.setFont(new Font("Arial Black", Font.BOLD, 24));
+		backinvalidreserve.setBorder(new EmptyBorder(20, 40, 20, 40));
+		Invalid_Reserve.setLayout(new GridLayout(2, 1, 0, 0));
+		Invalid_Reserve.setOpaque(false);
+		Invalid_Reserve.setBorder(new MatteBorder(5, 5, 5, 5, Color.white));
+		Invalid_Reserve.add(invalidreserveText);
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(1, 3));
+		buttons.setOpaque(false);
+		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
+		buttons.add(backinvalidreserve);
+		Invalid_Reserve.add(buttons);
 	}
 	
 	/**
@@ -411,6 +441,8 @@ public class BookUI extends JPanel {
 
 		this.Soldout.setBounds(soldoutCenter.width - (soldoutWidth / 2), soldoutCenter.height - (soldoutHeight / 2),
 				soldoutWidth, soldoutHeight);
+		this.Invalid_Reserve.setBounds(invalidreserveCenter.width - (invalidreserveWidth / 2), invalidreserveCenter.height - (invalidreserveHeight / 2),
+				invalidreserveWidth, invalidreserveHeight);
 	}
 	/**
 	 * default constructor of Menu
@@ -424,6 +456,7 @@ public class BookUI extends JPanel {
 		initReserve(hotel_ID, start, end, sn ,dn, qn);
 		initReservesuccess();
 		initSoldout();
+		initInvalid();
 		initLayerPane();
 		//for test
 		/*
@@ -436,6 +469,8 @@ public class BookUI extends JPanel {
 		cancelreserve.addMouseListener(ml);
 		backreserve.addMouseListener(ml);
 		nextreserve.addMouseListener(ml);
+		backsoldout.addMouseListener(ml);
+		backinvalidreserve.addMouseListener(ml);
 	}
 	/**
 	 * control the mouse event
@@ -467,6 +502,16 @@ public class BookUI extends JPanel {
 				String user = reserveusername.getText();
 				String phone = reservephone.getText();
 				String email = reserveEmailField.getText();
+				if (user.length() == 0) 
+				{
+					layeredPane.remove(Reserve);
+					layeredPane.add(Invalid_Reserve, new Integer(3));
+					reservebuttons.removeAll();
+					validate();
+					repaint();
+					nextreserve.setForeground(Color.black);
+					return;
+				}
 				//Forward reserve request to Book Controller
 				mBookController = new BookController(HotelID, s1, s2, 1, user, phone, email, sn, dn, qn);
 				Order order = mBookController.BookHotel();
@@ -493,7 +538,21 @@ public class BookUI extends JPanel {
 					repaint();
 					nextreserve.setForeground(Color.black);
 				}
-			}  
+			} else if (e.getSource() == backsoldout) {
+				layeredPane.remove(Soldout);
+				layeredPane.add(Reserve, new Integer(3));
+				validate();
+				repaint();
+				backsoldout.setForeground(Color.black);
+			} else if (e.getSource() == backinvalidreserve) {
+				layeredPane.remove(Invalid_Reserve);
+				layeredPane.add(Reserve, new Integer(3));
+				reservebuttons.add(cancelreserve);
+				reservebuttons.add(nextreserve);
+				validate();
+				repaint();
+				backinvalidreserve.setForeground(Color.black);
+			}
 		}
 	};
 }
