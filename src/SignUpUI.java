@@ -109,13 +109,13 @@ public class SignUpUI extends JPanel {
 				layeredPane.remove(Signuperror);
 				layeredPane.remove(Signuperror1);
 				layeredPane.add(Signup);
-				signupidField.setText(null);
-				signuppasswordField.setText(null);
-				usercodeField.setText(null);
 				revalidate();
 				backsignuperror.setForeground(Color.black);
 				backsignuperror1.setForeground(Color.black);
 			}
+			signupidField.setText(null);
+			signuppasswordField.setText(null);
+			usercodeField.setText(null);
 		}
 	};
 	

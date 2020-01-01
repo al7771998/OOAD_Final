@@ -95,19 +95,17 @@ public class SignInUI extends JPanel {
 					// UserID doesn't exist.
 					layeredPane.remove(Signin);
 					layeredPane.add(Signinerror, new Integer(2));
-					signinidField.setText("");
-					signinpasswordField.setText("");
 					validate();
 					repaint();
 				} else if (re == -1) {
 					// Wrong Password.
 					layeredPane.remove(Signin);
 					layeredPane.add(Signinerror1, new Integer(2));
-					signinidField.setText("");
-					signinpasswordField.setText("");
 					validate();
 					repaint();
 				}
+				signinidField.setText("");
+				signinpasswordField.setText("");
 				signinlogin.setForeground(Color.black);
 			} else if(e.getSource() == signinback) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.LOGIN);
