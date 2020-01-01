@@ -85,7 +85,7 @@ public class UIMainFrame extends JFrame {
 		if(next == UIStage.SEARCH_RESULT) {
 			this.setContentPane(new BookUI( this, CID, COD, HotelID, sn, dn, qn));
 			this.revalidate();
-			System.out.println("change to search result");
+			System.out.println("change to book");
 		}
 	}
 }

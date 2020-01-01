@@ -170,11 +170,11 @@ public class SearchResultUI extends JPanel {
 				repaint();
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
-				//if( controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
-				//	mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
-				//} else {
+				if( buttonsColumn.hid != -1 && controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
+					mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
+				} else {
 					layeredPane.add(NotAvailableError, new Integer(2));
-				//}
+				}
 				validate();
 				repaint();
 				reservehotellist.setForeground(Color.black);
@@ -198,7 +198,7 @@ public class SearchResultUI extends JPanel {
 		layeredPane.add(Hotellist, new Integer(3));
 		validate();
 		repaint();
-		showallText.setForeground(Color.black);
+		showallText.setForeground(Color.red);
 		
 		// buttons in search
 		star5.addMouseListener(ml);
@@ -354,10 +354,10 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 	JButton editButton;
 	String text;
 	
-	int hid;
-	int sroom;
-	int droom;
-	int qroom;
+	int hid = -1;
+	int sroom = -1;
+	int droom = -1;
+	int qroom = -1;
 
 	public ButtonColumn(JTable table, int column) {
 		super();

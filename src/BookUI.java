@@ -92,7 +92,7 @@ public class BookUI extends JPanel {
 		reservecheckindateField.setEditable(false);
 		reservecheckindateField.setFont(new Font("Serif", Font.BOLD, 23));
 		reservecheckindateField.setBackground(new Color(255, 255, 255));
-		reservecheckindateField.setText(Long.toString(start));
+		reservecheckindateField.setText(start);
 		reservecheckindateField.setOpaque(true);
 		reservecheckindateField.setBounds(267, 15, 105, 40);
 		reservecheckindateField.setColumns(10);
@@ -114,7 +114,7 @@ public class BookUI extends JPanel {
 		reservecheckoutdateField.setEditable(false);
 		reservecheckoutdateField.setFont(new Font("Serif", Font.BOLD, 23));
 		reservecheckoutdateField.setBackground(new Color(255, 255, 255));
-		reservecheckoutdateField.setText(Long.toString(end));
+		reservecheckoutdateField.setText(end);
 		reservecheckoutdateField.setOpaque(true);
 		reservecheckoutdateField.setBounds(267, 15, 105, 40);
 		reservecheckoutdateField.setColumns(10);
@@ -323,7 +323,7 @@ public class BookUI extends JPanel {
 				String user = reserveusername.getText();
 				String phone = reservephone.getText();
 				//Forward reserve request to Book Controller
-				mBookController = new Book(HotelID, s1, s2, 1, user, phone, sn, dn, qn);
+				//mBookController = new Book(HotelID, s1, s2, 1, user, phone, sn, dn, qn);
 			} else if (e.getSource() == backsoldout) {
 				layeredPane.remove(Soldout);
 			} 
