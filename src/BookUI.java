@@ -61,7 +61,7 @@ public class BookUI extends JPanel {
 	
 	// attribute of invalid reserve
 	private JPanel Invalid_Reserve = new JPanel();
-	final private int invalidreserveWidth = 700, invalidreserveHeight = 150;
+	final private int invalidreserveWidth = 800, invalidreserveHeight = 150;
 	final private Dimension invalidreserveCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	private JLabel invalidreserveText = new JLabel("Please fill your username, phone and e-mail correctly!", JLabel.CENTER);
 	private JLabel backinvalidreserve = new JLabel("BACK", JLabel.CENTER);
@@ -492,9 +492,9 @@ public class BookUI extends JPanel {
 
 		public void mouseClicked(MouseEvent e) {
 			if ( e.getSource() == cancelreserve) {
-				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
-			}  else if (e.getSource() == backreserve) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH_RESULT);
+			}  else if (e.getSource() == backreserve) {
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
 			} else if (e.getSource() == nextreserve) {
 				String s1 = reservecheckindateField.getText();
 				String s2 = reservecheckoutdateField.getText();
@@ -505,7 +505,7 @@ public class BookUI extends JPanel {
 				String user = reserveusername.getText();
 				String phone = reservephone.getText();
 				String email = reserveEmailField.getText();
-				if (user.length() == 0) 
+				if (user.isEmpty() || phone.isEmpty() || email.isEmpty()) 
 				{
 					layeredPane.remove(Reserve);
 					layeredPane.add(Invalid_Reserve, new Integer(3));
