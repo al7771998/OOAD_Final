@@ -28,11 +28,16 @@ CREATE TABLE `Orders` (
   `OrderID` int(11) NOT NULL,
   `UID` varchar(45) NOT NULL,
   `HotelID` int(11) NOT NULL,
+  `Reservations` int(11) NOT NULL,
+  `Email` varchar(45) NOT NULL,
+  `ContactName` varchar(45) NOT NULL,
+  `ContactPhone` varchar(45) NOT NULL,
   `SingleRoom` varchar(100) NOT NULL,
   `DoubleRoom` varchar(100) NOT NULL,
   `QuadRoom` varchar(100) NOT NULL,
   `CheckIn` date NOT NULL,
   `CheckOut` date NOT NULL,
+  `SumPrice` int(11) NOT NULL,
   PRIMARY KEY (`OrderID`),
   UNIQUE KEY `OrderID_UNIQUE` (`OrderID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
