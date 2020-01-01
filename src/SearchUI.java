@@ -78,8 +78,9 @@ public class SearchUI extends JPanel {
 	}
 	
 	private void initTitle() {
-
-		JLabel welcomeText = new JLabel(" welcome, " + DatabaseUtil.user, JLabel.CENTER);
+		JLabel welcomeText = new JLabel(" welcome ", JLabel.CENTER);
+		if (DatabaseUtil.user != null)
+			welcomeText = new JLabel(" welcome, " + DatabaseUtil.user.getUserID(), JLabel.CENTER);
 		
 		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 80));
 		titleText.setForeground(new Color(65, 105, 225));

@@ -23,15 +23,14 @@ public class BookUI extends JPanel {
 	
 	// attribute of title
 	private JPanel title = new JPanel();
-	final private int titleWidth = 930, titleHeight = 80;
-	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 6);
-	private JLabel titleText = new JLabel("     BOOK     ", JLabel.CENTER);
-
+	final private int titleWidth = 930, titleHeight = 120;
+	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 20 * 3);
+	private JLabel titleText = new JLabel("   BOOK  ", JLabel.CENTER);
 	
 	// attribute of Reserve
 	private JPanel Reserve = new JPanel();
-	final private int reserveWidth = 720, reserveHeight = 400;
-	final private Dimension reserveCenter = new Dimension(frameWidth / 2, frameHeight / 2);
+	final private int reserveWidth = 720, reserveHeight = 480;
+	final private Dimension reserveCenter = new Dimension(frameWidth / 2, frameHeight / 20 * 12);
 	private JPanel reservebuttons = new JPanel();
 	private JLabel cancelreserve = new JLabel("CANCEL", JLabel.CENTER);
 	private JLabel backreserve = new JLabel("BACK", JLabel.CENTER);
@@ -65,7 +64,7 @@ public class BookUI extends JPanel {
 	
 	/** for testing **/
 	/*public static void main(String[] args) {
-		new BookUI();
+		new BookUI(null, null, null, null, null, null, null);
 	}*/
 	
 	/**
@@ -81,7 +80,7 @@ public class BookUI extends JPanel {
 	 */
 	private void initReserve(int hotel_ID, String start, String end, int sn, int dn, int qn) {
 		Reserve.setBorder(new MatteBorder(5, 5, 5, 5, Color.white));
-		Reserve.setLayout(new GridLayout(5, 1));
+		Reserve.setLayout(new GridBagLayout());
 		Reserve.setOpaque(false);
 
 		// check in date panel
@@ -134,7 +133,7 @@ public class BookUI extends JPanel {
 		hotelIDPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 		hotelIDPanel.setOpaque(false);
 		// select hotel ID
-		JLabel hotelID = new JLabel("    HotelID     : " + Integer.toString(hotel_ID));
+		JLabel hotelID = new JLabel("HotelID: " + Integer.toString(hotel_ID));
 		hotelID.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		String[] option = new String[1500];
 		for (Integer i = 0; i < 1500; i++) {
@@ -152,8 +151,8 @@ public class BookUI extends JPanel {
 
 		// number of room panel
 		JPanel roomPanel = new JPanel();
-		roomPanel.setLayout(new GridLayout(1, 6));
-		roomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		roomPanel.setLayout(new GridLayout(3, 2));
+		//roomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		roomPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 		roomPanel.setOpaque(false);
 		// single room
@@ -188,7 +187,7 @@ public class BookUI extends JPanel {
 		// username panel
 		JPanel usernamePanel = new JPanel();
 		usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		usernamePanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		usernamePanel.setBorder(new EmptyBorder(25, 45, 25, 45));
 		usernamePanel.setOpaque(false);
 		// enter username
 		JLabel username = new JLabel("  Username: ");
@@ -264,32 +263,90 @@ public class BookUI extends JPanel {
 				
 		// setting 'back' and 'next' buttons
 		reservebuttons.setLayout(new GridLayout(1, 3));
+		reservebuttons.setBorder(new EmptyBorder(20, 80, 20, 80));
 		reservebuttons.setOpaque(false);
 		cancelreserve.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		backreserve.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		nextreserve.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reservebuttons.add(cancelreserve);
+		reservebuttons.add(backreserve);
 		reservebuttons.add(nextreserve);
 
 		// Reserve adding Panel
-		Reserve.add(checkinPanel);
-		Reserve.add(checkoutPanel);
-		Reserve.add(hotelIDPanel);
-		Reserve.add(roomPanel);
-		Reserve.add(usernamePanel);
-		Reserve.add(phonePanel);
-		Reserve.add(emailPanel);
-		Reserve.add(reservebuttons);
+		boolean test = false;
+		GridBagConstraints c = new GridBagConstraints();
+		Button button1 = new Button("test1");
+		Button button2 = new Button("test2");
+		Button button3 = new Button("test3");
+		Button button4 = new Button("test4");
+		Button button5 = new Button("test5");
+		Button button6 = new Button("test6");
+		Button button7 = new Button("test7");
+		Button button8 = new Button("test8");
+		c.fill = GridBagConstraints.BOTH;
+		c.ipady = 20;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		Reserve.add(test? button1:checkinPanel, c, 0);
+		c.gridx = 1;
+		c.gridy = 0;
+		Reserve.add(test? button2:checkoutPanel, c, 1);
+		c.ipady = 0;
+		c.gridx = 0;
+		c.gridy = 1;
+		Reserve.add(test? button3:hotelIDPanel, c, 2);
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridheight = 2;
+		Reserve.add(test? button4:roomPanel, c, 3);
+		c.gridx = 1;
+		c.gridy = 1;
+		c.gridheight = 1;
+		Reserve.add(test? button5:usernamePanel, c, 4);
+		c.gridx = 1;
+		c.gridy = 2;
+		Reserve.add(test? button6:phonePanel, c, 5);
+		c.gridx = 1;
+		c.gridy = 3;
+		Reserve.add(test? button7:emailPanel, c, 6);
+		c.ipady = 20;
+		c.gridx = 0;
+		c.gridy = 4;
+		c.gridwidth = 2;
+		Reserve.add(test? button8:reservebuttons, c, 7);
+		
 	}
 	
 	private void initTitle() {
-		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 96));
-		title.setLayout(new GridLayout(1, 1, 0, 0));
-		title.setOpaque(false);
+		JLabel welcomeText = new JLabel(" welcome ", JLabel.CENTER);
+		if (DatabaseUtil.user != null)
+			welcomeText = new JLabel(" welcome, " + DatabaseUtil.user.getUserID(), JLabel.CENTER);
+		
+		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 80));
 		titleText.setForeground(new Color(65, 105, 225));
 		titleText.setOpaque(false);
-		titleText.setBorder(new EmptyBorder(5, 5, 5, 5));
-		title.add(titleText);
+		//titleText.setBorder(new EmptyBorder(5, 5, 5, 5));
+		welcomeText.setFont(new Font("Brush Script MT", Font.BOLD, 32));
+		welcomeText.setForeground(new Color(65, 105, 225));
+		welcomeText.setOpaque(false);
+		//welcomeText.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        title.setOpaque(false);
+		title.setLayout(new GridBagLayout());
+		
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		title.add(titleText, c, 0);
+
+		c.ipady = 10;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		title.add(welcomeText, c, 1);
 	}
 	
 	private void initReservesuccess() {
@@ -362,11 +419,13 @@ public class BookUI extends JPanel {
 		initReservesuccess();
 		initSoldout();
 		initLayerPane();
-		/*//for test
+		//for test
+		/*
 		frame = new JFrame("test");
 		frame.setBounds(0,0,frameWidth, frameHeight);
 		frame.setVisible(true);
-		frame.setContentPane(Reserve);*/
+		frame.setContentPane(Reserve);
+		*/
 		// buttons in reserve
 		cancelreserve.addMouseListener(ml);
 		backreserve.addMouseListener(ml);
