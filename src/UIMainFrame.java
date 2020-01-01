@@ -15,7 +15,7 @@ public class UIMainFrame extends JFrame {
 	
 	//panel code
 	public enum UIStage{
-		LOGIN,SIGNUP,SIGNIN,SEARCH,SEARCH_RESULT,BOOK,MANAGE
+		LOGIN,SIGNUP,SIGNIN,SEARCH,SEARCH_RESULT,BOOK,MANAGE,BROWSE,MENU
 	}
 	
 	private JPanel loginUI;
@@ -25,6 +25,7 @@ public class UIMainFrame extends JFrame {
 	private JPanel manageUI;
 	private JPanel browseUI;
 	private JPanel searchResultUI;
+	private JPanel menuUI;
 
 	// Program constructor
 	public UIMainFrame() {
@@ -35,6 +36,7 @@ public class UIMainFrame extends JFrame {
 		searchUI = new SearchUI(this);
 		manageUI = new ManageUI(this);
 		browseUI = new BrowseUI(this);
+		menuUI = new MenuUI(this);
 		this.setContentPane(loginUI);
         this.setVisible(true);
 	}
@@ -85,6 +87,18 @@ public class UIMainFrame extends JFrame {
 				this.setContentPane(searchResultUI);
 				this.revalidate();
 				System.out.println("change to search result");
+				break;
+			case BROWSE:
+				((BrowseUI)browseUI).update_login_data();
+				this.setContentPane(browseUI);
+				this.revalidate();
+				System.out.println("change to browse");
+				break;
+			case MENU:
+				this.setContentPane(menuUI);
+				this.revalidate();
+				System.out.println("change to menu");
+				break;
 		}
 	}
 	
