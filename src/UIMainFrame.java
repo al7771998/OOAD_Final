@@ -15,7 +15,7 @@ public class UIMainFrame extends JFrame {
 	
 	//panel code
 	public enum UIStage{
-		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT
+		LOGIN,SIGNUP,SIGNIN,ROOM,SEARCH,SEARCH_RESULT,BOOK
 	}
 	
 	private JPanel loginUI;
@@ -73,9 +73,17 @@ public class UIMainFrame extends JFrame {
 		}
 	}
 	
-	public void changeUI(UIStage next, ArrayList<AvailableHotelRoom> AHR) {
+	public void changeUI(UIStage next, String CID, String COD, ArrayList<AvailableHotelRoom> AHR) {
 		if(next == UIStage.SEARCH_RESULT) {
-			this.setContentPane(new SearchResultUI( this, AHR));
+			this.setContentPane(new SearchResultUI( this, CID, COD, AHR));
+			this.revalidate();
+			System.out.println("change to search result");
+		}
+	}
+	
+	public void changeUI(UIStage next, String CID, String COD, int HotelID, int sn, int dn, int qn) {
+		if(next == UIStage.SEARCH_RESULT) {
+			this.setContentPane(new BookUI( this, CID, COD, HotelID, sn, dn, qn));
 			this.revalidate();
 			System.out.println("change to search result");
 		}

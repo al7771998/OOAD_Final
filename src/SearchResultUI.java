@@ -50,6 +50,13 @@ public class SearchResultUI extends JPanel {
 	private JLabel backhotellist = new JLabel("BACK", JLabel.CENTER);
 	private JLabel reservehotellist = new JLabel("RESERVE", JLabel.CENTER);
 	
+	// attribute of sign in error - UNKNOWN ID
+	private JPanel NotAvailableError = new JPanel();
+	final private int NotAvailableErrorWidth = 700, NotAvailableErrorHeight = 110;
+	final private Dimension NotAvailableErrorCenter = new Dimension(frameWidth / 2, 500);
+	private JLabel NotAvailableErrorText = new JLabel("No Available Room!", JLabel.CENTER);
+	private JLabel NotAvailableErrorBack = new JLabel("BACK", JLabel.CENTER);
+	
 	private JPanel star = new JPanel();
 	private JLabel star5 = new JLabel("5-star", JLabel.CENTER);
 	private JLabel star4 = new JLabel("4-star", JLabel.CENTER);
@@ -57,6 +64,10 @@ public class SearchResultUI extends JPanel {
 	private JLabel star2 = new JLabel("2-star", JLabel.CENTER);
 	private JLabel pricehighText = new JLabel("PRICE (HIGHEST FIRST)", JLabel.CENTER);
 	private JLabel pricelowText = new JLabel("PRICE (LOWEST FIRST)", JLabel.CENTER);
+	
+	private ButtonColumn buttonsColumn;
+	
+	String CID, COD;
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
@@ -139,10 +150,11 @@ public class SearchResultUI extends JPanel {
 				repaint();
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
-				//if(checkHotel(String CID, String COD, int HotelID, int sn, int dn, int qn)) {
-					
+				//if( controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
+				//	mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
+				//} else {
+					layeredPane.add(NotAvailableError);
 				//}
-				//TODO mUIMainFrame.changeUI()
 				validate();
 				repaint();
 				reservehotellist.setForeground(Color.black);
@@ -150,9 +162,11 @@ public class SearchResultUI extends JPanel {
 		}
 	};
 	
-	public SearchResultUI(UIMainFrame mUIMainFrame, ArrayList<AvailableHotelRoom> AHR) {
+	public SearchResultUI(UIMainFrame mUIMainFrame, String CID, String COD, ArrayList<AvailableHotelRoom> AHR) {
 		this.mUIMainFrame = mUIMainFrame;
 		this.controller = new SearchResultController(AHR);
+		this.CID = CID;
+		this.COD = COD;
 		
 		initSearchTag();
 		initLayerPane();
@@ -195,6 +209,19 @@ public class SearchResultUI extends JPanel {
 		star.add(star2);		
 	}
 	
+	/**
+	 * initialize Sign in error panel
+	 */
+	private void initNotAvailableError() {
+		NotAvailableErrorText.setFont(new Font("Dialog", Font.BOLD, 28));
+		NotAvailableErrorText.setForeground(new Color(255, 0, 0));
+		NotAvailableErrorBack.setFont(new Font("Arial Black", Font.BOLD, 28));
+		NotAvailableError.setLayout(new GridLayout(2, 1, 0, 0));
+		NotAvailableError.setOpaque(false);
+		NotAvailableError.add(NotAvailableErrorText);
+		NotAvailableError.add(NotAvailableErrorBack);
+	}
+	
 	private void initLayerPane() {
 		layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
@@ -206,6 +233,9 @@ public class SearchResultUI extends JPanel {
 		
 		this.Hotellist.setBounds(hotellistCenter.width - (hotellistWidth / 2),
 				hotellistCenter.height - (hotellistHeight / 2), hotellistWidth, hotellistHeight);
+		
+		this.NotAvailableError.setBounds(NotAvailableErrorCenter.width - (NotAvailableErrorWidth / 2),
+				NotAvailableErrorCenter.height - (NotAvailableErrorHeight / 2), NotAvailableErrorWidth, NotAvailableErrorHeight);
 	}
 	
 	/**
@@ -258,7 +288,7 @@ public class SearchResultUI extends JPanel {
 		JScrollPane HotellistJScrollPane = new JScrollPane(HotellistTable,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-		ButtonColumn buttonsColumn = new ButtonColumn(HotellistTable, 8);
+		buttonsColumn = new ButtonColumn(HotellistTable, 8);
 
 		// set 'back' and 'reserve' button
 		JPanel buttons = new JPanel();
@@ -303,10 +333,10 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 	JButton editButton;
 	String text;
 	
-	Object hid;
-	Object sroom;
-	Object droom;
-	Object qroom;
+	int hid;
+	int sroom;
+	int droom;
+	int qroom;
 
 	public ButtonColumn(JTable table, int column) {
 		super();
@@ -350,13 +380,9 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 
 	public void actionPerformed(ActionEvent e) {
 		fireEditingStopped();
-		hid = table.getModel().getValueAt(table.getSelectedRow(), 0);
-		sroom = table.getModel().getValueAt(table.getSelectedRow(), 4);
-		droom = table.getModel().getValueAt(table.getSelectedRow(), 5);
-		qroom = table.getModel().getValueAt(table.getSelectedRow(), 6);
-//		Menu.reservehotelid.setSelectedIndex((int) hid);
-//		Menu.reservesingleroomField.setText(sroom.toString());
-//		Menu.reservedoubleroomField.setText(droom.toString());
-//		Menu.reservequadroomField.setText(qroom.toString());
+		hid = (int) table.getModel().getValueAt(table.getSelectedRow(), 0);
+		sroom = (int) table.getModel().getValueAt(table.getSelectedRow(), 4);
+		droom = (int) table.getModel().getValueAt(table.getSelectedRow(), 5);
+		qroom = (int) table.getModel().getValueAt(table.getSelectedRow(), 6);
 	}
 }
