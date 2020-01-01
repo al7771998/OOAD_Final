@@ -196,8 +196,8 @@ public class SearchUI extends JPanel {
 		location.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		String[] option = {"台北","台中","高雄"};
 		locationOption = new JComboBox<Object>(option);
-		locationOption.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		
+		locationOption.setFont(new Font("新細明體", Font.PLAIN, 20));
+
 		// room panel adding
 		locationPanel.add(location);
 		locationPanel.add(locationOption);
