@@ -62,6 +62,8 @@ public class BookUI extends JPanel {
 	// Controller
 	private BookController mBookController;
 	
+	private int people;
+	
 	/** for testing **/
 	/*public static void main(String[] args) {
 		new BookUI(null, null, null, null, null, null, null);
@@ -410,9 +412,10 @@ public class BookUI extends JPanel {
 	 * default constructor of Menu
 	 */
 	//UIManager UImanager
-	public BookUI(UIMainFrame mUIMainFrame, String start, String end, int hotel_ID, int sn, int dn, int qn) {
+	public BookUI(UIMainFrame mUIMainFrame, int people, String start, String end, int hotel_ID, int sn, int dn, int qn) {
 		//mUIManager = UImanager;
 		this.mUIMainFrame = mUIMainFrame;
+		this.people = people;
 		initPanel();
 		initTitle();
 		initReserve(hotel_ID, start, end, sn ,dn, qn);
@@ -462,7 +465,7 @@ public class BookUI extends JPanel {
 				String phone = reservephone.getText();
 				String email = reserveEmailField.getText();
 				//Forward reserve request to Book Controller
-				mBookController = new BookController(HotelID, s1, s2, 1, user, phone, email, sn, dn, qn);
+				mBookController = new BookController(HotelID, s1, s2, people, user, phone, email, sn, dn, qn);
 				Order order = mBookController.BookHotel();
 				if (order != null) 
 				{
