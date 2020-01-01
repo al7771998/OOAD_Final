@@ -251,6 +251,34 @@ public class BookUI extends JPanel {
 		Reserve.add(reservebuttons);
 	}
 	
+	private void initReservesuccess() {
+		Reserve_success.setLayout(new GridLayout(1, 1, 0, 0));
+		Reserve_success.setOpaque(false);
+		JPanel reservenumberPanel = new JPanel();
+		reservenumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		reservenumberPanel.setOpaque(false);
+		reservenumberPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		JLabel reservesuccessText = new JLabel("SUCCEED! THANKS FOR YOUR BOOKING!");
+		reservesuccessText.setFont(new Font("Dialog", Font.BOLD, 25));
+		reservenumberPanel.add(reservesuccessText);
+		Reserve_success.add(reservenumberPanel);
+	}
+	/**
+	 * Initialize sold out Panel
+	 */
+	private void initSoldout() {
+		soldoutText.setFont(new Font("Dialog", Font.BOLD, 28));
+		soldoutText.setForeground(new Color(255, 0, 0));
+		soldoutText.setBorder(new EmptyBorder(20, 40, 20, 40));
+		backsoldout.setFont(new Font("Arial Black", Font.BOLD, 28));
+		backsoldout.setBorder(new EmptyBorder(20, 40, 20, 40));
+		Soldout.setLayout(new GridLayout(2, 1, 0, 0));
+		Soldout.setOpaque(false);
+		Soldout.setBorder(new MatteBorder(5, 5, 5, 5, Color.white));
+		Soldout.add(soldoutText);
+		Soldout.add(backsoldout);
+	}
+	
 	/**
 	 * Initialize the LayeredPane, setting the bounds and dimension of all Panel
 	 */
@@ -282,6 +310,8 @@ public class BookUI extends JPanel {
 		this.mUIMainFrame = mUIMainFrame;
 		initPanel();
 		initReserve(hotel_ID, start, end, sn ,dn, qn);
+		initReservesuccess();
+		initSoldout();
 		initLayerPane();
 		/*//for test
 		frame = new JFrame("test");
@@ -310,9 +340,9 @@ public class BookUI extends JPanel {
 
 		public void mouseClicked(MouseEvent e) {
 			if ( e.getSource() == cancelreserve) {
-				
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
 			}  else if (e.getSource() == backreserve) {
-				
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
 			} else if (e.getSource() == nextreserve) {
 				String s1 = reservecheckindateField.getText();
 				String s2 = reservecheckoutdateField.getText();
@@ -324,9 +354,31 @@ public class BookUI extends JPanel {
 				String phone = reservephone.getText();
 				//Forward reserve request to Book Controller
 				mBookController = new BookController(HotelID, s1, s2, 1, user, phone, sn, dn, qn);
-			} else if (e.getSource() == backsoldout) {
-				layeredPane.remove(Soldout);
-			} 
+				Order order = mBookController.BookHotel();
+				if (order != null) 
+				{
+					// 訂房成功
+					layeredPane.remove(Reserve);
+					layeredPane.add(Reserve_success);
+					reservecheckindateField.setText(null);
+					reservecheckoutdateField.setText(null);
+					reservebuttons.removeAll();
+					reservebuttons.add(backreserve);
+					validate();
+					repaint();
+					nextreserve.setForeground(Color.black);
+				}
+				else 
+				{
+					layeredPane.remove(Reserve);
+					layeredPane.add(Soldout, new Integer(3));
+					reservebuttons.removeAll();
+					reservebuttons.add(backreserve);
+					validate();
+					repaint();
+					nextreserve.setForeground(Color.black);
+				}
+			}  
 		}
 	};
 }
