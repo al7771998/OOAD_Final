@@ -1,9 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -28,25 +32,46 @@ public class ManageUI extends JPanel {
 	
 	// attribute of title
 	private JPanel title = new JPanel();
-	final private int titleWidth = 930, titleHeight = 80;
-	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 4);
-	private JLabel titleText = new JLabel("     MANAGE     ", JLabel.CENTER);
+	final private int titleWidth = 980, titleHeight = 60;
+	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 20);
+	private JLabel titleText = new JLabel("     Order List     ", JLabel.CENTER);
 	
 	// attribute of order list
 	private JPanel orderlist = new JPanel();
-	final private int orderlistWidth = 820, orderlistHeight = 600;
+	final private int orderlistWidth = 1000, orderlistHeight = 600;
 	final private Dimension orderlistCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	JTable orderlistTable = new JTable();
 
 	private JLabel logout = new JLabel("LOGOUT", JLabel.CENTER);
+	
+	MouseListener ml = new MouseAdapter() {
+		public void mouseEntered(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			l.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			l.setForeground(Color.red);
+		}
+
+		public void mouseExited(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			l.setForeground(Color.black);
+		}
+
+		public void mouseClicked(MouseEvent e) {
+			if(e.getSource() == logout) {
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.LOGIN);
+			}
+		}
+	};
 	
 	public ManageUI(UIMainFrame mUImainFrame) {
 		this.mUIMainFrame = mUImainFrame;
 		controller = new ManageController();
 		initPanel();
 		initTitle();
+		orderlist.setLayout(new BorderLayout());
+		orderlist.setOpaque(false);
 		initLayerPane();
-
+		logout.addMouseListener(ml);
 	}
 	
 	private void initPanel() {
@@ -55,7 +80,7 @@ public class ManageUI extends JPanel {
 	}
 	
 	private void initTitle() {
-		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 96));
+		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 64));
 		title.setLayout(new GridLayout(1, 1, 0, 0));
 		title.setOpaque(false);
 		titleText.setForeground(new Color(65, 105, 225));
@@ -75,9 +100,14 @@ public class ManageUI extends JPanel {
 		this.title.setBounds(titleCenter.width - (titleWidth / 2), titleCenter.height - (titleHeight / 2), titleWidth,
 				titleHeight);
 		layeredPane.add(title, new Integer(1));
+		
+		this.orderlist.setBounds(orderlistCenter.width - (orderlistWidth / 2),
+				orderlistCenter.height - (orderlistHeight / 2), orderlistWidth, orderlistHeight);
 		showorderlist(controller.makeOrderList());
 		layeredPane.add(orderlist, new Integer(3));
 		this.add(layeredPane);
+		
+		orderlistTable.setPreferredScrollableViewportSize(new Dimension(1000,600));
 	}
 	
 	public void showorderlist(DefaultTableModel tablemodel) {
@@ -92,15 +122,15 @@ public class ManageUI extends JPanel {
 		};
 		orderlistTable.setOpaque(false);
 		JTableHeader head = orderlistTable.getTableHeader();
-		head.setFont(new Font("Arial", Font.PLAIN, 20));
+		head.setFont(new Font("Arial", Font.PLAIN, 10));
 
 		// row height
 		orderlistTable.setRowHeight(40);
 		// column width
-		orderlistTable.getColumnModel().getColumn(0).setMaxWidth(50); // "ID", 
-		orderlistTable.getColumnModel().getColumn(1).setMaxWidth(50); // "UserID"
-		orderlistTable.getColumnModel().getColumn(2).setMaxWidth(50); // "HotelID"
-		orderlistTable.getColumnModel().getColumn(3).setMaxWidth(50); // "Reservations"
+		orderlistTable.getColumnModel().getColumn(0).setMaxWidth(100); // "ID", 
+		orderlistTable.getColumnModel().getColumn(1).setMaxWidth(100); // "UserID"
+		orderlistTable.getColumnModel().getColumn(2).setMaxWidth(100); // "HotelID"
+		orderlistTable.getColumnModel().getColumn(3).setMaxWidth(100); // "Reservations"
 		orderlistTable.getColumnModel().getColumn(4).setMaxWidth(300);// "Email"
 		orderlistTable.getColumnModel().getColumn(5).setMaxWidth(70); // "ContactName"
 		orderlistTable.getColumnModel().getColumn(6).setMaxWidth(70); // "ContactPhone"
@@ -126,7 +156,7 @@ public class ManageUI extends JPanel {
 		}
 
 		// build up Table
-		JScrollPane HotellistJScrollPane = new JScrollPane(orderlistTable,
+		JScrollPane orderlistJScrollPane = new JScrollPane(orderlistTable,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		//buttonsColumn = new ButtonColumn(orderlistTable, 8);
@@ -141,7 +171,7 @@ public class ManageUI extends JPanel {
 
 		orderlist.removeAll();
 		//orderlist.add(choicepanel, BorderLayout.NORTH);
-		orderlist.add(HotellistJScrollPane, BorderLayout.CENTER);
+		orderlist.add(orderlistJScrollPane, BorderLayout.CENTER);
 		orderlist.add(buttons, BorderLayout.SOUTH);
 	}
 	

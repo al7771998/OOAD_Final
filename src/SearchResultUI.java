@@ -42,7 +42,7 @@ public class SearchResultUI extends JPanel {
 	
 	// attribute of hotel list
 	private JPanel Hotellist = new JPanel();
-	final private int hotellistWidth = 820, hotellistHeight = 600;
+	final private int hotellistWidth = 1000, hotellistHeight = 600;
 	final private Dimension hotellistCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	JTable HotellistTable = new JTable();
 	String[] heading = new String[] { "ID", "Star", "City", "Address", "Single", "Double", "Quad", "Price", "Select" };
@@ -170,9 +170,8 @@ public class SearchResultUI extends JPanel {
 				repaint();
 				backhotellist.setForeground(Color.black);
 			} else if (e.getSource() == reservehotellist) {
-				System.out.println("reserve!!");
 				if( buttonsColumn.hid != -1 && controller.checkHotel( CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom)) {
-					mUIMainFrame.changeUI(UIMainFrame.UIStage.BOOK, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
+					mUIMainFrame.changeUI(UIMainFrame.UIStage.ROOM, CID, COD, buttonsColumn.hid, buttonsColumn.sroom, buttonsColumn.droom, buttonsColumn.qroom);
 				} else {
 					layeredPane.add(NotAvailableError, new Integer(2));
 				}
@@ -190,6 +189,7 @@ public class SearchResultUI extends JPanel {
 		this.COD = COD;
 		
 		initSearchTag();
+		initHotellist();
 		initNotAvailableError();
 		initLayerPane();
 		
@@ -213,6 +213,13 @@ public class SearchResultUI extends JPanel {
 		backhotellist.addMouseListener(ml);
 		reservehotellist.addMouseListener(ml);
 		NotAvailableErrorBack.addMouseListener(ml);
+	}
+	
+	private void initHotellist() {
+		Hotellist.setLayout(new BorderLayout());
+		Hotellist.setOpaque(false);
+		backhotellist.setFont(new Font("Arial Black", Font.BOLD, 30));
+		reservehotellist.setFont(new Font("Arial Black", Font.BOLD, 30));
 	}
 	
 	private void initSearchTag() {
@@ -286,11 +293,11 @@ public class SearchResultUI extends JPanel {
 		HotellistTable.getColumnModel().getColumn(1).setMaxWidth(50); // star
 		HotellistTable.getColumnModel().getColumn(2).setMaxWidth(60); // locality
 		HotellistTable.getColumnModel().getColumn(3).setMaxWidth(300); // address
-		HotellistTable.getColumnModel().getColumn(4).setMaxWidth(70); // single room
-		HotellistTable.getColumnModel().getColumn(5).setMaxWidth(70); // double room
-		HotellistTable.getColumnModel().getColumn(6).setMaxWidth(70); // quad room
+		HotellistTable.getColumnModel().getColumn(4).setMaxWidth(100); // single room
+		HotellistTable.getColumnModel().getColumn(5).setMaxWidth(100); // double room
+		HotellistTable.getColumnModel().getColumn(6).setMaxWidth(100); // quad room
 		HotellistTable.getColumnModel().getColumn(7).setMaxWidth(70); // price
-		HotellistTable.getColumnModel().getColumn(8).setMaxWidth(70); // select
+		HotellistTable.getColumnModel().getColumn(8).setMaxWidth(100); // select
 		// row color
 		DefaultTableCellRenderer ter = new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -345,7 +352,7 @@ public class SearchResultUI extends JPanel {
 		Hotellist.removeAll();
 		Hotellist.add(choicepanel, BorderLayout.NORTH);
 		Hotellist.add(HotellistJScrollPane, BorderLayout.CENTER);
-		//Hotellist.add(buttons, BorderLayout.SOUTH);
+		Hotellist.add(buttons, BorderLayout.SOUTH);
 	}
 }
 

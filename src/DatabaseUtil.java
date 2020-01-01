@@ -198,10 +198,10 @@ public class DatabaseUtil {
 		String cmd = "SELECT * FROM Orders;";
 		ArrayList<Order> result = new ArrayList<Order>();
 		try {
-			results = stmt.executeQuery(cmd);
-			
+			results = stmt.executeQuery(cmd);	
 			if (results.next()) {
-				System.out.print(results);
+				Order order = new Order();
+				result.add(order);
 				/*ArrayList<Integer> SRoom = new ArrayList<Integer>();
 				ArrayList<Integer> DRoom = new ArrayList<Integer>();
 				ArrayList<Integer> QRoom = new ArrayList<Integer>();
@@ -237,6 +237,7 @@ public class DatabaseUtil {
 			while(results.next()) {
 				//TODO add to arrayList
 			}
+			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
