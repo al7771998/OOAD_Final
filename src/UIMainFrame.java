@@ -15,7 +15,7 @@ public class UIMainFrame extends JFrame {
 	
 	//panel code
 	public enum UIStage{
-		LOGIN,SIGNUP,SIGNIN,SEARCH,SEARCH_RESULT,BOOK,MANAGE,BROWSE,MENU
+		LOGIN,SIGNUP,SIGNIN,SEARCH,SEARCH_RESULT,BOOK,MANAGE,BROWSE,MENU,MODIFY
 	}
 	
 	private JPanel loginUI;
@@ -114,6 +114,14 @@ public class UIMainFrame extends JFrame {
 	public void changeUI(UIStage next, int people, String CID, String COD, int HotelID, int sn, int dn, int qn) {
 		if(next == UIStage.BOOK) {
 			this.setContentPane(new BookUI( this, people, CID, COD, HotelID, sn, dn, qn));
+			this.revalidate();
+			System.out.println("change to book");
+		}
+	}
+	
+	public void changeUI(UIStage next, int reservationID, String CID, String COD, int HotelID, int sn, int dn, int qn, int sumPrice) {
+		if(next == UIStage.MODIFY) {
+			this.setContentPane(new ModifyUI(this, reservationID, CID, COD, HotelID, sn, dn, qn, sumPrice));
 			this.revalidate();
 			System.out.println("change to book");
 		}

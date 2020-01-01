@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -44,6 +45,7 @@ public class BrowseUI extends JPanel {
 	
 	private JLabel logout = new JLabel("LOGOUT", JLabel.CENTER);
 	private JLabel browseback = new JLabel("BACK", JLabel.CENTER);
+	private JLabel reviseText = new JLabel("REVISE", JLabel.CENTER);
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
@@ -60,11 +62,22 @@ public class BrowseUI extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if(e.getSource() == logout) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.LOGIN);
-			}
-			if(e.getSource() == browseback) {
+				logout.setForeground(Color.black);
+			} else if(e.getSource() == browseback) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.MENU);
 				validate();
 				repaint();
+				browseback.setForeground(Color.black);
+			} else if(e.getSource() == reviseText) {
+				int reservationID = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 0);
+				String CID = (String) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 7);
+				String COD = (String) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 8); 
+				int HotelID = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 2); 
+				int sn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 9); 
+				int dn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 10); 
+				int qn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 11);
+				int sumPrice = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 12);
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.MODIFY,reservationID,CID,COD,HotelID,sn,dn,qn,sumPrice);
 			}
 		}
 	};
@@ -76,6 +89,7 @@ public class BrowseUI extends JPanel {
 		initLayerPane();
 		logout.addMouseListener(ml);
 		browseback.addMouseListener(ml);
+		reviseText.addMouseListener(ml);
 	}
 	
 	public void update_login_data() {
@@ -132,7 +146,6 @@ public class BrowseUI extends JPanel {
 			}
 
 		};
-
 		orderlistTable.setOpaque(false);
 		JTableHeader head = orderlistTable.getTableHeader();
 		head.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -175,13 +188,15 @@ public class BrowseUI extends JPanel {
 
 		// set 'back' and 'reserve' button
 		JPanel buttons = new JPanel();
-		buttons.setLayout(new GridLayout(1, 1));
+		buttons.setLayout(new GridLayout(1, 3));
 		buttons.setOpaque(false);
 		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
 		browseback.setFont(new Font("Dialog", Font.BOLD, 25));
 		buttons.add(browseback);
 		logout.setFont(new Font("Dialog", Font.BOLD, 25));
 		buttons.add(logout);
+		reviseText.setFont(new Font("Dialog", Font.BOLD, 25));
+		buttons.add(reviseText);
 		
 		orderlist.removeAll();
 		//orderlist.add(choicepanel, BorderLayout.NORTH);

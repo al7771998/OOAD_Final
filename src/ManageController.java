@@ -43,8 +43,8 @@ public class ManageController{
 			String checkInDate = orders.get(i).getCheckInDate();
 			String checkOutDate = orders.get(i).getCheckOutDate();
 			int sn = orders.get(i).getSnum() != null? orders.get(i).getSnum().size():0;
-			int dn = orders.get(i).getDnum() != null? orders.get(i).getSnum().size():0;
-			int qn = orders.get(i).getQnum() != null? orders.get(i).getSnum().size():0;
+			int dn = orders.get(i).getDnum() != null? orders.get(i).getDnum().size():0;
+			int qn = orders.get(i).getQnum() != null? orders.get(i).getQnum().size():0;
 			int sumPrice = orders.get(i).getSumPrice();
 			//String go = "Select"; // select
 			Object[] data = { id, userId, hotelId, reservation, email, contactName, contactPhone, 

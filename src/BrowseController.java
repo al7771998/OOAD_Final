@@ -46,8 +46,8 @@ public class BrowseController{
 			String checkInDate = orders[i].getCheckInDate();
 			String checkOutDate = orders[i].getCheckOutDate();
 			int sn = orders[i].getSnum() != null? orders[i].getSnum().size():0;
-			int dn = orders[i].getDnum() != null? orders[i].getSnum().size():0;
-			int qn = orders[i].getQnum() != null? orders[i].getSnum().size():0;
+			int dn = orders[i].getDnum() != null? orders[i].getDnum().size():0;
+			int qn = orders[i].getQnum() != null? orders[i].getQnum().size():0;
 			int sumPrice = orders[i].getSumPrice();
 			//String go = "Select"; // select
 			Object[] data = { id, userId, hotelId, reservation, email, contactName, contactPhone, 
@@ -56,6 +56,10 @@ public class BrowseController{
 		}
 
 		return tablemodel;
+	}
+	
+	public void setValue(Object value) {
+		
 	}
 }
 

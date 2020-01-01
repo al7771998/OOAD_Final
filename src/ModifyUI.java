@@ -167,7 +167,7 @@ public class ModifyUI extends JPanel {
 		return true;
 	}
 	
-	public ModifyUI(UIMainFrame uIMainFrame) {
+	public ModifyUI(UIMainFrame uIMainFrame,int reservationID, String CID, String COD, int hotelID, int sn, int dn, int qn, int sumPrice) {
 		mUIMainFrame = uIMainFrame;
 		controller = new ModifyController();
 		initPanel();
@@ -182,12 +182,16 @@ public class ModifyUI extends JPanel {
 		changeText.addMouseListener(ml);
 		calculateText.addMouseListener(ml);
 		
-		//test
-//		reserveordersingleroomField.setText("1");
-//		reserveorderdoubleroomField.setText("1");
-//		reserveorderquadroomField.setText("1");
-//		reserveorderhotelIDField.setText("1");
-//		successreservenumberField.setText("1");
+		successreservenumberField.setText(String.valueOf(reservationID));
+		reserveordersingleroomField.setText(String.valueOf(sn));
+		reserveorderdoubleroomField.setText(String.valueOf(dn));
+		reserveorderquadroomField.setText(String.valueOf(qn));
+		reserveorderhotelIDField.setText(String.valueOf(hotelID));
+		reserveordercheckindateField.setText(CID);
+		reserveordercheckoutdateField.setText(COD);
+		reserveorderstaynightField.setText(String.valueOf(controller.CountDaysBetween(CID, COD)));
+		reserveorderpriceField.setText(String.valueOf(sumPrice));
+		
 	}
 	
 	private void initPanel() {
