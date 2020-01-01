@@ -11,6 +11,10 @@ public class Order {
 	private int ID;
 	private int HotelID;
 	private String UserID;
+	private int Reservations;
+	private String Email;
+	private String ContactName;
+	private String ContactPhone;
 	private String CheckInDate;
 	private String CheckOutDate;
 	private ArrayList<Integer> Snum, Dnum, Qnum;
@@ -22,6 +26,10 @@ public class Order {
 		ID = -1;
 		UserID = "";
 		HotelID = 0;
+		Reservations = 0;
+		Email = "";
+		ContactName = "";
+		ContactPhone = "";
 		CheckInDate = "";
 		CheckOutDate = "";
 		SumPrice = 0;
