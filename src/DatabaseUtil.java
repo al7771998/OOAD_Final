@@ -194,15 +194,15 @@ public class DatabaseUtil {
 	}
 	
 	//get all orders
-	public static ArrayList<Order> getOrders() {
-		String cmd = "SELECT * FROM Orders;";
+	public static Order[] getOrders() {
+		/*String cmd = "SELECT * FROM Orders;";
 		ArrayList<Order> result = new ArrayList<Order>();
 		try {
 			results = stmt.executeQuery(cmd);	
 			if (results.next()) {
 				Order order = new Order();
 				result.add(order);
-				/*ArrayList<Integer> SRoom = new ArrayList<Integer>();
+				ArrayList<Integer> SRoom = new ArrayList<Integer>();
 				ArrayList<Integer> DRoom = new ArrayList<Integer>();
 				ArrayList<Integer> QRoom = new ArrayList<Integer>();
 				String SR = results.getString("SingleRoom"), DR = results.getString("DoubleRoom"), QR = results.getString("QuadRoom");
@@ -229,7 +229,7 @@ public class DatabaseUtil {
 								 results.getDate("CheckOut").toString().replace('-', '/'),
 								 SRoom, 
 								 DRoom, 
-								 QRoom);*/
+								 QRoom);
 			} else {
 				System.out.println("No such Order!!");
 				return null;
@@ -238,6 +238,60 @@ public class DatabaseUtil {
 				//TODO add to arrayList
 			}
 			return result;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;*/
+		String cmd = "SELECT * FROM Orders;";
+		
+		try {
+			int len;
+			results = stmt.executeQuery(cmd);
+			results.last();
+			len = results.getRow();
+			results.first();
+			
+			if (len == 0) {
+				System.out.println("No such Order!!");
+				return null;
+			}
+			
+			Order[] retList = new Order[len];
+			int index = 0;
+			do {
+				ArrayList<Integer> SRoom = new ArrayList<Integer>();
+				ArrayList<Integer> DRoom = new ArrayList<Integer>();
+				ArrayList<Integer> QRoom = new ArrayList<Integer>();
+				String SR = results.getString("SingleRoom"), DR = results.getString("DoubleRoom"), QR = results.getString("QuadRoom");
+				for (String num : SR.split(":")) {
+					if (num.equals("")) 
+						break;
+					SRoom.add(Integer.valueOf(num));
+				}
+				for (String num : DR.split(":")) {
+					if (num.equals("")) break;
+					DRoom.add(Integer.valueOf(num));
+				}
+				for (String num : QR.split(":")) {
+					if (num.equals("")) break;
+					QRoom.add(Integer.valueOf(num));
+				}
+				retList[index++] = new Order(results.getInt("OrderID"), 
+											 results.getString("UID"), 
+											 results.getInt("HotelID"), 
+											 results.getInt("Reservations"),
+											 results.getString("Email"),
+											 results.getString("ContactName"),
+											 results.getString("ContactPhone"),
+											 results.getDate("CheckIn").toString().replace('-', '/'),
+											 results.getDate("CheckOut").toString().replace('-', '/'),
+											 SRoom, 
+											 DRoom, 
+											 QRoom);
+			} while(results.next());
+			
+			return retList;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

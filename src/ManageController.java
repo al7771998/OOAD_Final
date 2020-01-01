@@ -15,9 +15,13 @@ public class ManageController{
 			"QuadRoom",
 			"SumPrice" };
 	
-	private ArrayList<Order> orders;
+	private Order[] orders;
 	
 	public ManageController() {
+		orders = DatabaseUtil.getOrders();
+	}
+	
+	public void UpdateController() {
 		orders = DatabaseUtil.getOrders();
 	}
 	
@@ -32,20 +36,20 @@ public class ManageController{
 		if(orders == null)
 			return tablemodel;
 		// get data
-		for (int i = 0; i < orders.size(); i++) {
-			int id = orders.get(i).getID();
-			String userId = orders.get(i).getUserID();
-			int hotelId = orders.get(i).getHotelID();
-			int reservation = orders.get(i).getReservations();
-			String email = orders.get(i).getEmail();
-			String contactName = orders.get(i).getContactName();
-			String contactPhone = orders.get(i).getContactPhone();
-			String checkInDate = orders.get(i).getCheckInDate();
-			String checkOutDate = orders.get(i).getCheckOutDate();
-			int sn = orders.get(i).getSnum() != null? orders.get(i).getSnum().size():0;
-			int dn = orders.get(i).getDnum() != null? orders.get(i).getDnum().size():0;
-			int qn = orders.get(i).getQnum() != null? orders.get(i).getQnum().size():0;
-			int sumPrice = orders.get(i).getSumPrice();
+		for (int i = 0; i < orders.length; i++) {
+			int id = orders[i].getID();
+			String userId = orders[i].getUserID();
+			int hotelId = orders[i].getHotelID();
+			int reservation = orders[i].getReservations();
+			String email = orders[i].getEmail();
+			String contactName = orders[i].getContactName();
+			String contactPhone = orders[i].getContactPhone();
+			String checkInDate = orders[i].getCheckInDate();
+			String checkOutDate = orders[i].getCheckOutDate();
+			int sn = orders[i].getSnum() != null? orders[i].getSnum().size():0;
+			int dn = orders[i].getDnum() != null? orders[i].getSnum().size():0;
+			int qn = orders[i].getQnum() != null? orders[i].getSnum().size():0;
+			int sumPrice = orders[i].getSumPrice();
 			//String go = "Select"; // select
 			Object[] data = { id, userId, hotelId, reservation, email, contactName, contactPhone, 
 					checkInDate, checkOutDate, sn, dn ,qn, sumPrice};

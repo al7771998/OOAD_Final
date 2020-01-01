@@ -79,6 +79,7 @@ public class UIMainFrame extends JFrame {
 				System.out.println("change to search");
 				break;
 			case MANAGE:
+				((ManageUI)manageUI).update_data();
 				this.setContentPane(manageUI);
 				this.revalidate();
 				System.out.println("change to manage");
