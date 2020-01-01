@@ -40,7 +40,7 @@ public class SearchUI extends JPanel {
 	private JPanel EnterSearch = new JPanel();
 	final private int entersearchWidth = 600, entersearchlistHeight = 400;
 	final private Dimension entersearchCenter = new Dimension(frameWidth / 2, frameHeight / 2);
-	private JLabel logoutentersearch = new JLabel("LOGOUT", JLabel.CENTER);
+	private JLabel backentersearch = new JLabel("BACK", JLabel.CENTER);
 	private JLabel searchentersearch = new JLabel("NEXT", JLabel.CENTER);
 	private JComboBox<Object> locationOption;
 	protected JTextField entercheckindateField = new JTextField(10);
@@ -71,7 +71,7 @@ public class SearchUI extends JPanel {
 		initNomatchedhotelerror();
 		initLayerPane();
 		// buttons in enter hotel list
-		logoutentersearch.addMouseListener(ml);
+		backentersearch.addMouseListener(ml);
 		searchentersearch.addMouseListener(ml);
 	}
 	
@@ -238,9 +238,9 @@ public class SearchUI extends JPanel {
 		buttons.setLayout(new GridLayout(1, 2));
 		buttons.setOpaque(false);
 		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
-		logoutentersearch.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		backentersearch.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		searchentersearch.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		buttons.add(logoutentersearch);
+		buttons.add(backentersearch);
 		buttons.add(searchentersearch);
 		
 		// EnterHotellist adding
@@ -336,8 +336,9 @@ public class SearchUI extends JPanel {
 		}
 
 		public void mouseClicked(MouseEvent e) {
-			if(e.getSource() == logoutentersearch) {
-				mUIMainFrame.changeUI(UIMainFrame.UIStage.LOGIN);
+			if(e.getSource() == backentersearch) {
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.MENU);
+				backentersearch.setForeground(Color.black);
 			} else if(e.getSource() == searchentersearch) {
 				String s1 = entercheckindateField.getText();
 				String s2 = entercheckoutdateField.getText();
