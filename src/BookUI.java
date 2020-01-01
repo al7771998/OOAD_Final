@@ -13,9 +13,11 @@ import javax.swing.border.*;
 import javax.swing.table.*;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.DocumentFilter;
+import java.util.ArrayList;
 
 public class BookUI extends JPanel {
 	private JFrame frame;
+	private UIMainFrame mUIMainFrame;
 	private JLayeredPane layeredPane;
 	private JLabel background = new JLabel();
 	final int frameWidth = 1152, frameHeight = 720;
@@ -31,11 +33,12 @@ public class BookUI extends JPanel {
 	protected static JComboBox<Object> reservehotelid = new JComboBox<Object>();
 	protected JTextField reservecheckindateField = new JTextField(10);
 	protected JTextField reservecheckoutdateField = new JTextField(10);
+	protected JTextField reservehotelID = new JTextField(10);
 	protected static JTextField reservesingleroomField = new JTextField(2);
 	protected static JTextField reservedoubleroomField = new JTextField(2);
 	protected static JTextField reservequadroomField = new JTextField(2);
-	protected static JTextField reserveusername = new JTextField(2);
-	protected static JTextField reserveuphone = new JTextField(2);
+	protected static JTextField reserveusername = new JTextField(20);
+	protected static JTextField reservephone = new JTextField(20);
 	
 	// attribute of reserve error (sold out)
 	private JPanel Soldout = new JPanel();
@@ -51,14 +54,14 @@ public class BookUI extends JPanel {
 	protected JTextField successreservenumberField = new JTextField(10);
 	
 	// Controller
-	private Book mBookController = new Book();
+	private Book mBookController;
 	//UIManager
 	private UIManager mUIManager;
 	
 	/** for testing **/
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		new BookUI();
-	}
+	}*/
 	
 	/**
 	 * Initialize Menu(Panel) settings
@@ -71,7 +74,7 @@ public class BookUI extends JPanel {
 	/**
 	 * Initialize Reserve Panel
 	 */
-	private void initReserve() {
+	private void initReserve(int hotel_ID, String start, String end, int sn, int dn, int qn) {
 		Reserve.setBorder(new MatteBorder(5, 5, 5, 5, Color.white));
 		Reserve.setLayout(new GridLayout(5, 1));
 		Reserve.setOpaque(false);
@@ -89,16 +92,11 @@ public class BookUI extends JPanel {
 		reservecheckindateField.setEditable(false);
 		reservecheckindateField.setFont(new Font("Serif", Font.BOLD, 23));
 		reservecheckindateField.setBackground(new Color(255, 255, 255));
-		reservecheckindateField.setText("SELECT DATE");
+		reservecheckindateField.setText(Long.toString(start));
 		reservecheckindateField.setOpaque(true);
 		reservecheckindateField.setBounds(267, 15, 105, 40);
 		reservecheckindateField.setColumns(10);
-		reservecheckindateField.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				DatePopup DP = new DatePopup(reservecheckindateField);
-				DP.showDialog();
-			}
-		});
+		
 		// check in panel adding
 		checkinPanel.add(checkin);
 		checkinPanel.add(reservecheckindateField);
@@ -116,16 +114,11 @@ public class BookUI extends JPanel {
 		reservecheckoutdateField.setEditable(false);
 		reservecheckoutdateField.setFont(new Font("Serif", Font.BOLD, 23));
 		reservecheckoutdateField.setBackground(new Color(255, 255, 255));
-		reservecheckoutdateField.setText("SELECT DATE");
+		reservecheckoutdateField.setText(Long.toString(end));
 		reservecheckoutdateField.setOpaque(true);
 		reservecheckoutdateField.setBounds(267, 15, 105, 40);
 		reservecheckoutdateField.setColumns(10);
-		reservecheckoutdateField.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				DatePopup DP = new DatePopup(reservecheckoutdateField);
-				DP.showDialog();
-			}
-		});
+		
 		// check out panel adding
 		checkoutPanel.add(checkout);
 		checkoutPanel.add(reservecheckoutdateField);
@@ -136,15 +129,21 @@ public class BookUI extends JPanel {
 		hotelIDPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 		hotelIDPanel.setOpaque(false);
 		// select hotel ID
-		JLabel hotelID = new JLabel("    HotelID     : ");
+		JLabel hotelID = new JLabel("    HotelID     : " + Integer.toString(hotel_ID));
 		hotelID.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		String[] option = new String[1500];
 		for (Integer i = 0; i < 1500; i++) {
 			option[i] = i.toString();
 		}
-		reservehotelid = new JComboBox<Object>(option);
+		reservehotelID.setHorizontalAlignment(SwingConstants.CENTER);
+		reservehotelID.setEditable(false);
+		reservehotelID.setFont(new Font("Serif", Font.BOLD, 23));
+		reservehotelID.setBackground(new Color(255, 255, 255));
+		reservehotelID.setText(Integer.toString(hotel_ID));
+		reservehotelID.setOpaque(true);
+		reservehotelID.setBounds(267, 15, 105, 40);
+		reservehotelID.setColumns(10);
 		hotelIDPanel.add(hotelID);
-		hotelIDPanel.add(reservehotelid);
 
 		// number of room panel
 		JPanel roomPanel = new JPanel();
@@ -153,47 +152,26 @@ public class BookUI extends JPanel {
 		roomPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 		roomPanel.setOpaque(false);
 		// single room
-		JLabel singleroom = new JLabel("Single: ");
+		JLabel singleroom = new JLabel("Single: " + Integer.toString(sn));
 		singleroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reservesingleroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		reservesingleroomField.setEditable(true);
 		reservesingleroomField.setFont(new Font("Serif", Font.BOLD, 23));
-		reservesingleroomField.addKeyListener(new KeyAdapter() {// can only enter number!
-			public void keyTyped(KeyEvent e) {
-				char keyChar = e.getKeyChar();
-				if (!(keyChar >= '0' && keyChar <= '9')) {
-					e.consume();
-				}
-			}
-		});
+		
 		// double room
-		JLabel doubleroom = new JLabel("Double: ");
+		JLabel doubleroom = new JLabel("Double: "+ Integer.toString(dn));
 		doubleroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reservedoubleroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		reservedoubleroomField.setEditable(true);
 		reservedoubleroomField.setFont(new Font("Serif", Font.BOLD, 23));
-		reservedoubleroomField.addKeyListener(new KeyAdapter() {// can only enter number!
-			public void keyTyped(KeyEvent e) {
-				char keyChar = e.getKeyChar();
-				if (!(keyChar >= '0' && keyChar <= '9')) {
-					e.consume();
-				}
-			}
-		});
+		
 		// quad room
-		JLabel quadroom = new JLabel("Quad: ");
+		JLabel quadroom = new JLabel("Quad: "+ Integer.toString(qn));
 		quadroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reservequadroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		reservequadroomField.setEditable(true);
 		reservequadroomField.setFont(new Font("Serif", Font.BOLD, 23));
-		reservequadroomField.addKeyListener(new KeyAdapter() {// can only enter number!
-			public void keyTyped(KeyEvent e) {
-				char keyChar = e.getKeyChar();
-				if (!(keyChar >= '0' && keyChar <= '9')) {
-					e.consume();
-				}
-			}
-		});
+		
 		// room panel adding
 		roomPanel.add(singleroom);
 		roomPanel.add(reservesingleroomField);
@@ -202,6 +180,58 @@ public class BookUI extends JPanel {
 		roomPanel.add(quadroom);
 		roomPanel.add(reservequadroomField);
 
+		// username panel
+		JPanel usernamePanel = new JPanel();
+		usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		usernamePanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		usernamePanel.setOpaque(false);
+		// enter username
+		JLabel username = new JLabel("  Username: ");
+		checkin.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		// setting username
+		reserveusername.setHorizontalAlignment(SwingConstants.CENTER);
+		reserveusername.setEditable(true);
+		reserveusername.setFont(new Font("Serif", Font.BOLD, 23));
+		reserveusername.setBackground(new Color(255, 255, 255));
+		reserveusername.setOpaque(true);
+		reserveusername.setBounds(267, 15, 105, 40);
+		reserveusername.setColumns(10);
+		reserveusername.addKeyListener(new KeyAdapter() {
+			
+		});
+		
+		// username panel adding
+		usernamePanel.add(username);
+		usernamePanel.add(reserveusername);
+		
+		// phone number panel
+		JPanel phonePanel = new JPanel();
+		phonePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		phonePanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		phonePanel.setOpaque(false);
+		// enter phone
+		JLabel phone = new JLabel("  Phone Number: ");
+		checkin.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		// setting username
+		reservephone.setHorizontalAlignment(SwingConstants.CENTER);
+		reservephone.setEditable(true);
+		reservephone.setFont(new Font("Serif", Font.BOLD, 23));
+		reservephone.setBackground(new Color(255, 255, 255));
+		reservephone.setOpaque(true);
+		reservephone.setBounds(267, 15, 105, 40);
+		reservephone.setColumns(10);
+		reservephone.addKeyListener(new KeyAdapter() {// can only enter number!
+			public void keyTyped(KeyEvent e) {
+				char keyChar = e.getKeyChar();
+				if (!(keyChar >= '0' && keyChar <= '9')) {
+					e.consume();
+				}
+			}
+		});
+		
+		// username panel adding
+		phonePanel.add(phone);
+		phonePanel.add(reservephone);
 		// setting 'back' and 'next' buttons
 		reservebuttons.setLayout(new GridLayout(1, 3));
 		reservebuttons.setOpaque(false);
@@ -216,6 +246,8 @@ public class BookUI extends JPanel {
 		Reserve.add(checkoutPanel);
 		Reserve.add(hotelIDPanel);
 		Reserve.add(roomPanel);
+		Reserve.add(usernamePanel);
+		Reserve.add(phonePanel);
 		Reserve.add(reservebuttons);
 	}
 	
@@ -245,16 +277,17 @@ public class BookUI extends JPanel {
 	 * default constructor of Menu
 	 */
 	//UIManager UImanager
-	public BookUI() {
+	public BookUI(UIMainFrame mUIMainFrame, String start, String end, int hotel_ID, int sn, int dn, int qn) {
 		//mUIManager = UImanager;
+		this.mUIMainFrame = mUIMainFrame;
 		initPanel();
-		initReserve();
+		initReserve(hotel_ID, start, end, sn ,dn, qn);
 		initLayerPane();
-		//for test
+		/*//for test
 		frame = new JFrame("test");
 		frame.setBounds(0,0,frameWidth, frameHeight);
 		frame.setVisible(true);
-		frame.setContentPane(Reserve);
+		frame.setContentPane(Reserve);*/
 		// buttons in reserve
 		cancelreserve.addMouseListener(ml);
 		backreserve.addMouseListener(ml);
@@ -283,12 +316,14 @@ public class BookUI extends JPanel {
 			} else if (e.getSource() == nextreserve) {
 				String s1 = reservecheckindateField.getText();
 				String s2 = reservecheckoutdateField.getText();
-				String HotelID = reservehotelid.getSelectedItem().toString();
+				String HotelID = reservehotelID.getText();
 				int sn = Integer.parseInt(reservesingleroomField.getText());
 				int dn = Integer.parseInt(reservedoubleroomField.getText());
 				int qn = Integer.parseInt(reservequadroomField.getText());
+				String user = reserveusername.getText();
+				String phone = reservephone.getText();
 				//Forward reserve request to Book Controller
-				mBookController = new Book(HotelID, s1, s2, 1, "AAAAAAAAAA", "0987878787","single", 1);
+				mBookController = new Book(HotelID, s1, s2, 1, user, phone, sn, dn, qn);
 			} else if (e.getSource() == backsoldout) {
 				layeredPane.remove(Soldout);
 			} 
