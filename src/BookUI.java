@@ -53,7 +53,7 @@ public class BookUI extends JPanel {
 	protected JTextField successreservenumberField = new JTextField(10);
 	
 	// Controller
-	private Book mBookController = new Book();
+	private Book mBookController;
 	//UIManager
 	private UIManager mUIManager;
 	
@@ -321,8 +321,9 @@ public class BookUI extends JPanel {
 				int qn = Integer.parseInt(reservequadroomField.getText());
 				String user = reserveusername.getText();
 				String phone = reservephone.getText();
+				Arraylist<Integer> roomtype = sn, dn, qn;
 				//Forward reserve request to Book Controller
-				mBookController = new Book(HotelID, s1, s2, 1, user, phone,"single", 1);
+				mBookController = new Book(HotelID, s1, s2, 1, user, phone, roomtype);
 			} else if (e.getSource() == backsoldout) {
 				layeredPane.remove(Soldout);
 			} 
