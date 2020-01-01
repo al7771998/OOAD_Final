@@ -66,7 +66,6 @@ public class SearchUI extends JPanel {
 		this.mUIMainFrame = mUIMainFrame;
 		initPanel();
 		initTitle();
-		initPanel();
 		initEnterSearch();
 		initEnterinvaliddateerror();
 		initNomatchedhotelerror();
