@@ -26,9 +26,15 @@ public class SearchUI extends JPanel {
 	
 	// attribute of title
 	private JPanel title = new JPanel();
-	final private int titleWidth = 930, titleHeight = 80;
+	final private int titleWidth = 930, titleHeight = 120;
 	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 5);
-	private JLabel titleText = new JLabel("     SEARCH     ", JLabel.CENTER);
+	private JLabel titleText = new JLabel("   SEARCH   ", JLabel.CENTER);
+	
+	// attribute of welcome
+	//private JPanel welcome = new JPanel();
+	//final private int welcomeWidth = 930, welcomeHeight = 80;
+	//final private Dimension welcomeCenter = new Dimension(frameWidth / 2, frameHeight / 5);
+	//private JLabel welcomeText = new JLabel(" welcome " + DatabaseUtil.user, JLabel.CENTER);
 	
 	// attribute of entering Search Date, People, Rooms
 	private JPanel EnterSearch = new JPanel();
@@ -72,15 +78,41 @@ public class SearchUI extends JPanel {
 	}
 	
 	private void initTitle() {
-		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 96));
-		title.setLayout(new GridLayout(1, 1, 0, 0));
-		title.setOpaque(false);
+
+		JLabel welcomeText = new JLabel(" welcome, " + DatabaseUtil.user, JLabel.CENTER);
+		
+		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 80));
 		titleText.setForeground(new Color(65, 105, 225));
 		titleText.setOpaque(false);
-		titleText.setBorder(new EmptyBorder(5, 5, 5, 5));
-		title.add(titleText);
-	}
+		//titleText.setBorder(new EmptyBorder(5, 5, 5, 5));
+		welcomeText.setFont(new Font("Brush Script MT", Font.BOLD, 32));
+		welcomeText.setForeground(new Color(65, 105, 225));
+		welcomeText.setOpaque(false);
+		//welcomeText.setBorder(new EmptyBorder(5, 5, 5, 5));
+		Button button1 = new Button("1");
+        Button button2 = new Button("2");
+		
+        title.setOpaque(false);
+		title.setLayout(new GridBagLayout());
+		//GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
 
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+
+		title.add(titleText, c, 0);
+		//title.add(button1, c);
+		
+		c.ipady = 30;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		title.add(welcomeText, c, 1);
+		//title.add(button2, c);
+		
+	}
+	
 	private void initPanel() {
 		setLayout(new GridLayout(1, 1));
 		setOpaque(false);
@@ -232,7 +264,7 @@ public class SearchUI extends JPanel {
 		this.title.setBounds(titleCenter.width - (titleWidth / 2), titleCenter.height - (titleHeight / 2), titleWidth,
 				titleHeight);
 		layeredPane.add(title, new Integer(1));
-		
+
 		this.EnterSearch.setBounds(entersearchCenter.width - (entersearchWidth / 2),
 				entersearchCenter.height - (entersearchlistHeight / 3), entersearchWidth, entersearchlistHeight);
 
@@ -275,6 +307,22 @@ public class SearchUI extends JPanel {
 		No_matched_hotel_error.add(nomatchedhotelerrorText);
 		No_matched_hotel_error.add(backnomatchedhotelerror);
 	}
+	
+	public void updateTitle() {
+		Component toRemove = title.getComponent(1);
+		JLabel welcomeText = new JLabel(" welcome, " + DatabaseUtil.user.getUserID(), JLabel.CENTER);
+		welcomeText.setFont(new Font("Brush Script MT", Font.BOLD, 32));
+		welcomeText.setForeground(new Color(65, 105, 225));
+		welcomeText.setOpaque(false);
+		GridBagConstraints c = new GridBagConstraints();
+		c.ipady = 30;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		title.remove(toRemove);
+		title.add(welcomeText, c, 1);
+	}
+
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
