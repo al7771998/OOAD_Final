@@ -74,6 +74,14 @@ public class ManageUI extends JPanel {
 		logout.addMouseListener(ml);
 	}
 	
+	public void update_data() {
+		controller.UpdateController();
+		revalidate();
+		repaint();
+		orderlist.setOpaque(false);
+		showorderlist(controller.makeOrderList());
+	}
+	
 	private void initPanel() {
 		setLayout(new GridLayout(1, 1));
 		setOpaque(false);
