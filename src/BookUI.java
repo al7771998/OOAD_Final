@@ -55,8 +55,8 @@ public class BookUI extends JPanel {
 
 	// attribute of reserve success
 	private JPanel Reserve_success = new JPanel();
-	final private int reservesuccessWidth = 600, reservesuccessHeight = 75;
-	final private Dimension reservesuccessCenter = new Dimension(frameWidth / 2, frameHeight / 5);
+	final private int reservesuccessWidth = 600, reservesuccessHeight = 375;
+	final private Dimension reservesuccessCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	protected JTextField successreservenumberField = new JTextField(10);
 	
 	// Controller
@@ -352,7 +352,7 @@ public class BookUI extends JPanel {
 	}
 	
 	private void initReservesuccess() {
-		Reserve_success.setLayout(new GridLayout(1, 1, 0, 0));
+		Reserve_success.setLayout(new GridLayout(2, 1, 0, 0));
 		Reserve_success.setOpaque(false);
 		JPanel reservenumberPanel = new JPanel();
 		reservenumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -362,6 +362,12 @@ public class BookUI extends JPanel {
 		reservesuccessText.setFont(new Font("Dialog", Font.BOLD, 25));
 		reservenumberPanel.add(reservesuccessText);
 		Reserve_success.add(reservenumberPanel);
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(1, 3));
+		buttons.setOpaque(false);
+		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
+		buttons.add(backreserve);
+		Reserve_success.add(buttons);
 	}
 	/**
 	 * Initialize sold out Panel
@@ -471,11 +477,11 @@ public class BookUI extends JPanel {
 				{
 					// 訂房成功
 					layeredPane.remove(Reserve);
-					layeredPane.add(Reserve_success);
+					layeredPane.add(Reserve_success, new Integer(3));
 					reservecheckindateField.setText(null);
 					reservecheckoutdateField.setText(null);
 					reservebuttons.removeAll();
-					reservebuttons.add(backreserve);
+					//reservebuttons.add(backreserve);
 					validate();
 					repaint();
 					nextreserve.setForeground(Color.black);
@@ -485,7 +491,7 @@ public class BookUI extends JPanel {
 					layeredPane.remove(Reserve);
 					layeredPane.add(Soldout, new Integer(3));
 					reservebuttons.removeAll();
-					reservebuttons.add(backreserve);
+					//reservebuttons.add(backreserve);
 					validate();
 					repaint();
 					nextreserve.setForeground(Color.black);
