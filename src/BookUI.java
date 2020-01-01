@@ -130,7 +130,7 @@ public class BookUI extends JPanel {
 		// hotelID Panel
 		JPanel hotelIDPanel = new JPanel();
 		hotelIDPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		hotelIDPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		hotelIDPanel.setBorder(new EmptyBorder(60, 40, 1, 40));
 		hotelIDPanel.setOpaque(false);
 		// select hotel ID
 		JLabel hotelID = new JLabel("HotelID: " + Integer.toString(hotel_ID));
