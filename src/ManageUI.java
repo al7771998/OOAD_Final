@@ -43,6 +43,7 @@ public class ManageUI extends JPanel {
 	JTable orderlistTable = new JTable();
 
 	private JLabel logout = new JLabel("LOGOUT", JLabel.CENTER);
+	private JLabel revise = new JLabel("REVISE", JLabel.CENTER);
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
@@ -59,6 +60,17 @@ public class ManageUI extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if(e.getSource() == logout) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.LOGIN);
+			} else if(e.getSource() == revise) {
+				int reservationID = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 0);
+				String CID = (String) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 7);
+				String COD = (String) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 8); 
+				int HotelID = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 2); 
+				int sn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 9); 
+				int dn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 10); 
+				int qn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 11);
+				int sumPrice = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 12);
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.MANAGE,UIMainFrame.UIStage.MODIFY,reservationID,CID,COD,HotelID,sn,dn,qn,sumPrice);
+				revise.setForeground(Color.black);
 			}
 		}
 	};
@@ -72,6 +84,7 @@ public class ManageUI extends JPanel {
 		orderlist.setOpaque(false);
 		initLayerPane();
 		logout.addMouseListener(ml);
+		revise.addMouseListener(ml);
 	}
 	
 	public void update_data() {
@@ -171,11 +184,13 @@ public class ManageUI extends JPanel {
 
 		// set 'back' and 'reserve' button
 		JPanel buttons = new JPanel();
-		buttons.setLayout(new GridLayout(1, 1));
+		buttons.setLayout(new GridLayout(1, 2));
 		buttons.setOpaque(false);
 		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
 		logout.setFont(new Font("Dialog", Font.BOLD, 25));
 		buttons.add(logout);
+		revise.setFont(new Font("Dialog", Font.BOLD, 25));
+		buttons.add(revise);
 
 		orderlist.removeAll();
 		//orderlist.add(choicepanel, BorderLayout.NORTH);

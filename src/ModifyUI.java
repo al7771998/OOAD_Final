@@ -75,6 +75,8 @@ public class ModifyUI extends JPanel {
 	final private Dimension reservesuccessCenter = new Dimension(frameWidth / 2, frameHeight / 5);
 	protected JTextField successreservenumberField = new JTextField(10);
 	
+	private UIMainFrame.UIStage last;
+	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
@@ -92,23 +94,23 @@ public class ModifyUI extends JPanel {
 			layeredPane.remove(Changeroom_error);
 			if (e.getSource() == backText) {
 				//TODO back to where it was
-				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
+				mUIMainFrame.changeUI(last);
 			} else if(e.getSource() == cancelText) {
 				int orderID = Integer.parseInt(successreservenumberField.getText());
 				controller.cancel(orderID);
 			} else if(e.getSource() == changeText) {
 				if(!checkDate()) {
 					layeredPane.add(Revisedate_error, new Integer(3)); 
-					newcheckindateField.setText(null);
-					newcheckoutdateField.setText(null);
+					newcheckindateField.setText("");
+					newcheckoutdateField.setText("");
 					validate();
 					repaint();
 					return;
 				} else if(!checkRoom()) {
 					layeredPane.add(Changeroom_error, new Integer(3));
-					newsingleroomField.setText(null);
-					newdoubleroomField.setText(null);
-					newquadroomField.setText(null);
+					newsingleroomField.setText("");
+					newdoubleroomField.setText("");
+					newquadroomField.setText("");
 					return;
 				} else {
 					
@@ -119,9 +121,9 @@ public class ModifyUI extends JPanel {
 					reserveorderstaynightField.setText("-1");
 				}
 				int hotelID = Integer.parseInt(reserveorderhotelIDField.getText());
-				int nsn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():"0");
-				int ndn = Integer.parseInt(!newdoubleroomField.getText().equals("") ? newdoubleroomField.getText():"0");
-				int nqn = Integer.parseInt(!newquadroomField.getText().equals("") ? newquadroomField.getText(): "0");
+				int nsn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():reserveordersingleroomField.getText());
+				int ndn = Integer.parseInt(!newdoubleroomField.getText().equals("") ? newdoubleroomField.getText():reserveorderdoubleroomField.getText());
+				int nqn = Integer.parseInt(!newquadroomField.getText().equals("") ? newquadroomField.getText(): reserveorderquadroomField.getText());
 				int price = controller.getSumPrice(hotelID,nsn,ndn,nqn);
 				reserveorderpriceField.setText(String.valueOf(price));
 			}
@@ -150,25 +152,26 @@ public class ModifyUI extends JPanel {
 		int odn = Integer.parseInt(reserveorderdoubleroomField.getText());
 		int oqn = Integer.parseInt(reserveorderquadroomField.getText());
 		// 取得修改後的房間數
-		int nsn = Integer.parseInt(newsingleroomField.getText()!=null ? newsingleroomField.getText():"-1");
-		int ndn = Integer.parseInt(newdoubleroomField.getText()!=null ? newdoubleroomField.getText():"-1");
-		int nqn = Integer.parseInt(newquadroomField.getText()!=null ? newquadroomField.getText(): "-1");
+		int nsn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():"-1");
+		int ndn = Integer.parseInt(!newdoubleroomField.getText().equals("") ? newdoubleroomField.getText():"-1");
+		int nqn = Integer.parseInt(!newquadroomField.getText().equals("") ? newquadroomField.getText(): "-1");
 		if(nsn+ndn+nqn == -3) {
 			return true;
 		}
 		if (nsn > osn || ndn > odn || nqn > oqn) {
 //			 change room error 修改房間數失敗 不可增加房間
 			layeredPane.add(Changeroom_error, new Integer(3));
-			newsingleroomField.setText(null);
-			newdoubleroomField.setText(null);
-			newquadroomField.setText(null);
+			newsingleroomField.setText("");
+			newdoubleroomField.setText("");
+			newquadroomField.setText("");
 			return false;
 		}
 		return true;
 	}
 	
-	public ModifyUI(UIMainFrame uIMainFrame,int reservationID, String CID, String COD, int hotelID, int sn, int dn, int qn, int sumPrice) {
+	public ModifyUI(UIMainFrame uIMainFrame, UIMainFrame.UIStage last, int reservationID, String CID, String COD, int hotelID, int sn, int dn, int qn, int sumPrice) {
 		mUIMainFrame = uIMainFrame;
+		this.last = last;
 		controller = new ModifyController();
 		initPanel();
 		initTitle();
@@ -191,6 +194,9 @@ public class ModifyUI extends JPanel {
 		reserveordercheckoutdateField.setText(COD);
 		reserveorderstaynightField.setText(String.valueOf(controller.CountDaysBetween(CID, COD)));
 		reserveorderpriceField.setText(String.valueOf(sumPrice));
+		newsingleroomField.setText("");
+		newdoubleroomField.setText("");
+		newquadroomField.setText("");
 		
 	}
 	
