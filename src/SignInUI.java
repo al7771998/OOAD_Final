@@ -166,7 +166,7 @@ public class SignInUI extends JPanel {
 		// enter ID
 		JLabel ID = new JLabel("ID : ");
 		ID.setFont(new Font("Serif", Font.BOLD, 24));
-		signinidField = new JTextField(12) {
+		signinidField = new JTextField(10) {
 			@Override
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
@@ -200,7 +200,7 @@ public class SignInUI extends JPanel {
 		// enter password
 		JLabel password = new JLabel("PASSWORD : ");
 		password.setFont(new Font("Serif", Font.BOLD, 24));
-		signinpasswordField = new JPasswordField(13) {
+		signinpasswordField = new JPasswordField(11) {
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
 					Graphics2D g2 = (Graphics2D) g.create();
