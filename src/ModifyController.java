@@ -85,7 +85,7 @@ public class ModifyController{
 		}
 		
 		//insert into DB
-		Order nOrder = new Order(orderID, DatabaseUtil.user.getUserID(), hotelID, oldOrder.getReservations(), oldOrder.getEmail(), oldOrder.getContactName(),  oldOrder.getContactPhone(), nCID, nCOD, Snum, Dnum, Qnum);
+		Order nOrder = new Order(orderID, oldOrder.getUserID(), hotelID, oldOrder.getReservations(), oldOrder.getEmail(), oldOrder.getContactName(),  oldOrder.getContactPhone(), nCID, nCOD, Snum, Dnum, Qnum);
 		DatabaseUtil.insertOrder(nOrder);
 		return nOrder;
 	}

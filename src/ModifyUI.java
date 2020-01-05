@@ -65,26 +65,25 @@ public class ModifyUI extends JPanel {
 	// change room error
 	private JPanel Changeroom_error = new JPanel();
 	final private int changeroomerrorWidth = 800, changeroomerrorHeight = 75;
-	final private Dimension changeroomerrorCenter = new Dimension(frameWidth / 2, frameHeight / 10 * 9);
+	final private Dimension changeroomerrorCenter = new Dimension(frameWidth / 2, frameHeight / 15 * 14);
 	private JLabel changeroomerrorText = new JLabel("SORRY, ADDING ROOMS IS UNAVAILABLE!!", JLabel.CENTER);
+	
+	// change room error
+	private JPanel VerifyCode_error = new JPanel();
+	final private int verifyCodeerrorWidth = 800, verifyCodeerrorHeight = 75;
+	final private Dimension verifyCodeerrorCenter = new Dimension(frameWidth / 2, frameHeight / 15 * 14);
+	private JLabel verifyCodeerrorText = new JLabel("SORRY, Verify Code is wrong!!", JLabel.CENTER);
 
-	// cancel room error
-	private JPanel Cancelroom_error = new JPanel();
-	final private int cancelroomerrorWidth = 800, cancelroomerrorHeight = 75;
-	final private Dimension cancelroomerrorCenter = new Dimension(frameWidth / 2, frameHeight / 10 * 9);
-	private JLabel cancelroomerrorText = new JLabel("Verification code is not correct!!", JLabel.CENTER);
-
-		
 	// revise date error
 	private JPanel Revisedate_error = new JPanel();
 	final private int revisedateerrorWidth = 900, revisedateerrorHeight = 75;
-	final private Dimension revisedateerrorCenter = new Dimension(frameWidth / 2, frameHeight / 10 * 9);
+	final private Dimension revisedateerrorCenter = new Dimension(frameWidth / 2, frameHeight / 15 * 14);
 	private JLabel revisedateerrorText = new JLabel("SORRY, EXTENDING LODGE DAYS IS UNAVAILABLE!", JLabel.CENTER);
 	
 	// reservation change error
 	private JPanel Reservation_error = new JPanel();
 	final private int reservationerrorWidth = 800, reservationerrorHeight = 75;
-	final private Dimension reservationerrorCenter = new Dimension(frameWidth / 2, frameHeight / 10 * 9);
+	final private Dimension reservationerrorCenter = new Dimension(frameWidth / 2, frameHeight / 15 * 14);
 	private JLabel reservationerrorText = new JLabel("SORRY, ADDING PEOPLE IS UNAVAILABLE!!", JLabel.CENTER);
 
 	protected JTextField reservationNumberField = new JTextField(10);
@@ -105,6 +104,7 @@ public class ModifyUI extends JPanel {
 	private UIMainFrame.UIStage last;
 	private int hotelID,orderID,sn,dn,qn,reservationNum;
 	private String CID,COD;
+	long sumPrice;
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
@@ -120,9 +120,9 @@ public class ModifyUI extends JPanel {
 
 		public void mouseClicked(MouseEvent e) {
 			layeredPane.remove(Revisedate_error);
-			layeredPane.remove(Changeroom_error);
-			layeredPane.remove(Cancelroom_error);			
+			layeredPane.remove(Changeroom_error);	
 			layeredPane.remove(Reservation_error);
+			layeredPane.remove(VerifyCode_error);
 			if (e.getSource() == backText || e.getSource() == backTextcancelsuccess) {
 				//TODO back to where it was
 				mUIMainFrame.changeUI(last);
@@ -140,7 +140,7 @@ public class ModifyUI extends JPanel {
 					validate();
 					repaint();
 				} else {// Wrong verify code.
-					layeredPane.add(Cancelroom_error, new Integer(3));
+					layeredPane.add(VerifyCode_error, new Integer(3));
 					//newcheckindateField.setText("");
 					//newcheckoutdateField.setText("");
 					validate();
@@ -151,7 +151,7 @@ public class ModifyUI extends JPanel {
 				String VerifyCode = verifycodeField.getText(); // random verify code
 
 				if(!UserCode.equals(VerifyCode)) {// Wrong verify code.
-					layeredPane.add(Cancelroom_error, new Integer(3));
+					layeredPane.add(VerifyCode_error, new Integer(3));
 					//newcheckindateField.setText("");
 					//newcheckoutdateField.setText("");
 					validate();
@@ -162,13 +162,11 @@ public class ModifyUI extends JPanel {
 					newcheckoutdateField.setText("SELECT DATE");
 					validate();
 					repaint();
-					return;
 				} else if(!checkRoom()) {
 					layeredPane.add(Changeroom_error, new Integer(3));
 					newsingleroomField.setText("");
 					newdoubleroomField.setText("");
 					newquadroomField.setText("");
-					return;
 				} else if(!checkReservation()){
 					reservationNumberField.setText(String.valueOf(reservationNum));
 					layeredPane.add(Reservation_error, new Integer(3));
@@ -188,6 +186,8 @@ public class ModifyUI extends JPanel {
 					validate();
 					repaint();
 				}
+				reserveorderstaynightField.setText(String.valueOf(controller.CountDaysBetween(CID, COD)));
+				reserveorderpriceField.setText(String.valueOf(sumPrice));
 				changeText.setForeground(Color.black);
 			}  else if(e.getSource() == calculateText) {
 				String s1 = newcheckindateField.getText();
@@ -270,9 +270,9 @@ public class ModifyUI extends JPanel {
 		initPanel();
 		initTitle();
 		initChangeroomerror();
-		initCancelordererror();
 		initRevisedateerror();
 		initReviseSuccess();
+		initVerifyCodeerror();
 		initReservationerror();
 		initReservation();
 		initCancelSuccess();
@@ -293,6 +293,7 @@ public class ModifyUI extends JPanel {
 		this.hotelID = hotelID;
 		this.CID = CID;
 		this.COD = COD;
+		this.sumPrice = sumPrice;
 		orderIDField.setText(String.valueOf(orderID));
 		reservationNumberField.setText(String.valueOf(reservationNum));
 		reserveordersingleroomField.setText(String.valueOf(sn));
@@ -334,13 +335,18 @@ public class ModifyUI extends JPanel {
 		changeroomerrorText.setForeground(new Color(255, 0, 0));
 		Changeroom_error.add(changeroomerrorText);
 	}
-	private void initCancelordererror() {
-		Cancelroom_error.setLayout(new GridLayout(2, 1, 0, 0));
-		Cancelroom_error.setOpaque(false);
-		cancelroomerrorText.setFont(new Font("Dialog", Font.BOLD, 30));
-		cancelroomerrorText.setForeground(new Color(255, 0, 0));
-		Cancelroom_error.add(cancelroomerrorText);
+	
+	/**
+	 * initialize change room error panel
+	 */
+	private void initVerifyCodeerror() {
+		VerifyCode_error.setLayout(new GridLayout(1, 1, 0, 0));
+		VerifyCode_error.setOpaque(false);
+		verifyCodeerrorText.setFont(new Font("Dialog", Font.BOLD, 30));
+		verifyCodeerrorText.setForeground(new Color(255, 0, 0));
+		VerifyCode_error.add(verifyCodeerrorText);
 	}
+
 	/**
 	 * initialize change room error panel
 	 */
@@ -427,6 +433,10 @@ public class ModifyUI extends JPanel {
 				changeroomerrorCenter.height - (changeroomerrorHeight / 2), changeroomerrorWidth,
 				changeroomerrorHeight);
 		
+		this.VerifyCode_error.setBounds(verifyCodeerrorCenter.width - (verifyCodeerrorWidth / 2),
+				verifyCodeerrorCenter.height - (verifyCodeerrorHeight / 2), verifyCodeerrorWidth,
+				verifyCodeerrorHeight);
+		
 		this.Reservation_error.setBounds(reservationerrorCenter.width - (reservationerrorWidth / 2),
 				reservationerrorCenter.height - (reservationerrorHeight / 2), reservationerrorWidth,
 				reservationerrorHeight);
@@ -437,9 +447,7 @@ public class ModifyUI extends JPanel {
 		this.Cancel_success.setBounds(cancelsuccessCenter.width - (cancelsuccessWidth / 2),
 				cancelsuccessCenter.height - (cancelsuccessHeight / 2), cancelsuccessWidth,
 				cancelsuccessHeight);
-		this.Cancelroom_error.setBounds(cancelroomerrorCenter.width - (cancelroomerrorWidth / 2),
-				cancelroomerrorCenter.height - (cancelroomerrorHeight / 2), cancelroomerrorWidth,
-				cancelroomerrorHeight);
+
 	}
 	
 	/**
