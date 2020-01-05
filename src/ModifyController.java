@@ -113,7 +113,7 @@ public class ModifyController{
 		long Days = CountDaysBetween(order.getCheckInDate(), order.getCheckOutDate());
 		long D = CountDaysBetween(nCID, nCOD);
 		
-		return D > 0 && D < Days && CountDaysBetween(order.getCheckInDate(), nCID) >= 0;
+		return D > 0 && D <= Days && CountDaysBetween(order.getCheckInDate(), nCID) >= 0;
 	}
 	
 	public int getSumPrice(int hotelID,int sn,int dn,int qn) {
