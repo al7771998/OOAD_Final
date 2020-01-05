@@ -6,6 +6,9 @@ import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -71,7 +74,24 @@ public class DatabaseUtil {
 					stmt.execute(cmds[i]);
 				}
 			}
-
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd");
+			String str="2020_01_05";
+			Date dt=sdf.parse(str);
+			Calendar rightNow = Calendar.getInstance();
+			rightNow.setTime(dt);
+			
+			int i = 0;
+			while (i <= 365) {
+				rightNow.add(Calendar.DATE,1);
+				Date dt1=rightNow.getTime();
+				String reStr = sdf.format(dt1);
+				String cmd = "ALTER TABLE Rooms ADD "
+						+ reStr
+						+ " VARCHAR(20);";
+				stmt.execute(cmd);
+				i++;
+			}
 			System.out.println("finish!");
 		} catch (Exception e) {
 			e.printStackTrace();

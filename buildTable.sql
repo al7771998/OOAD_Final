@@ -87,3 +87,28 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-06-23 18:50:09
+
+DROP TABLE IF EXISTS `Hotels`;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `Hotels` (
+  `HotelID` int(11) NOT NULL,
+  `HotelStar` int(11) NOT NULL,
+  `Locality` varchar(45) NOT NULL,
+  `Street-Address` varchar(45) NOT NULL,
+  `SingleRoom` int(11) NOT NULL,
+  `SinglePrice` int(11) NOT NULL,
+  `DoubleRoom` int(11) NOT NULL,
+  `DoublePrice` int(11) NOT NULL,
+  `QuadRoom` int(11) NOT NULL,
+  `QuadPrice` int(11) NOT NULL,
+  PRIMARY KEY (`HotelID`),
+  UNIQUE KEY `ID_UNIQUE` (`HotelID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `Rooms`;
+SET character_set_client = utf8mb4 ;
+CREATE TABLE `Rooms` (
+  `HotelID` int(11) NOT NULL,
+  PRIMARY KEY (`HotelID`),
+  UNIQUE KEY `ID_UNIQUE` (`HotelID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
