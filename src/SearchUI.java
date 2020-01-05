@@ -344,6 +344,7 @@ public class SearchUI extends JPanel {
 				String s1 = entercheckindateField.getText();
 				String s2 = entercheckoutdateField.getText();
 				DatabaseUtil.ReadHotelList();
+				controller.UpdateHotelList();
 				if (controller.countDaysBetween(s1, s2) > 0) {
 					String CID = entercheckindateField.getText();
 					String COD = entercheckoutdateField.getText();
