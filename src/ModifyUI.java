@@ -128,6 +128,7 @@ public class ModifyUI extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			layeredPane.remove(Revisedate_error);
 			layeredPane.remove(Changeroom_error);
+			layeredPane.remove(Cancelroom_error);			
 			layeredPane.remove(Reservation_error);
 			layeredPane.remove(VerifyCode_error);
 			if (e.getSource() == backText || e.getSource() == backTextcancelsuccess) {
@@ -147,7 +148,7 @@ public class ModifyUI extends JPanel {
 					validate();
 					repaint();
 				} else {// Wrong verify code.
-					layeredPane.add(Changeroom_error, new Integer(3));
+					layeredPane.add(Cancelroom_error, new Integer(3));
 					//newcheckindateField.setText("");
 					//newcheckoutdateField.setText("");
 					validate();
@@ -366,22 +367,23 @@ public class ModifyUI extends JPanel {
 	 * initialize change room error panel
 	 */
 	private void initCancelSuccess() {
-		Cancel_success.setLayout(new GridLayout(1, 1, 0, 0));
+		Cancel_success.setLayout(new GridLayout(1, 2, 0, 0));
 		Cancel_success.setOpaque(false);
-		JPanel reservenumberPanel = new JPanel();
-		reservenumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		reservenumberPanel.setOpaque(false);
-		reservenumberPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+//		JPanel reservenumberPanel = new JPanel();
+//		reservenumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+//		reservenumberPanel.setOpaque(false);
 		JLabel reservesuccessText = new JLabel("Cancel Succeeed!");
 		reservesuccessText.setFont(new Font("Dialog", Font.BOLD, 25));
-		reservenumberPanel.add(reservesuccessText);
-		Cancel_success.add(reservenumberPanel);
+		//reservenumberPanel.add(reservesuccessText);
+//		
 		JPanel buttons = new JPanel();
-		buttons.setLayout(new GridLayout(2, 1));
+		buttons.setLayout(new GridLayout(1, 1));
 		buttons.setOpaque(false);
 		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
-		backTextcancelsuccess.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		backTextcancelsuccess.setFont(new Font("Arial Black", Font.PLAIN, 22));
 		buttons.add(backTextcancelsuccess);
+		
+		Cancel_success.add(reservesuccessText);
 		Cancel_success.add(buttons);
 	}
 
@@ -512,9 +514,9 @@ public class ModifyUI extends JPanel {
 		JPanel hotelIDPanel = new JPanel();
 		hotelIDPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		hotelIDPanel.setOpaque(false);
-		hotelIDPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		hotelIDPanel.setBorder(new EmptyBorder(20, 200, 20, 200));
 		// enter hotel ID
-		JLabel hotelID = new JLabel("    HotelID     : ");
+		JLabel hotelID = new JLabel(" HotelID : ");
 		hotelID.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		reserveorderhotelIDField.setHorizontalAlignment(SwingConstants.CENTER);
 		reserveorderhotelIDField.setFont(new Font("Serif", Font.BOLD, 20));
@@ -528,13 +530,13 @@ public class ModifyUI extends JPanel {
 		roomPanel.setLayout(new GridLayout(1, 7));
 		roomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		roomPanel.setOpaque(false);
-		roomPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		roomPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
 		// row name
 		JLabel room = new JLabel("ROOM: ");
 		room.setFont(new Font("Arial Black", Font.BOLD, 20));
 		// single room
 		JLabel singleroom = new JLabel("Single: ");
-		singleroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		singleroom.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		reserveordersingleroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		reserveordersingleroomField.setEditable(false);
 		reserveordersingleroomField.setFont(new Font("Serif", Font.BOLD, 20));
@@ -548,7 +550,7 @@ public class ModifyUI extends JPanel {
 		});
 		// double room
 		JLabel doubleroom = new JLabel("Double: ");
-		doubleroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		doubleroom.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		reserveorderdoubleroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		reserveorderdoubleroomField.setEditable(false);
 		reserveorderdoubleroomField.setFont(new Font("Serif", Font.BOLD, 20));
@@ -562,7 +564,7 @@ public class ModifyUI extends JPanel {
 		});
 		// quad room
 		JLabel quadroom = new JLabel("Quad: ");
-		quadroom.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		quadroom.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		reserveorderquadroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		reserveorderquadroomField.setEditable(false);
 		reserveorderquadroomField.setFont(new Font("Serif", Font.BOLD, 20));
@@ -588,16 +590,16 @@ public class ModifyUI extends JPanel {
 		newRoomPanel.setLayout(new GridLayout(1, 7));
 		newRoomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		newRoomPanel.setOpaque(false);
-		newRoomPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		newRoomPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
 		// row name
 		JLabel change = new JLabel("CHANGE TO ");
 		change.setFont(new Font("Arial Black", Font.BOLD, 20));
 		//new single room
 		JLabel singleroom1 = new JLabel("Single: ");
-		singleroom1.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		singleroom1.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		newsingleroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		newsingleroomField.setEditable(true);
-		newsingleroomField.setFont(new Font("Arial Black", Font.BOLD, 23));
+		newsingleroomField.setFont(new Font("Arial Black", Font.BOLD, 20));
 		newsingleroomField.addKeyListener(new KeyAdapter() {// can only enter number!
 			public void keyTyped(KeyEvent e) {
 				char keyChar = e.getKeyChar();
@@ -608,7 +610,7 @@ public class ModifyUI extends JPanel {
 		});
 		//new double room
 		JLabel doubleroom1 = new JLabel("Double: ");
-		doubleroom1.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		doubleroom1.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		newdoubleroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		newdoubleroomField.setEditable(true);
 		newdoubleroomField.setFont(new Font("Arial Black", Font.BOLD, 23));
@@ -622,7 +624,7 @@ public class ModifyUI extends JPanel {
 		});
 		//new quad room
 		JLabel quadroom1 = new JLabel("Quad: ");
-		quadroom1.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		quadroom1.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		newquadroomField.setHorizontalAlignment(SwingConstants.CENTER);
 		newquadroomField.setEditable(true);
 		newquadroomField.setFont(new Font("Arial Black", Font.BOLD, 23));
@@ -648,7 +650,7 @@ public class ModifyUI extends JPanel {
 		JPanel lodgingPanel = new JPanel();
 		lodgingPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		lodgingPanel.setOpaque(false);
-		lodgingPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		lodgingPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		JLabel date = new JLabel("DATE ");
 		date.setFont(new Font("Arial Black", Font.BOLD, 20));
 		reserveordercheckindateField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -669,7 +671,7 @@ public class ModifyUI extends JPanel {
 		JPanel reviseDatePanel = new JPanel();
 		reviseDatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		reviseDatePanel.setOpaque(false);
-		reviseDatePanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		reviseDatePanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		JLabel reviseDate = new JLabel("CHANGE TO ");
 		reviseDate.setFont(new Font("Arial Black", Font.BOLD, 20));
 		// setting check in yyyy/mm/dd
@@ -731,7 +733,7 @@ public class ModifyUI extends JPanel {
 		// set 'back' and 'next' button
 		reserveorderbuttons.setLayout(new GridLayout(1, 3));
 		reserveorderbuttons.setOpaque(false);
-		reserveorderbuttons.setBorder(new EmptyBorder(20, 40, 20, 40));
+		reserveorderbuttons.setBorder(new EmptyBorder(20, 30, 20, 0));
 		changeText.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		cancelText.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		backText.setFont(new Font("Arial Black", Font.PLAIN, 20));
@@ -745,7 +747,7 @@ public class ModifyUI extends JPanel {
 		verifycodePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		verifycodePanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 		// enter verify code
-		JLabel verifycode = new JLabel("VERIFY CODE        ");
+		JLabel verifycode = new JLabel("VERIFY CODE     ");
 		verifycode.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		usercodeField.setEditable(true);
 		usercodeField.setFont(new Font("Times New Roman", Font.BOLD, 23));

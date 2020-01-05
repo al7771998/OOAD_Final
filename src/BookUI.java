@@ -228,7 +228,7 @@ public class BookUI extends JPanel {
 		// setting phone
 		reservephone.setHorizontalAlignment(SwingConstants.CENTER);
 		reservephone.setEditable(true);
-		reservephone.setFont(new Font("Serif", Font.BOLD, 23));
+		reservephone.setFont(new Font("Serif", Font.PLAIN, 23));
 		reservephone.setBackground(new Color(255, 255, 255));
 		reservephone.setOpaque(true);
 		reservephone.setBounds(267, 15, 105, 40);
@@ -257,7 +257,7 @@ public class BookUI extends JPanel {
 		// setting email
 		reserveEmailField.setHorizontalAlignment(SwingConstants.CENTER);
 		reserveEmailField.setEditable(true);
-		reserveEmailField.setFont(new Font("Serif", Font.BOLD, 23));
+		reserveEmailField.setFont(new Font("Serif", Font.PLAIN, 23));
 		reserveEmailField.setBackground(new Color(255, 255, 255));
 		reserveEmailField.setOpaque(true);
 		reserveEmailField.setBounds(267, 15, 105, 40);
