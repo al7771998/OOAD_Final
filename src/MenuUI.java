@@ -135,7 +135,7 @@ public class MenuUI extends JPanel {
 		browse.setFont(new Font("Serif", Font.BOLD, 30));
 		search.setFont(new Font("Serif", Font.BOLD, 30));
 		blank.setFont(new Font("Serif", Font.BOLD, 30));
-		logout.setFont(new Font("Serif", Font.BOLD, 30));
+		logout.setFont(new Font("Serif", Font.BOLD, 22));
 		logout.setBorder(new EmptyBorder(50, 0, 0, 0));
 		
 		subMenu.setLayout(new GridBagLayout());
