@@ -73,6 +73,7 @@ public class SearchUI extends JPanel {
 		// buttons in enter hotel list
 		backentersearch.addMouseListener(ml);
 		searchentersearch.addMouseListener(ml);
+		backnomatchedhotelerror.addMouseListener(ml);
 	}
 	
 	private void initTitle() {
@@ -369,6 +370,11 @@ public class SearchUI extends JPanel {
 					repaint();
 				}
 				searchentersearch.setForeground(Color.black);
+			} else if(e.getSource()== backnomatchedhotelerror) {
+				layeredPane.remove(No_matched_hotel_error);
+				layeredPane.add(EnterSearch, new Integer(3));
+				validate();
+				repaint();
 			}
 		}
 	};

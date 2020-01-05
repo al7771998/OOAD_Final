@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -175,6 +176,39 @@ public class BookController {
 		long end = CountDaysBetween(sdf.format(Now), endTime);
 
 		if (CheckAllRooms(Integer.valueOf(hotelName), start, end, singleRoomNum, doubleRoomNum, quadRoomNum)) {
+			//等等都搬去DatabaseUtil
+			String cmd = "SELECT * FROM Hotel WHERE HotelID=\'" + hotelName + "\';";
+			String roominfo;
+			try {
+				results = stmt.executeQuery(cmd);
+				if (results.next()) {
+					roominfo = result.getString(startTime.replace("/","_"));
+				} else {
+					System.out.println("Changing Hotel Database Error!!");
+					return false;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			String[] s_d_q = roominfo.split(":");
+			int current_sn = Integer.valueOf(s_d_q[0]) - singleRoomNum, 
+				current_dn = Integer.valueOf(s_d_q[1]) - doubleRoomNum,
+				current_qn = Integer.valueOf(s_d_q[2]) - quadRoomNum;
+			cmd = "UPDATE Hotel SET "
+				+ startTime.replace("/","_") //YYYY_MM_DD single:double:quad
+				+ " = "
+				+ "\'" + Integer.toString(current_sn) + ":" + Integer.toString(current_dn)
+				+ ":" + Integer.toString(current_qn) + "\';"
+				+"WHERE HotelID=\'" + hotelName + "\';";
+			try {
+				stmt.execute(cmd);
+			} catch (SQLException e) {
+				e.getStackTrace();
+				return false;
+			}
+			return true;
+			//這些保留
+			
 			ArrayList<ArrayList<Integer>> re = Reserve(Integer.valueOf(hotelName), contactName, start, end, singleRoomNum, doubleRoomNum, quadRoomNum);
 			Order nOrder = new Order(DatabaseUtil.getNewOrderID(), DatabaseUtil.user.getUserID(), Integer.parseInt(hotelName), reservations, emailAddress, contactName, contactPhone, startTime, endTime, re.get(0), re.get(1), re.get(2));
 			DatabaseUtil.insertOrder(nOrder);
