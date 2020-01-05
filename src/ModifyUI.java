@@ -154,8 +154,12 @@ public class ModifyUI extends JPanel {
 					s1 = CID;
 					s2 = COD;
 				}
-				if(!checkDate()) {
-					reserveorderstaynightField.setText("-1");
+				if(!s1.equals("SELECT DATE") && !s2.equals("SELECT DATE")) {
+					if (controller.CountDaysBetween(s1, s2) > 0) {
+						reserveorderstaynightField.setText(String.valueOf(controller.CountDaysBetween(s1, s2)));
+					} else {
+						reserveorderstaynightField.setText("-1");
+					}
 				}
 				int hotelID = Integer.parseInt(reserveorderhotelIDField.getText());
 				int nsn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():reserveordersingleroomField.getText());
