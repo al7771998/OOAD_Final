@@ -162,11 +162,11 @@ public class SignInUI extends JPanel {
 		JPanel IDPanel = new JPanel();
 		IDPanel.setOpaque(false);
 		IDPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		IDPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		IDPanel.setBorder(new EmptyBorder(20, 40, 10, 40));
 		// enter ID
-		JLabel ID = new JLabel("       ID          : ");
-		ID.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		signinidField = new JTextField(10) {
+		JLabel ID = new JLabel("ID : ");
+		ID.setFont(new Font("Serif", Font.BOLD, 24));
+		signinidField = new JTextField(12) {
 			@Override
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
@@ -186,7 +186,7 @@ public class SignInUI extends JPanel {
 			}
 		};
 		signinidField.setEditable(true);
-		signinidField.setFont(new Font("Arial Black", Font.BOLD, 23));
+		signinidField.setFont(new Font("Serif", Font.BOLD, 23));
 		signinidField.setBackground(new Color(232, 232, 232, 120));
 		// ID Panel adding
 		IDPanel.add(ID);
@@ -196,11 +196,11 @@ public class SignInUI extends JPanel {
 		JPanel passwordPanel = new JPanel();
 		passwordPanel.setOpaque(false);
 		passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		passwordPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		passwordPanel.setBorder(new EmptyBorder(10, 40, 20, 40));
 		// enter password
 		JLabel password = new JLabel("PASSWORD : ");
-		password.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		signinpasswordField = new JPasswordField(10) {
+		password.setFont(new Font("Serif", Font.BOLD, 24));
+		signinpasswordField = new JPasswordField(13) {
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
 					Graphics2D g2 = (Graphics2D) g.create();
@@ -218,7 +218,7 @@ public class SignInUI extends JPanel {
 			}
 		};
 		signinpasswordField.setEditable(true);
-		signinpasswordField.setFont(new Font("Arial Black", Font.BOLD, 23));
+		signinpasswordField.setFont(new Font("Serif", Font.BOLD, 23));
 		signinpasswordField.setBackground(new Color(232, 232, 232, 120));
 		// whether to show the password or not
 		signinpasswordField.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -258,9 +258,9 @@ public class SignInUI extends JPanel {
 		JPanel buttons = new JPanel();
 		buttons.setOpaque(false);
 		buttons.setLayout(new GridLayout(1, 2));
-		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
-		signinlogin.setFont(new Font("Arial Black", Font.PLAIN, 18));
-		signinback.setFont(new Font("Arial Black", Font.PLAIN, 18));
+		buttons.setBorder(new EmptyBorder(20, 140, 20, 140));
+		signinlogin.setFont(new Font("Serif", Font.BOLD, 22));
+		signinback.setFont(new Font("Serif", Font.BOLD, 22));
 		signinlogin.setOpaque(false);
 		signinback.setOpaque(false);
 		buttons.add(signinback);

@@ -55,14 +55,14 @@ public class BookUI extends JPanel {
 
 	// attribute of reserve success
 	private JPanel Reserve_success = new JPanel();
-	final private int reservesuccessWidth = 600, reservesuccessHeight = 375;
-	final private Dimension reservesuccessCenter = new Dimension(frameWidth / 2, frameHeight / 2);
+	final private int reservesuccessWidth = 720, reservesuccessHeight = 480;
+	final private Dimension reservesuccessCenter = new Dimension(frameWidth / 2, frameHeight / 20 * 12);
 	protected JTextField successreservenumberField = new JTextField(10);
 	
 	// attribute of invalid reserve
 	private JPanel Invalid_Reserve = new JPanel();
-	final private int invalidreserveWidth = 700, invalidreserveHeight = 370;
-	final private Dimension invalidreserveCenter = new Dimension(frameWidth / 2, frameHeight / 2);
+	final private int invalidreserveWidth = 720, invalidreserveHeight = 480;
+	final private Dimension invalidreserveCenter = new Dimension(frameWidth / 2, frameHeight / 20 * 12);
 	private JLabel invalidreserveText = new JLabel("<html><body><p>Please fill your username, </p><br><p>phone and e-mail correctly!</p><body></html>", JLabel.CENTER);
 	private JLabel backinvalidreserve = new JLabel("BACK", JLabel.CENTER);
 	
@@ -104,7 +104,7 @@ public class BookUI extends JPanel {
 		reservecheckindateField.setHorizontalAlignment(SwingConstants.CENTER);
 		reservecheckindateField.setEditable(false);
 		reservecheckindateField.setFont(new Font("Serif", Font.BOLD, 23));
-		reservecheckindateField.setBackground(new Color(255, 255, 255));
+		reservecheckindateField.setBackground(new Color(150, 255, 150));
 		reservecheckindateField.setText(start);
 		reservecheckindateField.setOpaque(true);
 		reservecheckindateField.setBounds(267, 15, 105, 50);
@@ -126,7 +126,7 @@ public class BookUI extends JPanel {
 		reservecheckoutdateField.setHorizontalAlignment(SwingConstants.CENTER);
 		reservecheckoutdateField.setEditable(false);
 		reservecheckoutdateField.setFont(new Font("Serif", Font.BOLD, 23));
-		reservecheckoutdateField.setBackground(new Color(255, 255, 255));
+		reservecheckoutdateField.setBackground(new Color(150, 255, 150));
 		reservecheckoutdateField.setText(end);
 		reservecheckoutdateField.setOpaque(true);
 		reservecheckoutdateField.setBounds(267, 15, 105, 50);
@@ -364,8 +364,9 @@ public class BookUI extends JPanel {
 		JPanel reservenumberPanel = new JPanel();
 		reservenumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		reservenumberPanel.setOpaque(false);
-		reservenumberPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		reservenumberPanel.setBorder(new MatteBorder(5, 5, 5, 5, Color.white));
 		JLabel reservesuccessText = new JLabel("SUCCEED! THANKS FOR YOUR BOOKING!");
+		reservesuccessText.setBorder(new EmptyBorder(100, 0, 0, 0));
 		reservesuccessText.setFont(new Font("Dialog", Font.BOLD, 25));
 		reservenumberPanel.add(reservesuccessText);
 		Reserve_success.add(reservenumberPanel);
