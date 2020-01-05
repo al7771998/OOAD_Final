@@ -164,7 +164,7 @@ public class ModifyUI extends JPanel {
 				long price = controller.getSumPrice(hotelID,nsn,ndn,nqn) * controller.CountDaysBetween(s1, s2);
 				reserveorderpriceField.setText(String.valueOf(price));
 			} else if (e.getSource() == revisesuccessDone) {
-				mUIMainFrame.changeUI(UIMainFrame.UIStage.BROWSE);
+				mUIMainFrame.changeUI(last);
 			}
 		}
 	};
