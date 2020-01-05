@@ -23,7 +23,9 @@ public class SearchController{
 			 + HotelList[x.getHotelID()].getDoubleRoomPrice() * x.getDouble()
 		     + HotelList[x.getHotelID()].getQuadRoomPrice() * x.getQuad();
 	}
-	
+	public void UpdateHotelList() {
+		HotelList = DatabaseUtil.HotelList;
+	}
 	/**
 	 * This method runs the given Search operation.
 	 * 
