@@ -96,6 +96,7 @@ public class UIMainFrame extends JFrame {
 				System.out.println("change to browse");
 				break;
 			case MENU:
+				((MenuUI)menuUI).updateTitle();
 				this.setContentPane(menuUI);
 				this.revalidate();
 				System.out.println("change to menu");

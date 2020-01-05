@@ -38,6 +38,7 @@ public class ModifyUI extends JPanel {
 	final private int reserveorderWidth = 750, reserveorderHeight = 460;
 	final private Dimension reserveorderCenter = new Dimension(frameWidth / 2, frameHeight / 2);
 	private JLabel backText = new JLabel("BACK", JLabel.CENTER);
+	private JLabel backTextcancelsuccess = new JLabel("BACK", JLabel.CENTER);
 	private JLabel cancelText = new JLabel("CANCEL ORDER", JLabel.CENTER);
 	private JLabel changeText = new JLabel("CHANGE", JLabel.CENTER);
 	protected JTextField reserveorderhotelIDField = new JTextField(15);
@@ -70,14 +71,19 @@ public class ModifyUI extends JPanel {
 	private JLabel revisedateerrorText = new JLabel("SORRY, EXTENDING LODGE DAYS IS UNAVAILABLE!", JLabel.CENTER);
 
 	protected JTextField successreservenumberField = new JTextField(10);
-	
+
 	// attribute of revise success
 	private JPanel Revise_success = new JPanel();
 	final private int revisesuccessWidth = 700, revisesuccessHeight = 110;
 	final private Dimension revisesuccessCenter = new Dimension(frameWidth / 2, 500);
 	private JLabel revisesuccessText = new JLabel("Change Success!", JLabel.CENTER);
 	private JLabel revisesuccessDone = new JLabel("DONE", JLabel.CENTER);
-	
+	// attribute of cancel success
+	private JPanel Cancel_success = new JPanel();
+	final private int cancelsuccessWidth = 600, cancelsuccessHeight = 75;
+	final private Dimension cancelsuccessCenter = new Dimension(frameWidth / 2, frameHeight / 2);
+	//protected JTextField successreservenumberField = new JTextField(10);
+
 	private UIMainFrame.UIStage last;
 	private int hotelID,orderID,sn,dn,qn;
 	private String CID,COD;
@@ -97,12 +103,19 @@ public class ModifyUI extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			layeredPane.remove(Revisedate_error);
 			layeredPane.remove(Changeroom_error);
-			if (e.getSource() == backText) {
+			if (e.getSource() == backText || e.getSource() == backTextcancelsuccess) {
 				//TODO back to where it was
 				mUIMainFrame.changeUI(last);
 			} else if(e.getSource() == cancelText) {
 				int orderID = Integer.parseInt(successreservenumberField.getText());
 				controller.cancel(orderID);
+				layeredPane.remove(Reserveorder);
+				layeredPane.add(Cancel_success, new Integer(3)); 
+				newcheckindateField.setText("");
+				newcheckoutdateField.setText("");
+				validate();
+				repaint();
+				//cancelText.setForeground(Color.black);
 			} else if(e.getSource() == changeText) {
 				if(!checkDate()) {
 					layeredPane.add(Revisedate_error, new Integer(3)); 
@@ -201,9 +214,11 @@ public class ModifyUI extends JPanel {
 		initRevisedateerror();
 		initReviseSuccess();
 		initReservation();
+		initCancelSuccess();
 		initLayerPane();
 		
 		backText.addMouseListener(ml);
+		backTextcancelsuccess.addMouseListener(ml);
 		cancelText.addMouseListener(ml);
 		changeText.addMouseListener(ml);
 		calculateText.addMouseListener(ml);
@@ -255,6 +270,29 @@ public class ModifyUI extends JPanel {
 		changeroomerrorText.setFont(new Font("Dialog", Font.BOLD, 30));
 		changeroomerrorText.setForeground(new Color(255, 0, 0));
 		Changeroom_error.add(changeroomerrorText);
+	}
+	
+	/**
+	 * initialize change room error panel
+	 */
+	private void initCancelSuccess() {
+		Cancel_success.setLayout(new GridLayout(1, 1, 0, 0));
+		Cancel_success.setOpaque(false);
+		JPanel reservenumberPanel = new JPanel();
+		reservenumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		reservenumberPanel.setOpaque(false);
+		reservenumberPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		JLabel reservesuccessText = new JLabel("Cancel Succeeed!");
+		reservesuccessText.setFont(new Font("Dialog", Font.BOLD, 25));
+		reservenumberPanel.add(reservesuccessText);
+		Cancel_success.add(reservenumberPanel);
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(2, 1));
+		buttons.setOpaque(false);
+		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
+		backText.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		buttons.add(backTextcancelsuccess);
+		Cancel_success.add(buttons);
 	}
 
 	/**
@@ -310,6 +348,10 @@ public class ModifyUI extends JPanel {
 		
 		this.Revise_success.setBounds(revisesuccessCenter.width - (revisesuccessWidth / 2),
 				revisesuccessCenter.height - (revisesuccessHeight / 2), revisesuccessWidth, revisesuccessHeight);
+
+		this.Cancel_success.setBounds(cancelsuccessCenter.width - (cancelsuccessWidth / 2),
+				cancelsuccessCenter.height - (cancelsuccessHeight / 2), cancelsuccessWidth,
+				cancelsuccessHeight);
 	}
 	
 	/**
