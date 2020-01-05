@@ -120,7 +120,7 @@ public class UIMainFrame extends JFrame {
 		}
 	}
 	
-	public void changeUI(UIStage last, UIStage next, int reservationID, String CID, String COD, int HotelID, int sn, int dn, int qn, int sumPrice) {
+	public void changeUI(UIStage last, UIStage next, int reservationID, String CID, String COD, int HotelID, int sn, int dn, int qn, long sumPrice) {
 		if(next == UIStage.MODIFY) {
 			this.setContentPane(new ModifyUI(this, last, reservationID, CID, COD, HotelID, sn, dn, qn, sumPrice));
 			this.revalidate();

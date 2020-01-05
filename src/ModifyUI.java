@@ -68,14 +68,19 @@ public class ModifyUI extends JPanel {
 	final private int revisedateerrorWidth = 800, revisedateerrorHeight = 75;
 	final private Dimension revisedateerrorCenter = new Dimension(frameWidth / 2, frameHeight / 10 * 9);
 	private JLabel revisedateerrorText = new JLabel("SORRY, EXTENDING LODGE DAYS IS UNAVAILABLE!", JLabel.CENTER);
-	
-	// attribute of reserve success
-	private JPanel Reserve_success = new JPanel();
-	final private int reservesuccessWidth = 600, reservesuccessHeight = 75;
-	final private Dimension reservesuccessCenter = new Dimension(frameWidth / 2, frameHeight / 5);
+
 	protected JTextField successreservenumberField = new JTextField(10);
 	
+	// attribute of revise success
+	private JPanel Revise_success = new JPanel();
+	final private int revisesuccessWidth = 700, revisesuccessHeight = 110;
+	final private Dimension revisesuccessCenter = new Dimension(frameWidth / 2, 500);
+	private JLabel revisesuccessText = new JLabel("Change Success!", JLabel.CENTER);
+	private JLabel revisesuccessDone = new JLabel("DONE", JLabel.CENTER);
+	
 	private UIMainFrame.UIStage last;
+	private int hotelID,orderID,sn,dn,qn;
+	private String CID,COD;
 	
 	MouseListener ml = new MouseAdapter() {
 		public void mouseEntered(MouseEvent e) {
@@ -113,7 +118,20 @@ public class ModifyUI extends JPanel {
 					newquadroomField.setText("");
 					return;
 				} else {
-					
+					sn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():String.valueOf(sn));
+					dn = Integer.parseInt(!newdoubleroomField.getText().equals("") ? newdoubleroomField.getText():String.valueOf(dn));
+					qn = Integer.parseInt(!newquadroomField.getText().equals("") ? newquadroomField.getText(): String.valueOf(qn));
+					String s1 = newcheckindateField.getText();
+					String s2 = newcheckoutdateField.getText();
+					if(!s1.equals("SELECT DATE") && !s2.equals("SELECT DATE")) {
+						CID = s1;
+						COD = s2;
+					}
+					Order order = controller.modifyHotel(orderID,hotelID,sn,dn,qn,CID,COD);
+					layeredPane.remove(Reserveorder);
+					layeredPane.add(Revise_success,new Integer(1));
+					validate();
+					repaint();
 				}
 				changeText.setForeground(Color.black);
 			}  else if(e.getSource() == calculateText) {
@@ -124,8 +142,12 @@ public class ModifyUI extends JPanel {
 				int nsn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():reserveordersingleroomField.getText());
 				int ndn = Integer.parseInt(!newdoubleroomField.getText().equals("") ? newdoubleroomField.getText():reserveorderdoubleroomField.getText());
 				int nqn = Integer.parseInt(!newquadroomField.getText().equals("") ? newquadroomField.getText(): reserveorderquadroomField.getText());
-				int price = controller.getSumPrice(hotelID,nsn,ndn,nqn);
+				String nCID = newcheckindateField.getText();
+				String nCOD = newcheckoutdateField.getText();
+				long price = controller.getSumPrice(hotelID,nsn,ndn,nqn) * controller.CountDaysBetween(nCID, nCOD);
 				reserveorderpriceField.setText(String.valueOf(price));
+			} else if (e.getSource() == revisesuccessDone) {
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.BROWSE);
 			}
 		}
 	};
@@ -169,7 +191,7 @@ public class ModifyUI extends JPanel {
 		return true;
 	}
 	
-	public ModifyUI(UIMainFrame uIMainFrame, UIMainFrame.UIStage last, int reservationID, String CID, String COD, int hotelID, int sn, int dn, int qn, int sumPrice) {
+	public ModifyUI(UIMainFrame uIMainFrame, UIMainFrame.UIStage last, int reservationID, String CID, String COD, int hotelID, int sn, int dn, int qn, long sumPrice) {
 		mUIMainFrame = uIMainFrame;
 		this.last = last;
 		controller = new ModifyController();
@@ -177,6 +199,7 @@ public class ModifyUI extends JPanel {
 		initTitle();
 		initChangeroomerror();
 		initRevisedateerror();
+		initReviseSuccess();
 		initReservation();
 		initLayerPane();
 		
@@ -184,7 +207,15 @@ public class ModifyUI extends JPanel {
 		cancelText.addMouseListener(ml);
 		changeText.addMouseListener(ml);
 		calculateText.addMouseListener(ml);
+		revisesuccessDone.addMouseListener(ml);
 		
+		this.orderID = reservationID;
+		this.sn = sn;
+		this.dn = dn;
+		this.qn = qn;
+		this.hotelID = hotelID;
+		this.CID = CID;
+		this.COD = COD;
 		successreservenumberField.setText(String.valueOf(reservationID));
 		reserveordersingleroomField.setText(String.valueOf(sn));
 		reserveorderdoubleroomField.setText(String.valueOf(dn));
@@ -237,6 +268,19 @@ public class ModifyUI extends JPanel {
 		Revisedate_error.add(revisedateerrorText);
 	}
 	
+	/**
+	 * initialize Revise success panel
+	 */
+	private void initReviseSuccess() {
+		revisesuccessText.setFont(new Font("Dialog", Font.BOLD, 28));
+		revisesuccessText.setForeground(Color.green);
+		revisesuccessDone.setFont(new Font("Arial Black", Font.BOLD, 28));
+		Revise_success.setLayout(new GridLayout(2, 1, 0, 0));
+		Revise_success.setOpaque(false);
+		Revise_success.add(revisesuccessText);
+		Revise_success.add(revisesuccessDone);
+	}
+	
 	private void initLayerPane() {
 		layeredPane = new JLayeredPane();
 		layeredPane.setPreferredSize(new Dimension(frameWidth, frameHeight));
@@ -263,6 +307,9 @@ public class ModifyUI extends JPanel {
 		this.Changeroom_error.setBounds(changeroomerrorCenter.width - (changeroomerrorWidth / 2),
 				changeroomerrorCenter.height - (changeroomerrorHeight / 2), changeroomerrorWidth,
 				changeroomerrorHeight);
+		
+		this.Revise_success.setBounds(revisesuccessCenter.width - (revisesuccessWidth / 2),
+				revisesuccessCenter.height - (revisesuccessHeight / 2), revisesuccessWidth, revisesuccessHeight);
 	}
 	
 	/**
