@@ -150,23 +150,24 @@ public class BrowseUI extends JPanel {
 		orderlistTable.setOpaque(false);
 		JTableHeader head = orderlistTable.getTableHeader();
 		head.setFont(new Font("Arial", Font.PLAIN, 10));
+		((DefaultTableCellRenderer)orderlistTable.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
 		// row height
 		orderlistTable.setRowHeight(40);
 		// column width
-		orderlistTable.getColumnModel().getColumn(0).setMaxWidth(100); // "ID", 
-		orderlistTable.getColumnModel().getColumn(1).setMaxWidth(100); // "UserID"
-		orderlistTable.getColumnModel().getColumn(2).setMaxWidth(100); // "HotelID"
-		orderlistTable.getColumnModel().getColumn(3).setMaxWidth(100); // "Reservations"
-		orderlistTable.getColumnModel().getColumn(4).setMaxWidth(300);// "Email"
-		orderlistTable.getColumnModel().getColumn(5).setMaxWidth(70); // "ContactName"
-		orderlistTable.getColumnModel().getColumn(6).setMaxWidth(70); // "ContactPhone"
-		orderlistTable.getColumnModel().getColumn(7).setMaxWidth(70); // "CheckInDate"
-		orderlistTable.getColumnModel().getColumn(8).setMaxWidth(70); // "CheckOutDate"
-		orderlistTable.getColumnModel().getColumn(9).setMaxWidth(70); // "SingleRoom Num"
-		orderlistTable.getColumnModel().getColumn(10).setMaxWidth(70);// "DoubleRoom Num"
-		orderlistTable.getColumnModel().getColumn(11).setMaxWidth(70);// "QuadRoom Num"
-		orderlistTable.getColumnModel().getColumn(12).setMaxWidth(70);// "SumPrice" 
+		orderlistTable.getColumnModel().getColumn(0).setMaxWidth(40); // "ID", 
+		orderlistTable.getColumnModel().getColumn(1).setMaxWidth(60); // "UserID"
+		orderlistTable.getColumnModel().getColumn(2).setMaxWidth(40); // "HotelID"
+		orderlistTable.getColumnModel().getColumn(3).setMaxWidth(80); // "Reservations"
+		orderlistTable.getColumnModel().getColumn(4).setMaxWidth(200);// "Email"
+		orderlistTable.getColumnModel().getColumn(5).setMaxWidth(100); // "ContactName"
+		orderlistTable.getColumnModel().getColumn(6).setMaxWidth(120); // "ContactPhone"
+		orderlistTable.getColumnModel().getColumn(7).setMaxWidth(140); // "CheckInDate"
+		orderlistTable.getColumnModel().getColumn(8).setMaxWidth(140); // "CheckOutDate"
+		orderlistTable.getColumnModel().getColumn(9).setMaxWidth(80); // "SingleRoom Num"
+		orderlistTable.getColumnModel().getColumn(10).setMaxWidth(80);// "DoubleRoom Num"
+		orderlistTable.getColumnModel().getColumn(11).setMaxWidth(80);// "QuadRoom Num"
+		orderlistTable.getColumnModel().getColumn(12).setMaxWidth(60);// "SumPrice" 
 		// row color
 		DefaultTableCellRenderer ter = new DefaultTableCellRenderer() {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -181,6 +182,7 @@ public class BrowseUI extends JPanel {
 		for (int i = 0; i <= 12; i++) {
 			orderlistTable.getColumn(mBrowseController.heading[i]).setCellRenderer(ter);
 		}
+		ter.setHorizontalAlignment(JLabel.CENTER);
 
 		// build up Table
 		JScrollPane orderlistJScrollPane = new JScrollPane(orderlistTable,
