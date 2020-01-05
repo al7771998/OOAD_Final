@@ -49,7 +49,7 @@ public class MenuUI extends JPanel {
 
 	// attribute of sub menu
 	private JPanel subMenu = new JPanel();
-	final private int subMenuWidth = 1200, subMenuHeight = 600;
+	final private int subMenuWidth = 1200, subMenuHeight = 700;
 	final private Dimension subMenuCenter = new Dimension(frameWidth / 2, frameHeight / 10 * 6);
 	private JLabel search = new JLabel("SEARCH", JLabel.CENTER);
 	private JLabel browse = new JLabel("BROWSE", JLabel.CENTER);
