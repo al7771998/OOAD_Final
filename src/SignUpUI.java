@@ -32,7 +32,7 @@ public class SignUpUI extends JPanel {
 
 	//signup section
 	private JPanel Signup = new JPanel();
-	final private int signupSetWidth = 600, signupSetHeight = 270;
+	final private int signupSetWidth = 600, signupSetHeight = 320;
 	final private Dimension signupSetCenter = new Dimension(frameWidth / 2, 450);
 	private JLabel signuplogin = new JLabel("SIGN UP and LOGIN", JLabel.CENTER);
 	private JLabel signupcancel = new JLabel("CANCEL", JLabel.CENTER);
@@ -169,8 +169,8 @@ public class SignUpUI extends JPanel {
 		JPanel IDPanel = new JPanel();
 		IDPanel.setOpaque(false);
 		IDPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		IDPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
-		JLabel ID = new JLabel("         ID          ");
+		IDPanel.setBorder(new EmptyBorder(20, 40, 10, 40));
+		JLabel ID = new JLabel("ID : ");
 		ID.setFont(new Font("Serif", Font.BOLD, 24));
 		signupidField = new JTextField(10) {
 			@Override
@@ -201,8 +201,8 @@ public class SignUpUI extends JPanel {
 		JPanel passwordPanel = new JPanel();
 		passwordPanel.setOpaque(false);
 		passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		passwordPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
-		JLabel password = new JLabel("PASSWORD    ");
+		passwordPanel.setBorder(new EmptyBorder(10, 40, 10, 40));
+		JLabel password = new JLabel("PASSWORD : ");
 		password.setFont(new Font("Serif", Font.BOLD, 24));
 		signuppasswordField = new JPasswordField(10) {
 			protected void paintComponent(Graphics g) {
@@ -263,12 +263,12 @@ public class SignUpUI extends JPanel {
 		JPanel verifycodePanel = new JPanel();
 		verifycodePanel.setOpaque(false);
 		verifycodePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		verifycodePanel.setBorder(new EmptyBorder(20, 40, 20, 40));
+		verifycodePanel.setBorder(new EmptyBorder(10, 40, 20, 40));
 		// enter verify code
-		JLabel verifycode = new JLabel("VERIFY CODE   ");
-		verifycode.setFont(new Font("Serif", Font.BOLD, 24));
+		JLabel verifycode = new JLabel("VERIFY CODE  ");
+		verifycode.setFont(new Font("Serif", Font.BOLD, 20));
 		usercodeField.setEditable(true);
-		usercodeField.setFont(new Font("Times New Roman", Font.BOLD, 23));
+		usercodeField.setFont(new Font("Serif", Font.BOLD, 20));
 		usercodeField.addKeyListener(new KeyAdapter() {// can only enter number!
 			public void keyTyped(KeyEvent e) {
 				String s = usercodeField.getText();
@@ -288,8 +288,8 @@ public class SignUpUI extends JPanel {
 		buttons.setOpaque(false);
 		buttons.setLayout(new GridLayout(1, 2));
 		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
-		signuplogin.setFont(new Font("Serif", Font.BOLD, 24));
-		signupcancel.setFont(new Font("Serif", Font.BOLD, 24));
+		signuplogin.setFont(new Font("Serif", Font.BOLD, 22));
+		signupcancel.setFont(new Font("Serif", Font.BOLD, 22));
 		buttons.add(signupcancel);
 		buttons.add(signuplogin);
 
