@@ -132,15 +132,7 @@ public class ManageUI extends JPanel {
 	}
 	
 	public void showorderlist(DefaultTableModel tablemodel) {
-		orderlistTable = new JTable(tablemodel) {
-			public boolean isCellEditable(int row, int column) {
-				if (column == 12) {
-					return true;
-				}
-				return false;
-			}
-
-		};
+		orderlistTable = new JTable(tablemodel);
 		orderlistTable.setOpaque(false);
 		JTableHeader head = orderlistTable.getTableHeader();
 		head.setFont(new Font("Arial", Font.PLAIN, 10));
