@@ -148,6 +148,12 @@ public class ModifyUI extends JPanel {
 				}
 				changeText.setForeground(Color.black);
 			}  else if(e.getSource() == calculateText) {
+				String s1 = newcheckindateField.getText();
+				String s2 = newcheckoutdateField.getText();
+				if(s1.equals("SELECT DATE") || s2.equals("SELECT DATE")) {
+					s1 = CID;
+					s2 = COD;
+				}
 				if(!checkDate()) {
 					reserveorderstaynightField.setText("-1");
 				}
@@ -155,9 +161,7 @@ public class ModifyUI extends JPanel {
 				int nsn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():reserveordersingleroomField.getText());
 				int ndn = Integer.parseInt(!newdoubleroomField.getText().equals("") ? newdoubleroomField.getText():reserveorderdoubleroomField.getText());
 				int nqn = Integer.parseInt(!newquadroomField.getText().equals("") ? newquadroomField.getText(): reserveorderquadroomField.getText());
-				String nCID = newcheckindateField.getText();
-				String nCOD = newcheckoutdateField.getText();
-				long price = controller.getSumPrice(hotelID,nsn,ndn,nqn) * controller.CountDaysBetween(nCID, nCOD);
+				long price = controller.getSumPrice(hotelID,nsn,ndn,nqn) * controller.CountDaysBetween(s1, s2);
 				reserveorderpriceField.setText(String.valueOf(price));
 			} else if (e.getSource() == revisesuccessDone) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.BROWSE);
