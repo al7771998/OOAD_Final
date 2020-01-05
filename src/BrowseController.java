@@ -1,4 +1,8 @@
 import javax.swing.table.DefaultTableModel;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class BrowseController{
@@ -48,7 +52,7 @@ public class BrowseController{
 			int sn = orders[i].getSnum() != null? orders[i].getSnum().size():0;
 			int dn = orders[i].getDnum() != null? orders[i].getDnum().size():0;
 			int qn = orders[i].getQnum() != null? orders[i].getQnum().size():0;
-			int sumPrice = orders[i].getSumPrice();
+			long sumPrice = orders[i].getSumPrice() * CountDaysBetween(orders[i].getCheckInDate(),orders[i].getCheckOutDate());
 			//String go = "Select"; // select
 			Object[] data = { id, userId, hotelId, reservation, email, contactName, contactPhone, 
 					checkInDate, checkOutDate, sn, dn ,qn, sumPrice};
@@ -58,8 +62,13 @@ public class BrowseController{
 		return tablemodel;
 	}
 	
-	public void setValue(Object value) {
-		
+	public static long CountDaysBetween(String D1, String D2) {
+		final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		final LocalDate firstDate = LocalDate.parse(D1, formatter);
+		final LocalDate secondDate = LocalDate.parse(D2, formatter);
+		final long days = ChronoUnit.DAYS.between(firstDate, secondDate);
+		// System.out.println("Days between: " + days);
+		return days;
 	}
 }
 

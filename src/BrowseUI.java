@@ -76,7 +76,7 @@ public class BrowseUI extends JPanel {
 				int sn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 9); 
 				int dn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 10); 
 				int qn = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 11);
-				int sumPrice = (int) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 12);
+				long sumPrice = (long) orderlistTable.getModel().getValueAt(orderlistTable.getSelectedRow(), 12);
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.BROWSE,UIMainFrame.UIStage.MODIFY,reservationID,CID,COD,HotelID,sn,dn,qn,sumPrice);
 				reviseText.setForeground(Color.black);
 			}

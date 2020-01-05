@@ -16,13 +16,7 @@ import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -49,14 +43,14 @@ public class MenuUI extends JPanel {
 	
 	// attribute of title
 	private JPanel title = new JPanel();
-	final private int titleWidth = 930, titleHeight = 80;
+	final private int titleWidth = 930, titleHeight = 120;
 	final private Dimension titleCenter = new Dimension(frameWidth / 2, frameHeight / 4);
 	private JLabel titleText = new JLabel("     Hotel     ", JLabel.CENTER);
 
 	// attribute of sub menu
 	private JPanel subMenu = new JPanel();
-	final private int subMenuWidth = 500, subMenuHeight = 70;
-	final private Dimension subMenuCenter = new Dimension(frameWidth / 2, frameHeight / 4 * 3);
+	final private int subMenuWidth = 1200, subMenuHeight = 700;
+	final private Dimension subMenuCenter = new Dimension(frameWidth / 2, frameHeight / 10 * 6);
 	private JLabel search = new JLabel("SEARCH", JLabel.CENTER);
 	private JLabel browse = new JLabel("BROWSE", JLabel.CENTER);
 	private JLabel logout = new JLabel("LOGOUT", JLabel.CENTER);
@@ -106,25 +100,73 @@ public class MenuUI extends JPanel {
 	}
 	
 	private void initTitle() {
-		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 96));
-		logout.setFont(new Font("Arial Black", Font.BOLD, 30));
-		browse.setFont(new Font("Arial Black", Font.BOLD, 30));
-		search.setFont(new Font("Arial Black", Font.BOLD, 30));
-		title.setLayout(new GridLayout(1, 1, 0, 0));
-		title.setOpaque(false);
+		
+        title.setOpaque(false);
+		title.setLayout(new GridBagLayout());
+		
+		JLabel welcomeText = new JLabel(" welcome ", JLabel.CENTER);
+		if (DatabaseUtil.user != null)
+			welcomeText = new JLabel(" welcome, " + DatabaseUtil.user.getUserID(), JLabel.CENTER);
+		
+		titleText.setFont(new Font("Brush Script MT", Font.BOLD, 80));
 		titleText.setForeground(new Color(65, 105, 225));
 		titleText.setOpaque(false);
-		titleText.setBorder(new EmptyBorder(5, 5, 5, 5));
-		title.add(titleText);
+		welcomeText.setFont(new Font("Brush Script MT", Font.BOLD, 32));
+		welcomeText.setForeground(new Color(65, 105, 225));
+		welcomeText.setOpaque(false);
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		title.add(titleText, c, 0);
+
+		c.ipady = 30;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		title.add(welcomeText, c, 1);
+
 	}
 	
 	private void initSubMenu() {
-		subMenu.setLayout(new GridLayout(1, 2, 0, 0));
+
+		JLabel blank = new JLabel("      ", JLabel.CENTER);
+		browse.setFont(new Font("Serif", Font.BOLD, 30));
+		search.setFont(new Font("Serif", Font.BOLD, 30));
+		blank.setFont(new Font("Serif", Font.BOLD, 30));
+		logout.setFont(new Font("Serif", Font.BOLD, 30));
+		logout.setBorder(new EmptyBorder(50, 0, 0, 0));
+		
+		subMenu.setLayout(new GridBagLayout());
 		subMenu.setOpaque(false);
 		subMenu.setBackground(null);
-		subMenu.add(logout);
-		subMenu.add(browse);
-		subMenu.add(search);
+		boolean test = false;
+		GridBagConstraints c = new GridBagConstraints();
+		Button button1 = new Button("test1");
+		Button button2 = new Button("test2");
+		Button button3 = new Button("test3");
+		Button button4 = new Button("test4");
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		subMenu.add(test? button1:search, c, 0);
+		c.gridx = 2;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		subMenu.add(test? button2:blank, c, 1);
+		c.gridx = 3;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		subMenu.add(test? button3:browse, c, 2);
+		c.ipady = 80;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 5;
+		subMenu.add(test? button4:logout, c, 3);
+		
+
 	}
 	
 	private void initLayerPane() {
@@ -147,5 +189,19 @@ public class MenuUI extends JPanel {
 
 	}
 
+	public void updateTitle() {
+		Component toRemove = title.getComponent(1);
+		JLabel welcomeText = new JLabel(" welcome, " + DatabaseUtil.user.getUserID(), JLabel.CENTER);
+		welcomeText.setFont(new Font("Brush Script MT", Font.BOLD, 32));
+		welcomeText.setForeground(new Color(65, 105, 225));
+		welcomeText.setOpaque(false);
+		GridBagConstraints c = new GridBagConstraints();
+		c.ipady = 30;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+		title.remove(toRemove);
+		title.add(welcomeText, c, 1);
+	}
 	
 }
