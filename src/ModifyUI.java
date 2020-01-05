@@ -74,13 +74,6 @@ public class ModifyUI extends JPanel {
 	final private Dimension verifyCodeerrorCenter = new Dimension(frameWidth / 2, frameHeight / 15 * 14);
 	private JLabel verifyCodeerrorText = new JLabel("SORRY, Verify Code is wrong!!", JLabel.CENTER);
 
-	// cancel room error
-	private JPanel Cancelroom_error = new JPanel();
-	final private int cancelroomerrorWidth = 800, cancelroomerrorHeight = 75;
-	final private Dimension cancelroomerrorCenter = new Dimension(frameWidth / 2, frameHeight / 15 * 14);
-	private JLabel cancelroomerrorText = new JLabel("Verification code is not correct!!", JLabel.CENTER);
-
-		
 	// revise date error
 	private JPanel Revisedate_error = new JPanel();
 	final private int revisedateerrorWidth = 900, revisedateerrorHeight = 75;
@@ -127,8 +120,7 @@ public class ModifyUI extends JPanel {
 
 		public void mouseClicked(MouseEvent e) {
 			layeredPane.remove(Revisedate_error);
-			layeredPane.remove(Changeroom_error);
-			layeredPane.remove(Cancelroom_error);			
+			layeredPane.remove(Changeroom_error);	
 			layeredPane.remove(Reservation_error);
 			layeredPane.remove(VerifyCode_error);
 			if (e.getSource() == backText || e.getSource() == backTextcancelsuccess) {
@@ -148,7 +140,7 @@ public class ModifyUI extends JPanel {
 					validate();
 					repaint();
 				} else {// Wrong verify code.
-					layeredPane.add(Cancelroom_error, new Integer(3));
+					layeredPane.add(VerifyCode_error, new Integer(3));
 					//newcheckindateField.setText("");
 					//newcheckoutdateField.setText("");
 					validate();
@@ -278,7 +270,6 @@ public class ModifyUI extends JPanel {
 		initPanel();
 		initTitle();
 		initChangeroomerror();
-		initCancelordererror();
 		initRevisedateerror();
 		initReviseSuccess();
 		initVerifyCodeerror();
@@ -355,14 +346,7 @@ public class ModifyUI extends JPanel {
 		verifyCodeerrorText.setForeground(new Color(255, 0, 0));
 		VerifyCode_error.add(verifyCodeerrorText);
 	}
-	
-	private void initCancelordererror() {
-		Cancelroom_error.setLayout(new GridLayout(2, 1, 0, 0));
-		Cancelroom_error.setOpaque(false);
-		cancelroomerrorText.setFont(new Font("Dialog", Font.BOLD, 30));
-		cancelroomerrorText.setForeground(new Color(255, 0, 0));
-		Cancelroom_error.add(cancelroomerrorText);
-	}
+
 	/**
 	 * initialize change room error panel
 	 */
@@ -463,9 +447,7 @@ public class ModifyUI extends JPanel {
 		this.Cancel_success.setBounds(cancelsuccessCenter.width - (cancelsuccessWidth / 2),
 				cancelsuccessCenter.height - (cancelsuccessHeight / 2), cancelsuccessWidth,
 				cancelsuccessHeight);
-		this.Cancelroom_error.setBounds(cancelroomerrorCenter.width - (cancelroomerrorWidth / 2),
-				cancelroomerrorCenter.height - (cancelroomerrorHeight / 2), cancelroomerrorWidth,
-				cancelroomerrorHeight);
+
 	}
 	
 	/**
