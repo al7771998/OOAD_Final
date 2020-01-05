@@ -92,7 +92,7 @@ public class DatabaseUtil {
 				stmt.execute(cmd);
 				i++;
 			}
-			System.out.println("finish!");
+			System.out.println("finish building table!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -562,16 +562,87 @@ public class DatabaseUtil {
 	 */
 	public static Hotel[] HotelList;
 	public static void ReadHotelList()  {
-		try (Reader reader = new InputStreamReader(main.class.getResourceAsStream("HotelList.json"), "big5")) {
+		/*try (Reader reader = new InputStreamReader(main.class.getResourceAsStream("HotelList.json"), "big5")) {
 			// try (BufferedReader reader = new BufferedReader(new FileReader(file)) {
 			Gson gson = new GsonBuilder().create();
 			HotelList = gson.fromJson(reader, Hotel[].class);
-			for (Hotel h : HotelList)
+			for (Hotel h : HotelList) {
 				h.init();
+				String cmd = "INSERT INTO Hotels"
+						+ "(HotelID, HotelStar, Locality, StreetAddress, SingleRoom, SinglePrice, DoubleRoom, DoublePrice, QuadRoom, QuadPrice)"
+						+ "VALUES"
+						+ "(" + h.getID() + ", "
+						+ h.getStar() + ", "
+						+ "\'" + h.getLocality() + "\'" + ", "
+						+ "\'" + h.getAddress() + "\'" + ", "
+						+ h.getSingleRooms().length + ", "
+						+ h.getSingleRoomPrice() + ", "
+						+ h.getDoubleRooms().length + ", "
+						+ h.getDoubleRoomPrice() + ", "
+						+ h.getQuadRooms().length + ", "
+						+ h.getQuadRoomPrice()
+						+ ");";
+				stmt.execute(cmd);
+			
+				String cmd_h = "INSERT INTO Rooms "
+						+ "(HotelID)"
+						+ "VALUES"
+						+ "(" + h.getID() + ");";
+				stmt.execute(cmd_h);
+				
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd");
+				String str="2020_01_05";
+				Date dt=sdf.parse(str);
+				Calendar rightNow = Calendar.getInstance();
+				rightNow.setTime(dt);
+				
+				String temp = "\'" + Integer.toString(h.getSingleRooms().length)
+				+ ":" + Integer.toString(h.getDoubleRooms().length)
+				+ ":" + Integer.toString(h.getQuadRooms().length) + "\'"
+				+ " WHERE HotelID = ";
+				
+				int i = 0;
+				while (i <= 365) {
+					rightNow.add(Calendar.DATE,1);
+					Date dt1=rightNow.getTime();
+					String reStr = sdf.format(dt1);
+					String cmd_r = "UPDATE Rooms SET "
+							+ reStr + "="
+							+ temp
+							+ h.getID()
+							+ ";";
+					stmt.execute(cmd_r);
+					i++;
+				}
+			}
+			System.out.println("finish inserting Hotel, Room!");
 //			for (Hotel h : HotelList)
 //				System.out.println(h);
-		} catch (Exception e) {
-			System.out.println("cannot find the file.");
+		}*/
+		try {
+			String cmd = "SELECT * FROM Hotels;";
+			
+			int len;
+			results = stmt.executeQuery(cmd);
+			results.last();
+			len = results.getRow();
+			results.first();
+
+			HotelList = new Hotel[len];
+			
+			//HotelList[results.getInt("HotelID")]= new Hotel(results.getInt("HotelID"), results.getInt("HotelStar"), results.getString("Locality"), results.getString("StreetAddress"), results.getInt("SingleRoom"), results.getInt("SinglePrice"), results.getInt("DoubleRoom"), results.getInt("DoublePrice"), results.getInt("QuadRoom"), results.getInt("QuadPrice"));
+			//System.out.println(HotelList[0]);
+			
+			int index = 0;
+			do {
+				HotelList[results.getInt("HotelID")]= new Hotel(results.getInt("HotelID"), results.getInt("HotelStar"), results.getString("Locality"), results.getString("StreetAddress"), results.getInt("SingleRoom"), results.getInt("SinglePrice"), results.getInt("DoubleRoom"), results.getInt("DoublePrice"), results.getInt("QuadRoom"), results.getInt("QuadPrice"));
+				System.out.println(HotelList[results.getInt("HotelID")].getID());
+				
+			} while(results.next());
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			//System.out.println("cannot find the file.");
 		}
 	}
 }
