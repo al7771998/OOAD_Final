@@ -75,7 +75,7 @@ public class DatabaseUtil {
 				}
 			}
 			
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd");
+			/*SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd");
 			String str="2020_01_05";
 			Date dt=sdf.parse(str);
 			Calendar rightNow = Calendar.getInstance();
@@ -91,7 +91,7 @@ public class DatabaseUtil {
 						+ " VARCHAR(20);";
 				stmt.execute(cmd);
 				i++;
-			}
+			}*/
 			System.out.println("finish building table!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -633,12 +633,71 @@ public class DatabaseUtil {
 			//HotelList[results.getInt("HotelID")]= new Hotel(results.getInt("HotelID"), results.getInt("HotelStar"), results.getString("Locality"), results.getString("StreetAddress"), results.getInt("SingleRoom"), results.getInt("SinglePrice"), results.getInt("DoubleRoom"), results.getInt("DoublePrice"), results.getInt("QuadRoom"), results.getInt("QuadPrice"));
 			//System.out.println(HotelList[0]);
 			
-			int index = 0;
 			do {
 				HotelList[results.getInt("HotelID")]= new Hotel(results.getInt("HotelID"), results.getInt("HotelStar"), results.getString("Locality"), results.getString("StreetAddress"), results.getInt("SingleRoom"), results.getInt("SinglePrice"), results.getInt("DoubleRoom"), results.getInt("DoublePrice"), results.getInt("QuadRoom"), results.getInt("QuadPrice"));
-				System.out.println(HotelList[results.getInt("HotelID")].getID());
+				//System.out.println(HotelList[results.getInt("HotelID")].getID());
 				
 			} while(results.next());
+			
+			String cmd_o = "SELECT * FROM Orders;";
+			
+			results = stmt.executeQuery(cmd_o);
+			results.last();
+			results.first();
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd");
+			String str="2020_01_05";
+			Date dt=sdf.parse(str);
+			
+			do {
+				Date date1 = new SimpleDateFormat("yyyy-mm-dd").parse(results.getString("CheckIn")); 
+				Date date2 = new SimpleDateFormat("yyyy-mm-dd").parse(results.getString("CheckOut")); 
+				
+				long day = -1;
+				if ((date2.getTime()-dt.getTime())/(24*60*60*1000)>0) {
+					day = (date1.getTime()-dt.getTime())/(24*60*60*1000) > 0 ? (date2.getTime()-date1.getTime())/(24*60*60*1000): 
+				(date2.getTime()-dt.getTime())/(24*60*60*1000);
+				}
+				
+				String SR = results.getString("SingleRoom"), DR = results.getString("DoubleRoom"), QR = results.getString("QuadRoom");
+				
+				int i = 0;
+				int start_d = (date1.getTime()-dt.getTime())/(24*60*60*1000) > 0 ? (int)(date1.getTime()-dt.getTime())/(24*60*60*1000):0;
+				while (i <= (int)day) {
+					for (String num : SR.split(":")) {
+						if (num.equals("")) {
+							//System.out.println("S");
+							break;
+						}
+						HotelList[results.getInt("HotelID")].getSingleRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+					}
+					for (String num : DR.split(":")) {
+						if (num.equals("")) {
+							//System.out.println("D");
+							break;
+						}
+						HotelList[results.getInt("HotelID")].getDoubleRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+					}
+					
+					for (String num : QR.split(":")) {
+						if (num.equals("")) {
+							//System.out.println("Q");
+							break;
+						}
+						HotelList[results.getInt("HotelID")].getQuadRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+						
+					}
+					
+					i++;
+				}
+				
+			} while(results.next());
+
+			/*int j = 0;
+			while (j < 25) {
+				System.out.println(String.valueOf(5+j) + ":" + HotelList[0].getQuadRooms()[0].getDateIsOccupied()[j]);
+				j++;
+			}*/
 		}
 		catch (Exception e) {
 			System.out.println(e);
