@@ -177,7 +177,7 @@ public class BookController {
 
 		if (CheckAllRooms(Integer.valueOf(hotelName), start, end, singleRoomNum, doubleRoomNum, quadRoomNum)) {
 			//等等都搬去DatabaseUtil
-			String cmd = "SELECT * FROM Hotel WHERE HotelID=\'" + hotelName + "\';";
+			/*String cmd = "SELECT * FROM Hotel WHERE HotelID=\'" + hotelName + "\';";
 			String roominfo;
 			try {
 				results = stmt.executeQuery(cmd);
@@ -206,7 +206,7 @@ public class BookController {
 				e.getStackTrace();
 				return false;
 			}
-			return true;
+			return true;*/
 			//這些保留
 			
 			ArrayList<ArrayList<Integer>> re = Reserve(Integer.valueOf(hotelName), contactName, start, end, singleRoomNum, doubleRoomNum, quadRoomNum);

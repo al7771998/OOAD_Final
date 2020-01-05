@@ -533,9 +533,11 @@ public class BookUI extends JPanel {
 				}
 				//Forward reserve request to Book Controller
 				mBookController = new BookController(HotelID, s1, s2, people, user, phone, email, sn, dn, qn);
+				DatabaseUtil.ReadHotelList();
 				Order order = mBookController.BookHotel();
 				if (order != null) 
 				{
+					DatabaseUtil.ReadHotelList();
 					// 訂房成功
 					layeredPane.remove(Reserve);
 					layeredPane.add(Reserve_success, new Integer(3));

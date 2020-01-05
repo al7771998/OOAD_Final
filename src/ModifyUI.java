@@ -131,6 +131,7 @@ public class ModifyUI extends JPanel {
 				String VerifyCode = verifycodeField.getText(); // random verify code
 
 				if (UserCode.equals(VerifyCode)) {
+					DatabaseUtil.ReadHotelList();
 					int orderID = Integer.parseInt(orderIDField.getText());
 					controller.cancel(orderID);
 					layeredPane.remove(Reserveorder);
@@ -149,7 +150,7 @@ public class ModifyUI extends JPanel {
 			} else if(e.getSource() == changeText) {
 				String UserCode = usercodeField.getText(); // user enter verify code
 				String VerifyCode = verifycodeField.getText(); // random verify code
-
+				DatabaseUtil.ReadHotelList();
 				if(!UserCode.equals(VerifyCode)) {// Wrong verify code.
 					layeredPane.add(VerifyCode_error, new Integer(3));
 					//newcheckindateField.setText("");
@@ -170,7 +171,7 @@ public class ModifyUI extends JPanel {
 				} else if(!checkReservation()){
 					reservationNumberField.setText(String.valueOf(reservationNum));
 					layeredPane.add(Reservation_error, new Integer(3));
-					}else {
+				}else {
 					sn = Integer.parseInt(!newsingleroomField.getText().equals("") ? newsingleroomField.getText():String.valueOf(sn));
 					dn = Integer.parseInt(!newdoubleroomField.getText().equals("") ? newdoubleroomField.getText():String.valueOf(dn));
 					qn = Integer.parseInt(!newquadroomField.getText().equals("") ? newquadroomField.getText(): String.valueOf(qn));
@@ -181,6 +182,7 @@ public class ModifyUI extends JPanel {
 						COD = s2;
 					}
 					Order order = controller.modifyHotel(orderID,hotelID,sn,dn,qn,CID,COD);
+					DatabaseUtil.ReadHotelList();
 					layeredPane.remove(Reserveorder);
 					layeredPane.add(Revise_success,new Integer(1));
 					validate();
