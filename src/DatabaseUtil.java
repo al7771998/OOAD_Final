@@ -662,21 +662,24 @@ public class DatabaseUtil {
 				String SR = results.getString("SingleRoom"), DR = results.getString("DoubleRoom"), QR = results.getString("QuadRoom");
 				
 				int i = 0;
-				int start_d = (date1.getTime()-dt.getTime())/(24*60*60*1000) > 0 ? (int)(date1.getTime()-dt.getTime())/(24*60*60*1000):0;
+				int start_d = (date1.getTime()-dt.getTime())/(24*60*60*1000) > 0 ? (int)((date1.getTime()-dt.getTime())/(24*60*60*1000)):0;
+				//System.out.println(start_d);
 				while (i <= (int)day) {
 					for (String num : SR.split(":")) {
 						if (num.equals("")) {
 							//System.out.println("S");
 							break;
 						}
-						HotelList[results.getInt("HotelID")].getSingleRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+						//HotelList[results.getInt("HotelID")].getSingleRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+						HotelList[results.getInt("HotelID")].setRoomState("S", Integer.valueOf(num), start_d + i);
 					}
 					for (String num : DR.split(":")) {
 						if (num.equals("")) {
 							//System.out.println("D");
 							break;
 						}
-						HotelList[results.getInt("HotelID")].getDoubleRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+						//HotelList[results.getInt("HotelID")].getDoubleRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+						HotelList[results.getInt("HotelID")].setRoomState("D", Integer.valueOf(num), start_d + i);
 					}
 					
 					for (String num : QR.split(":")) {
@@ -684,8 +687,8 @@ public class DatabaseUtil {
 							//System.out.println("Q");
 							break;
 						}
-						HotelList[results.getInt("HotelID")].getQuadRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
-						
+						//HotelList[results.getInt("HotelID")].getQuadRooms()[Integer.valueOf(num)].setDateIsOccupied(start_d + i);
+						HotelList[results.getInt("HotelID")].setRoomState("Q", Integer.valueOf(num), start_d + i);
 					}
 					
 					i++;

@@ -109,4 +109,16 @@ public class Hotel {
 		return ID + " " + Star + " " + Locality + " " + Address + " " 
 				+ RoomTypes[0] + " " + RoomTypes[1] + " " + RoomTypes[2];
 	}
+	
+	public void setRoomState(String T, int n, int d) {
+		if (T.equals("S")) {
+			SingleRooms[n].setDateIsOccupied(d);
+		}
+		else if (T.equals("D")) {
+			DoubleRooms[n].setDateIsOccupied(d);
+		}
+		else if (T.equals("Q")) {
+			QuadRooms[n].setDateIsOccupied(d);
+		}
+	}
 }
