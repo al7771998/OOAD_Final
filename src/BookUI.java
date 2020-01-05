@@ -500,7 +500,7 @@ public class BookUI extends JPanel {
 			if ( e.getSource() == cancelreserve) {
 				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH_RESULT);
 			}  else if (e.getSource() == backreserve) {
-				mUIMainFrame.changeUI(UIMainFrame.UIStage.SEARCH);
+				mUIMainFrame.changeUI(UIMainFrame.UIStage.MENU);
 			} else if (e.getSource() == nextreserve) {
 				String s1 = reservecheckindateField.getText();
 				String s2 = reservecheckoutdateField.getText();

@@ -138,7 +138,16 @@ public class ModifyUI extends JPanel {
 					repaint();
 				}
 			} else if(e.getSource() == changeText) {
-				if(!checkDate()) {
+				String UserCode = usercodeField.getText(); // user enter verify code
+				String VerifyCode = verifycodeField.getText(); // random verify code
+
+				if(!UserCode.equals(VerifyCode)) {// Wrong verify code.
+					layeredPane.add(Changeroom_error, new Integer(3));
+					//newcheckindateField.setText("");
+					//newcheckoutdateField.setText("");
+					validate();
+					repaint();
+				} else if(!checkDate()) {
 					layeredPane.add(Revisedate_error, new Integer(3)); 
 					newcheckindateField.setText("");
 					newcheckoutdateField.setText("");
@@ -302,7 +311,7 @@ public class ModifyUI extends JPanel {
 		Changeroom_error.add(changeroomerrorText);
 	}
 	private void initCancelordererror() {
-		Cancelroom_error.setLayout(new GridLayout(1, 1, 0, 0));
+		Cancelroom_error.setLayout(new GridLayout(2, 1, 0, 0));
 		Cancelroom_error.setOpaque(false);
 		cancelroomerrorText.setFont(new Font("Dialog", Font.BOLD, 30));
 		cancelroomerrorText.setForeground(new Color(255, 0, 0));
@@ -326,7 +335,7 @@ public class ModifyUI extends JPanel {
 		buttons.setLayout(new GridLayout(2, 1));
 		buttons.setOpaque(false);
 		buttons.setBorder(new EmptyBorder(20, 40, 20, 40));
-		backText.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		backTextcancelsuccess.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		buttons.add(backTextcancelsuccess);
 		Cancel_success.add(buttons);
 	}
