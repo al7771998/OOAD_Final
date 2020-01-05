@@ -60,7 +60,7 @@ public class DatabaseUtil {
 		try {
 			System.out.print("Building database...");
 
-			fin = new BufferedReader(new FileReader("buildTable.sql"));
+			fin = new BufferedReader(new FileReader("backup.sql"));
 			String line = null;
 			StringBuffer sb = new StringBuffer();
 			while ((line = fin.readLine()) != null) {
