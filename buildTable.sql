@@ -94,7 +94,7 @@ CREATE TABLE `Hotels` (
   `HotelID` int(11) NOT NULL,
   `HotelStar` int(11) NOT NULL,
   `Locality` varchar(45) NOT NULL,
-  `Street-Address` varchar(45) NOT NULL,
+  `StreetAddress` varchar(45) NOT NULL,
   `SingleRoom` int(11) NOT NULL,
   `SinglePrice` int(11) NOT NULL,
   `DoubleRoom` int(11) NOT NULL,

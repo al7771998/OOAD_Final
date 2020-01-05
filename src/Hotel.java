@@ -1,10 +1,14 @@
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import com.google.gson.annotations.SerializedName;
 /*www*/
 /*
  * This is the class of the Hotel read from the HotelList.json.
  */
 public class Hotel {
-	@SerializedName("HotelID")
+	/*@SerializedName("HotelID")
 	private int ID;
 	@SerializedName("HotelStar")
 	private int Star;
@@ -12,6 +16,11 @@ public class Hotel {
 	@SerializedName("Street-Address")
 	private String Address;
 	@SerializedName("Rooms")
+	private RoomType[] RoomTypes;*/
+	private int ID;
+	private int Star;
+	private String Locality;
+	private String Address;
 	private RoomType[] RoomTypes;
 	
 	private int SingleRoomPrice;
@@ -21,11 +30,30 @@ public class Hotel {
 	/*
 	 * This method initialize the Hotel class.
 	 */
-	public void init() {
-		SingleRooms = new Room[RoomTypes[0].getNumber()];
+	//public void init(int _ID, int _Star, String _Locality, String _Address, int _SingleRoom, int _SinglePrice, int _DoubleRoom, int _DoublePrice, int _QuadRoom, int _QuadPrice) {
+	Hotel (int _ID, int _Star, String _Locality, String _Address, int _SingleRoom, int _SinglePrice, int _DoubleRoom, int _DoublePrice, int _QuadRoom, int _QuadPrice) {
+		ID = _ID;
+		Star = _Star;
+		Locality = _Locality;
+		Address = _Address;
+		
+		SingleRooms = new Room[_SingleRoom];
+		DoubleRooms = new Room[_DoubleRoom];
+		QuadRooms = new Room[_QuadRoom];
+		for (int i = 0; i < SingleRooms.length; i++)
+			SingleRooms[i] = new Room();
+		for (int i = 0; i < DoubleRooms.length; i++) 
+			DoubleRooms[i] = new Room();
+		for (int i = 0; i < QuadRooms.length; i++) 
+			QuadRooms[i] = new Room();
+		SingleRoomPrice = _SinglePrice;
+		DoubleRoomPrice = _DoublePrice;
+		QuadRoomPrice = _QuadPrice;
+		
+		/*SingleRooms = new Room[RoomTypes[0].getNumber()];
 		DoubleRooms = new Room[RoomTypes[1].getNumber()];
 		QuadRooms = new Room[RoomTypes[2].getNumber()];
-		for (int i = 0; i < SingleRooms.length; i++) 
+		for (int i = 0; i < SingleRooms.length; i++)
 			SingleRooms[i] = new Room();
 		for (int i = 0; i < DoubleRooms.length; i++) 
 			DoubleRooms[i] = new Room();
@@ -33,7 +61,7 @@ public class Hotel {
 			QuadRooms[i] = new Room();
 		SingleRoomPrice = RoomTypes[0].getPrice(); 
 		DoubleRoomPrice = RoomTypes[1].getPrice();
-		QuadRoomPrice = RoomTypes[2].getPrice();
+		QuadRoomPrice = RoomTypes[2].getPrice();*/
 	}
 	public int getID() {
 		return ID;
