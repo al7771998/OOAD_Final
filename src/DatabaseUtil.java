@@ -60,7 +60,7 @@ public class DatabaseUtil {
 		try {
 			System.out.print("Building database...");
 
-			fin = new BufferedReader(new FileReader("backup.sql"));
+			fin = new BufferedReader(new FileReader("backup_F.sql"));
 			String line = null;
 			StringBuffer sb = new StringBuffer();
 			while ((line = fin.readLine()) != null) {
@@ -628,6 +628,10 @@ public class DatabaseUtil {
 			len = results.getRow();
 			results.first();
 
+			if (len == 0) {
+				return;
+			}
+			
 			HotelList = new Hotel[len];
 			
 			//HotelList[results.getInt("HotelID")]= new Hotel(results.getInt("HotelID"), results.getInt("HotelStar"), results.getString("Locality"), results.getString("StreetAddress"), results.getInt("SingleRoom"), results.getInt("SinglePrice"), results.getInt("DoubleRoom"), results.getInt("DoublePrice"), results.getInt("QuadRoom"), results.getInt("QuadPrice"));
@@ -641,9 +645,15 @@ public class DatabaseUtil {
 			
 			String cmd_o = "SELECT * FROM Orders;";
 			
+			int len_o;
 			results = stmt.executeQuery(cmd_o);
 			results.last();
+			len_o = results.getRow();
 			results.first();
+			
+			if (len_o == 0) {
+				return;
+			}
 			
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd");
 			//String str="2020_01_05";
