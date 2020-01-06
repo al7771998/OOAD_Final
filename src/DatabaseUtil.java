@@ -663,8 +663,8 @@ public class DatabaseUtil {
 				
 				int i = 0;
 				int start_d = (date1.getTime()-dt.getTime())/(24*60*60*1000) > 0 ? (int)((date1.getTime()-dt.getTime())/(24*60*60*1000)):0;
-				//System.out.println(start_d);
-				while (i <= (int)day) {
+				System.out.println(start_d);
+				while (i < (int)day) {
 					for (String num : SR.split(":")) {
 						if (num.equals("")) {
 							//System.out.println("S");
@@ -696,11 +696,16 @@ public class DatabaseUtil {
 				
 			} while(results.next());
 
-			/*int j = 0;
-			while (j < 25) {
-				System.out.println(String.valueOf(5+j) + ":" + HotelList[0].getQuadRooms()[0].getDateIsOccupied()[j]);
-				j++;
-			}*/
+			int j = 0;
+			int l = 0;
+			while (l < 29) {
+				while (j < 5) {
+					System.out.println(l + ":" + String.valueOf(5+j) + ":" + HotelList[0].getSingleRooms()[l].getDateIsOccupied()[j]);
+					j++;
+				}
+				l++;
+				j = 0;
+			}
 		}
 		catch (Exception e) {
 			System.out.println(e);
