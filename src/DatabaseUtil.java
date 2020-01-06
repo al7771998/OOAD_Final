@@ -646,8 +646,11 @@ public class DatabaseUtil {
 			results.first();
 			
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd");
-			String str="2020_01_05";
-			Date dt=sdf.parse(str);
+			//String str="2020_01_05";
+			//Date dt=sdf.parse(str);
+			Date da = new Date();
+			Date dt=sdf.parse(sdf.format(da));
+			//System.out.println(sdf.format(da));
 			
 			do {
 				Date date1 = new SimpleDateFormat("yyyy-mm-dd").parse(results.getString("CheckIn")); 
@@ -659,11 +662,13 @@ public class DatabaseUtil {
 				(date2.getTime()-dt.getTime())/(24*60*60*1000);
 				}
 				
+				//System.out.println(day);
+				
 				String SR = results.getString("SingleRoom"), DR = results.getString("DoubleRoom"), QR = results.getString("QuadRoom");
 				
 				int i = 0;
 				int start_d = (date1.getTime()-dt.getTime())/(24*60*60*1000) > 0 ? (int)((date1.getTime()-dt.getTime())/(24*60*60*1000)):0;
-				System.out.println(start_d);
+				//System.out.println(start_d);
 				while (i < (int)day) {
 					for (String num : SR.split(":")) {
 						if (num.equals("")) {
@@ -696,16 +701,16 @@ public class DatabaseUtil {
 				
 			} while(results.next());
 
-			int j = 0;
+			/*int j = 0;
 			int l = 0;
 			while (l < 29) {
 				while (j < 5) {
-					System.out.println(l + ":" + String.valueOf(5+j) + ":" + HotelList[0].getSingleRooms()[l].getDateIsOccupied()[j]);
+					System.out.println(l + ":" + String.valueOf(j) + ":" + HotelList[0].getSingleRooms()[l].getDateIsOccupied()[j]);
 					j++;
 				}
 				l++;
 				j = 0;
-			}
+			}*/
 		}
 		catch (Exception e) {
 			System.out.println(e);
